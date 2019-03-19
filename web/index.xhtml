@@ -10,28 +10,14 @@
     <ui:define name="content">
 
         <h:form>
-            <!--<h1 class="title  ui-corner-all">As seguintes ações preventivas estão configuradas para o sistema:</h1>-->
-            <ul>
-                <li>
-                    Exibe alerta para os módulos que atingirem mais de 50% do total das ocorrências do mês e recomenda 3 rondas a cada 1 hora durante 7 dias
-                </li>
-                <li>Informa se houve diminuição das ocorrências naqueles módulos após as rondas preventivas</li>
-                <li>Sugere rotas passando por módulos com maior quantidade de ocorrências, caso um módulo ultrapasse 20% das ocorrências semanais, exibe alerta sugerindo rondas passando pelo módulo.</li>
-            </ul>
-
+            
             <center>
+                <img src="resources/images/jesse-orrico-60373-unsplash.jpg" alt="" width="100%" height="100%"/>
                 <!-- Atendente -->
                 <!-- Atividades de atendente aqui -->
             </center>
 
-            <!-- Atividades de Administrador  aqui-->
-            <p:panel header="" style="border-style: none"  toggleable="false" visible="#{usuario.getIdpessoa().getIdperfil().getNmperfil() == 'Administrador' || usuario.getIdpessoa().getIdperfil().getNmperfil() == 'Guarda'}" id="pnlAdministradorIndex"> 
-
-                
-            </p:panel>
-
-            <p:panel header="" style="border-style: none" toggleable="false"  visible="#{usuario == null}" id="pnlGeralIndex">Bem Vindo</p:panel>
-
+            
 
         </h:form>
     </ui:define>
