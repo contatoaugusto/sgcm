@@ -14,11 +14,7 @@
     <http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPoint">
         <custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER"/>
         <logout logout-success-url="/controleacesso/login.xhtml" />
-        <intercept-url pattern="/manterResidencia.xhtml" access="hasRole('Administrador')" />
-        <intercept-url pattern="/manterMorador.xhtml" access="hasRole('Administrador')" />
-        <intercept-url pattern="/manterGuarda.xhtml" access="hasRole('Administrador')" />
-        <intercept-url pattern="/manterAdministrador.xhtml" access="hasRole('Administrador')" />
-        <intercept-url pattern="/manterOcorrencia.xhtml" access="hasAnyRole('Administrador','Morador', 'Guarda')" /> 
+
     </http>
 
 
@@ -26,7 +22,7 @@
     <b:bean class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter" id="authenticationFilter" p:authenticationManager-ref="customAuthenticationManager"/>
 
     <!-- Custom authentication manager. In order to authenticate, username and password must not be the same -->
-    <b:bean class="br.com.sgor.controleacesso.manager.CustomAuthenticationManager" id="customAuthenticationManager"/>
+    <b:bean class="br.com.sgcm.controleacesso.manager.CustomAuthenticationManager" id="customAuthenticationManager"/>
 
     <!-- The AuthenticationEntryPoint is responsible for redirecting the user to a particular page, like a login page,
                     whenever the server sends back a response requiring authentication -->
