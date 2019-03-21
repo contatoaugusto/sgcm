@@ -44,6 +44,8 @@ public class PerfilDAO implements Serializable {
     @NotNull
     @Size(min = 1, max = 100)
     private String nmperfil;
+    @Size(max = 200)
+    private String deperfil;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperfil")
     private Collection<PessoaDAO> pessoaDAOCollection;
 
@@ -74,7 +76,15 @@ public class PerfilDAO implements Serializable {
     public void setNmperfil(String nmperfil) {
         this.nmperfil = nmperfil;
     }
+    
+    public String getDeperfil() {
+        return deperfil;
+    }
 
+    public void setDeperfil(String deperfil) {
+        this.deperfil = deperfil;
+    }
+    
     @XmlTransient
     public Collection<PessoaDAO> getPessoaDAOCollection() {
         return pessoaDAOCollection;

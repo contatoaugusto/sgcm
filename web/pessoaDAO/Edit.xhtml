@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.EditPessoaDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_idpessoa}" for="idpessoa" />
+                    <h:inputText id="idpessoa" value="#{pessoaDAOController.selected.idpessoa}" title="#{bundleTemp.EditPessoaDAOTitle_idpessoa}" required="true" requiredMessage="#{bundleTemp.EditPessoaDAORequiredMessage_idpessoa}"/>
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nmpessoa}" for="nmpessoa" />
+                    <h:inputText id="nmpessoa" value="#{pessoaDAOController.selected.nmpessoa}" title="#{bundleTemp.EditPessoaDAOTitle_nmpessoa}" required="true" requiredMessage="#{bundleTemp.EditPessoaDAORequiredMessage_nmpessoa}"/>
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nucpf}" for="nucpf" />
+                    <h:inputText id="nucpf" value="#{pessoaDAOController.selected.nucpf}" title="#{bundleTemp.EditPessoaDAOTitle_nucpf}" required="true" requiredMessage="#{bundleTemp.EditPessoaDAORequiredMessage_nucpf}"/>
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nurg}" for="nurg" />
+                    <h:inputText id="nurg" value="#{pessoaDAOController.selected.nurg}" title="#{bundleTemp.EditPessoaDAOTitle_nurg}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_deendereco}" for="deendereco" />
+                    <h:inputText id="deendereco" value="#{pessoaDAOController.selected.deendereco}" title="#{bundleTemp.EditPessoaDAOTitle_deendereco}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nmbairro}" for="nmbairro" />
+                    <h:inputText id="nmbairro" value="#{pessoaDAOController.selected.nmbairro}" title="#{bundleTemp.EditPessoaDAOTitle_nmbairro}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nmcidade}" for="nmcidade" />
+                    <h:inputText id="nmcidade" value="#{pessoaDAOController.selected.nmcidade}" title="#{bundleTemp.EditPessoaDAOTitle_nmcidade}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_deemail}" for="deemail" />
+                    <h:inputText id="deemail" value="#{pessoaDAOController.selected.deemail}" title="#{bundleTemp.EditPessoaDAOTitle_deemail}" />   
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nutelefone}" for="nutelefone" />
+                    <h:inputText id="nutelefone" value="#{pessoaDAOController.selected.nutelefone}" title="#{bundleTemp.EditPessoaDAOTitle_nutelefone}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nucelular}" for="nucelular" />
+                    <h:inputText id="nucelular" value="#{pessoaDAOController.selected.nucelular}" title="#{bundleTemp.EditPessoaDAOTitle_nucelular}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nucrm}" for="nucrm" />
+                    <h:inputText id="nucrm" value="#{pessoaDAOController.selected.nucrm}" title="#{bundleTemp.EditPessoaDAOTitle_nucrm}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nmespecialidademedica}" for="nmespecialidademedica" />
+                    <h:inputText id="nmespecialidademedica" value="#{pessoaDAOController.selected.nmespecialidademedica}" title="#{bundleTemp.EditPessoaDAOTitle_nmespecialidademedica}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nucrt}" for="nucrt" />
+                    <h:inputText id="nucrt" value="#{pessoaDAOController.selected.nucrt}" title="#{bundleTemp.EditPessoaDAOTitle_nucrt}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_nucoren}" for="nucoren" />
+                    <h:inputText id="nucoren" value="#{pessoaDAOController.selected.nucoren}" title="#{bundleTemp.EditPessoaDAOTitle_nucoren}" />
+                    <h:outputLabel value="#{bundleTemp.EditPessoaDAOLabel_idperfil}" for="idperfil" />
+                    <h:selectOneMenu id="idperfil" value="#{pessoaDAOController.selected.idperfil}" title="#{bundleTemp.EditPessoaDAOTitle_idperfil}" required="true" requiredMessage="#{bundleTemp.EditPessoaDAORequiredMessage_idperfil}">
+                        <f:selectItems value="#{perfilDAOController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{pessoaDAOController.update}" value="#{bundleTemp.EditPessoaDAOSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundleTemp.EditPessoaDAOViewLink}"/>
+                <br />
+                <h:commandLink action="#{pessoaDAOController.prepareList}" value="#{bundleTemp.EditPessoaDAOShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.EditPessoaDAOIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

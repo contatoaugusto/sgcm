@@ -57,6 +57,8 @@ public class PessoaDAO implements Serializable {
     @NotNull
     @Size(min = 1, max = 100)
     private String nmpessoa;
+    @Size(max = 15)
+    private String desexo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -69,6 +71,8 @@ public class PessoaDAO implements Serializable {
     private String nmbairro;
     @Size(max = 100)
     private String nmcidade;
+    @Size(max = 10)
+    private String nucep;
     @Size(max = 100)
     private String deemail;
     @Size(max = 15)
@@ -82,7 +86,7 @@ public class PessoaDAO implements Serializable {
     @Size(max = 15)
     private String nucrt;
     @Size(max = 15)
-    private String nucoren;
+    private String nucoren;    
     @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")
     @ManyToOne(optional = false)
     private PerfilDAO idperfil;
@@ -117,7 +121,13 @@ public class PessoaDAO implements Serializable {
     public void setNmpessoa(String nmpessoa) {
         this.nmpessoa = nmpessoa;
     }
+    public String getDesexo() {
+        return desexo;
+    }
 
+    public void setDedesexo(String desexo) {
+        this.desexo = desexo;
+    }    
     public String getNucpf() {
         return nucpf;
     }
@@ -158,6 +168,14 @@ public class PessoaDAO implements Serializable {
         this.nmcidade = nmcidade;
     }
 
+    public String getNucep() {
+        return nucep;
+    }
+
+    public void setNucep(String nucep) {
+        this.nucep = nucep;
+    }
+    
     public String getDeemail() {
         return deemail;
     }

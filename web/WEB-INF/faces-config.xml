@@ -24,5 +24,9 @@
             <base-name>/BundleTeste</base-name>
             <var>bundleTeste</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleTemp</base-name>
+            <var>bundleTemp</var>
+        </resource-bundle>
     </application>
 </faces-config>
