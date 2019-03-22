@@ -125,7 +125,7 @@ public class PessoaDAO implements Serializable {
         return desexo;
     }
 
-    public void setDedesexo(String desexo) {
+    public void setDesexo(String desexo) {
         this.desexo = desexo;
     }    
     public String getNucpf() {

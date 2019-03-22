@@ -12,31 +12,31 @@
         <p:panel header="Cadastro de Perfil" style="border-style: none"> 
             <center>
                 <h:form id="form_cadastro">
-                    <p>Os campos destacados são de preenchimento obrigatório.</p>
-                    <h:panelGrid id="pngCadastro" columns="6">
+                    <p >Os campos destacados são de preenchimento obrigatório.</p>
+                    <h:panelGrid id="pngCadastro" columns="1">
 
                         <p:outputLabel for="nome" value="Nome:" />
-                        <p:inputText id="nome" required="true" value="#{perfilDAOController.selected.nmpessoa}" size="50"/>
+                        <p:inputText id="nome" required="true" value="#{perfilDAOController.selected.nmperfil}" size="50"/>
                         <p:message for="nome" />
-                        
+
                         <p:outputLabel for="descricao" value="Descrição de Perfil:" />
-                        <p:inputTextarea id="descricao" required="true" value="#{perfilDAOController.selected.descricao}" 
+                        <p:inputTextarea id="descricao" required="true" value="#{perfilDAOController.selected.deperfil}" 
                                          cols="93" maxlength="200"  rows="5" counter="display"  autoResize="true" 
                                          counterTemplate="{0} caráteres restantes."/>
                         <h:outputText id="display" />
                         <p:message for="descricao" />
-                        
+
                         <br></br>
                         <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{perfilDAOController.create()}" update=":lista"/>
-                        <p:commandButton value="Limpar" type="reset"/>
-
+<!--                        <p:commandButton value="Limpar" type="reset"/>-->
+                    </h:panelGrid>        
                     <p:autoUpdate />
                 </h:form>
 
                 <br></br><br></br>
 
                 <p:dataTable 
-                    value="#{pessoaDAOController.items}"                      
+                    value="#{perfilDAOController.items}"                      
                     var="lista"
                     style="margin-bottom:20px"
                     paginator="false" id="lista"
@@ -45,26 +45,15 @@
                     rowStyleClass="#{(indiceLinha mod 2) eq 0 ? 'highlight' : 'highlight2'}">
 
                     <f:facet name="header">
-                        <h:outputText value="Lista de Guardas"/>
+                        <h:outputText value="Perfis Cadastrados"/>
                     </f:facet>
 
                     <p:column headerText="Nome" >
-                        <h:outputText value="#{lista.nmpessoa}"/>
+                        <h:outputText value="#{lista.nmperfil}"/>
                     </p:column>
 
-                    <p:column headerText="CPF" >
-                        <h:outputText value="#{lista.nucpf}" />
-                    </p:column>
-
-                    <p:column headerText="Telefone">
-                         <h:outputText value="#{lista.nutelefone}" />
-                    </p:column>
-                    
-                    <p:column headerText="Endereço">
-                         <h:outputText value="#{lista.deendereco}" />
-                    </p:column>
-                    <p:column headerText="CEP">
-                         <h:outputText value="#{lista.nucep}" />
+                    <p:column headerText="Descrição" >
+                        <h:outputText value="#{lista.deperfil}" />
                     </p:column>
 
                 </p:dataTable>

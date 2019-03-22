@@ -38,17 +38,17 @@
                                 <p:menuitem value="" url="" disabled="true"/>  
                                 <p:menuitem value="Início" url="/index.xhtml" rendered="#{usuario == null}"/>   
                                 <p:menuitem value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" disabled="#{usuario == null}"/>
-                                <p:menuitem value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Cadastro de Medicamento" url="./manterGuarda.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Cadastro de Usuário" url="./manterUsuario.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Histórico Clínico" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
-                                <p:menuitem value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true" />
+                                <p:menuitem value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true" />
+                                <p:menuitem value="Cadastro de Medicamento" url="./manterGuarda.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Cadastro de Usuário" url="./manterUsuario.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Histórico Clínico" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
+                                <p:menuitem value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.getIdpessoa.getIdperfil().getNmperfil() == 'Administrador')}"/>
                                 
                                 <p:menuitem value="Login" url="./controleacesso/login.xhtml" rendered="true" disabled="#{usuario != null}"/>
                             </p:submenu>

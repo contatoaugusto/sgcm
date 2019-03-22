@@ -3,9 +3,13 @@ package br.com.sgcm.bean;
 import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
+import br.com.sgcm.dao.PerfilDAO;
+import br.com.sgcm.dao.UsuarioDAO;
 import br.com.sgcm.facade.PessoaDAOFacade;
+import br.com.sgcm.facade.UsuarioDAOFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -29,10 +33,17 @@ public class PessoaDAOController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+    private String nmUsuario = "";
+    private String deSenha = "";
+    
+    @EJB
+    private UsuarioDAOFacade usuarioDAOFacade;
+    
     public PessoaDAOController() {
     }
 
     public PessoaDAO getSelected() {
+        
         if (current == null) {
             current = new PessoaDAO();
             selectedItemIndex = -1;
@@ -81,11 +92,21 @@ public class PessoaDAOController implements Serializable {
 
     public String create() {
         try {
+            
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("PessoaDAOCreated"));
-            return prepareCreate();
+            
+            // Cria o usuario
+            UsuarioDAO currentUsuario = new UsuarioDAO();
+            currentUsuario = new UsuarioDAO();
+            currentUsuario.setNmusuario(getNmUsuario());
+            currentUsuario.setDeSenha(getDeSenha());
+            currentUsuario.setIdpessoa(current);
+            usuarioDAOFacade.create(currentUsuario);
+            
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
+            return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
             return null;
         }
     }
@@ -192,6 +213,35 @@ public class PessoaDAOController implements Serializable {
         return ejbFacade.find(id);
     }
 
+
+    /**
+     * @return the nmUsuario
+     */
+    public String getNmUsuario() {
+        return nmUsuario;
+    }
+
+    /**
+     * @param nmUsuario the nmUsuario to set
+     */
+    public void setNmUsuario(String nmUsuario) {
+        this.nmUsuario = nmUsuario;
+    }
+
+    /**
+     * @return the deSenha
+     */
+    public String getDeSenha() {
+        return deSenha;
+    }
+
+    /**
+     * @param deSenha the deSenha to set
+     */
+    public void setDeSenha(String deSenha) {
+        this.deSenha = deSenha;
+    }    
+    
     @FacesConverter(forClass = PessoaDAO.class)
     public static class PessoaDAOControllerConverter implements Converter {
 

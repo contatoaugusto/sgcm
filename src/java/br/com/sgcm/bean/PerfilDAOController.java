@@ -6,6 +6,7 @@ import br.com.sgcm.bean.util.PaginationHelper;
 import br.com.sgcm.facade.PerfilDAOFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -22,6 +23,34 @@ import javax.faces.model.SelectItem;
 @SessionScoped
 public class PerfilDAOController implements Serializable {
 
+    /**
+     * @return the perfilList
+     */
+    public List<PerfilDAO> getPerfilList() {
+        return perfilList;
+    }
+
+    /**
+     * @param perfilList the perfilList to set
+     */
+    public void setPerfilList(List<PerfilDAO> perfilList) {
+        this.perfilList = perfilList;
+    }
+
+    /**
+     * @return the idPerfil
+     */
+    public Integer getIdPerfil() {
+        return idPerfil;
+    }
+
+    /**
+     * @param idPerfil the idPerfil to set
+     */
+    public void setIdPerfil(Integer idPerfil) {
+        this.idPerfil = idPerfil;
+    }
+
     private PerfilDAO current;
     private DataModel items = null;
     @EJB
@@ -29,10 +58,16 @@ public class PerfilDAOController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+    private List<PerfilDAO> perfilList;
+    private Integer idPerfil;
+    
     public PerfilDAOController() {
     }
 
     public PerfilDAO getSelected() {
+        
+            setPerfilList(ejbFacade.findAll());
+        
         if (current == null) {
             current = new PerfilDAO();
             selectedItemIndex = -1;
@@ -64,7 +99,8 @@ public class PerfilDAOController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        current = new PerfilDAO();
+        return "manterPerfil";
     }
 
     public String prepareView() {
@@ -81,11 +117,13 @@ public class PerfilDAOController implements Serializable {
 
     public String create() {
         try {
+            
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("PerfilDAOCreated"));
-            return prepareCreate();
+            
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
+            return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
             return null;
         }
     }
@@ -192,7 +230,7 @@ public class PerfilDAOController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = PerfilDAO.class)
+    @FacesConverter(forClass = PerfilDAO.class, value = "perfilConverter")
     public static class PerfilDAOControllerConverter implements Converter {
 
         @Override

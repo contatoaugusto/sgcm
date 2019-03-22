@@ -29,7 +29,7 @@ public class UsuarioDAOFacade extends AbstractFacade<UsuarioDAO> {
         if (em == null){
 //            Session session = HibernateUtil.getSessionFactory().openSession();
 //            EntityManager em = session.getEntityManagerFactory().createEntityManager();
-            EntityManagerFactory factory = Persistence.createEntityManagerFactory("sgorPU");
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("sgcmPU");
             em = factory.createEntityManager();
         }
         return em;
