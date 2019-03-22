@@ -11,7 +11,7 @@
 
     <h:body style="background-image:url('../resources/images/Tools-icon.png');background-position: 50% -60%;background-repeat: no-repeat">
 
-        <p:dialog header="Login" visible="true" closable="false" draggable="true" resizable="false" width="500" height="270">
+        <p:dialog header="Login" visible="true" closable="false" draggable="true" resizable="false" width="500" height="210" styleClass="disable-scroll">
             <p:growl id="mensagens" autoUpdate="true"  sticky="false" life="5000"/>    
             <center>
                 <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
@@ -30,8 +30,9 @@
                 <h:panelGrid cellpadding="1" width="100%">
                     <h:outputLabel value="Usuário/senha" style="font-weight: bold"/>
                     <h:outputLabel value="admin/123"/>
-                    <h:outputLabel value="morador/123"/>
-                    <h:outputLabel value="guarda/123"/>
+                    <h:outputLabel value="atendente/123"/>
+                    <h:outputLabel value="medico/123"/>
+                    <h:outputLabel value="enfermeiro/123"/>
                 </h:panelGrid>
             </form>
             <br/><br/>

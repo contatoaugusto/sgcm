@@ -30,7 +30,7 @@
             </p:toolbarGroup> 
             <p:toolbarGroup align="right" style="position:absolute; right:15px; top: 55px">  
 
-                    <span id="usuario" style="font-weight: bold ; font-size:12px;"> #{request.remoteUser == null ? 'Visitante' : request.remoteUser}</span>
+                    <span id="usuario" style="font-weight: bold ; font-size:12px;"> #{request.remoteUser == null ? 'Visitante' : usuario.idpessoa.nmpessoa}</span>
                     <p:separator />
                     <span id="textosessaoexpira" style="font-weight: bold ; font-size:12px;">#{request.remoteUser == null ? '' : 'Sessão expira em: '} </span>
                     <span id="dialog-countdown" style="font-weight: bold ; font-size:12px;"></span>
