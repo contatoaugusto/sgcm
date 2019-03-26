@@ -10,7 +10,7 @@ Resources > Add Resources > Importar o arquivo glassfish-resources.xml que está 
 Dai o recurso criado aparecerá em: JDBC Resources
 
 Azure Jelastic
-@#Kdsoiw1400
+@#Kd for all
 
 
 Dados do JElastic
@@ -18,11 +18,11 @@ contatoaugusto@gmail.com
 kd for all
 
 MySql
-https://node30085-tccantonioaugusto.jelastic.saveincloud.net 
+https://node30147-tccantonioaugusto.jelastic.saveincloud.net 
 root
-Vo6eUUxfa8
+NDSgrh44161
 
 Administração Glassfish
-https://node30086-tccantonioaugusto.jelastic.saveincloud.net:4848
+ https://node30163-tccantonioaugusto.jelastic.saveincloud.net:4848
 admin
-4aK64hmj7U
+AQVhbo91813
