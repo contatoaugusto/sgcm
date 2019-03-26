@@ -8,3 +8,21 @@ Configurar o jndi-name="jdbc/sgcmJNDI" na instância do GlassFish em:
 http://localhost:4848/
 Resources > Add Resources > Importar o arquivo glassfish-resources.xml que está n projeto
 Dai o recurso criado aparecerá em: JDBC Resources
+
+Azure Jelastic
+@#Kdsoiw1400
+
+
+Dados do JElastic
+contatoaugusto@gmail.com
+kd for all
+
+MySql
+https://node30085-tccantonioaugusto.jelastic.saveincloud.net 
+root
+Vo6eUUxfa8
+
+Administração Glassfish
+https://node30086-tccantonioaugusto.jelastic.saveincloud.net:4848
+admin
+4aK64hmj7U

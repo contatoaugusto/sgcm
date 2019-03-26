@@ -273,8 +273,9 @@ DROP TABLE IF EXISTS `perfil`;
 CREATE TABLE `perfil` (
   `idperfil` int(11) NOT NULL AUTO_INCREMENT,
   `nmperfil` varchar(100) NOT NULL,
+  `deperfil` varchar(200) DEFAULT NULL COMMENT 'Descrição do perfil',
   PRIMARY KEY (`idperfil`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,6 +284,7 @@ CREATE TABLE `perfil` (
 
 LOCK TABLES `perfil` WRITE;
 /*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
+INSERT INTO `perfil` VALUES (6,'Administrador','A pessoa que manda na coisa toda'),(7,'Atendente','Perfil das pessoas que realizam o atendimento na clínica'),(8,'Medico','Os perfis dos médicos da clinica'),(9,'Enfermeiro','Os enfermeiros da clínica ou auxiliares de enfermagem');
 /*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,22 +298,25 @@ DROP TABLE IF EXISTS `pessoa`;
 CREATE TABLE `pessoa` (
   `idpessoa` int(11) NOT NULL AUTO_INCREMENT,
   `nmpessoa` varchar(100) NOT NULL,
+  `desexo` varchar(15) DEFAULT NULL,
   `nucpf` varchar(15) NOT NULL,
   `nurg` varchar(15) DEFAULT NULL,
   `deendereco` varchar(100) DEFAULT NULL,
-  `nmbairro` varchar(50) DEFAULT NULL,
-  `nmcidade` varchar(50) DEFAULT NULL,
-  `deemail` varchar(50) DEFAULT NULL,
+  `nmbairro` varchar(100) DEFAULT NULL,
+  `nmcidade` varchar(100) DEFAULT NULL,
+  `nucep` varchar(10) DEFAULT NULL,
+  `deemail` varchar(100) DEFAULT NULL,
   `nutelefone` varchar(15) DEFAULT NULL,
   `nucelular` varchar(15) DEFAULT NULL,
   `nucrm` varchar(15) DEFAULT NULL COMMENT 'Quando a pessoa for médico precisa do cadastro do conselho regional de medicina',
+  `nmespecialidademedica` varchar(150) DEFAULT NULL COMMENT 'Quando se tratar do cadastro de pessoa ser um médico, precisa informa sua especialidade: cardiologista, Neurologista, Crlinico Geral, Pediatra, Ginecologista, etc.',
   `nucrt` varchar(15) DEFAULT NULL COMMENT 'Número da carteira de trabalho, quando se tratar de funcionário',
   `nucoren` varchar(15) DEFAULT NULL COMMENT 'Quando se tratar de enfermeiro, precisa do registro do conselho regional de enfermegem',
   `idperfil` int(11) NOT NULL COMMENT 'Define se a pessoa é um paciente, médico, atendente ou enfermeiro',
   PRIMARY KEY (`idpessoa`),
   KEY `pessoa_perfil_idx` (`idperfil`),
   CONSTRAINT `pessoa_perfil` FOREIGN KEY (`idperfil`) REFERENCES `perfil` (`idperfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,6 +325,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
+INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','','',NULL,NULL,6),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','','',NULL,NULL,7);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +374,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `idusuario_pessoa_idx` (`idpessoa`),
   CONSTRAINT `idusuario_pessoa` FOREIGN KEY (`idpessoa`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,6 +383,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -389,4 +396,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-13 21:20:55
+-- Dump completed on 2019-03-24 16:28:44

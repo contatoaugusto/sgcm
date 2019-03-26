@@ -10,7 +10,8 @@
 	    <p>Ocorreu um erro inesperado. Contate o adminstrador do sistema.</p>
             <p>Talvez a página que você está tentando acessar não esteja disponível.</p>
             <!-- Stack trace -->
-
+            <br></br>
+             #{requestScope['javax.servlet.error.exception']}   
 		
 	</ui:define>
 </ui:composition>
