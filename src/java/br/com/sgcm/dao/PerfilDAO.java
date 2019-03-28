@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "PerfilDAO.findAll", query = "SELECT p FROM PerfilDAO p")
     , @NamedQuery(name = "PerfilDAO.findByIdperfil", query = "SELECT p FROM PerfilDAO p WHERE p.idperfil = :idperfil")
-    , @NamedQuery(name = "PerfilDAO.findByNmperfil", query = "SELECT p FROM PerfilDAO p WHERE p.nmperfil = :nmperfil")})
+    , @NamedQuery(name = "PerfilDAO.findByNmperfil", query = "SELECT p FROM PerfilDAO p WHERE p.nmperfil = :nmperfil")
+    , @NamedQuery(name = "PerfilDAO.findByDeperfil", query = "SELECT p FROM PerfilDAO p WHERE p.deperfil = :deperfil")})
 public class PerfilDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -76,7 +77,7 @@ public class PerfilDAO implements Serializable {
     public void setNmperfil(String nmperfil) {
         this.nmperfil = nmperfil;
     }
-    
+
     public String getDeperfil() {
         return deperfil;
     }
@@ -84,7 +85,7 @@ public class PerfilDAO implements Serializable {
     public void setDeperfil(String deperfil) {
         this.deperfil = deperfil;
     }
-    
+
     @XmlTransient
     public Collection<PessoaDAO> getPessoaDAOCollection() {
         return pessoaDAOCollection;

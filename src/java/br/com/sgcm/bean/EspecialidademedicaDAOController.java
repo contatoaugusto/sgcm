@@ -1,9 +1,9 @@
 package br.com.sgcm.bean;
 
-import br.com.sgcm.dao.PerfilDAO;
+import br.com.sgcm.dao.EspecialidademedicaDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
-import br.com.sgcm.facade.PerfilDAOFacade;
+import br.com.sgcm.facade.EspecialidademedicaDAOFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,63 +19,37 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("perfilDAOController")
+@Named("especialidademedicaDAOController")
 @SessionScoped
-public class PerfilDAOController implements Serializable {
+public class EspecialidademedicaDAOController implements Serializable {
 
-    /**
-     * @return the perfilList
-     */
-    public List<PerfilDAO> getPerfilList() {
-        return perfilList;
-    }
-
-    /**
-     * @param perfilList the perfilList to set
-     */
-    public void setPerfilList(List<PerfilDAO> perfilList) {
-        this.perfilList = perfilList;
-    }
-
-    /**
-     * @return the idPerfil
-     */
-    public Integer getIdPerfil() {
-        return idPerfil;
-    }
-
-    /**
-     * @param idPerfil the idPerfil to set
-     */
-    public void setIdPerfil(Integer idPerfil) {
-        this.idPerfil = idPerfil;
-    }
-
-    private PerfilDAO current;
+    
+    
+    private EspecialidademedicaDAO current;
     private DataModel items = null;
     @EJB
-    private br.com.sgcm.facade.PerfilDAOFacade ejbFacade;
+    private br.com.sgcm.facade.EspecialidademedicaDAOFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    private List<PerfilDAO> perfilList;
-    private Integer idPerfil;
-
-    public PerfilDAOController() {
+    private List<EspecialidademedicaDAO> especialidademedicaList;
+    private Integer idEspecialidademedica;
+    
+    public EspecialidademedicaDAOController() {
     }
 
-    public PerfilDAO getSelected() {
-
-        setPerfilList(ejbFacade.findAll());
-
+    public EspecialidademedicaDAO getSelected() {
+        
+        setEspecialidademedicaList(ejbFacade.findAll());
+        
         if (current == null) {
-            current = new PerfilDAO();
+            current = new EspecialidademedicaDAO();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private PerfilDAOFacade getFacade() {
+    private EspecialidademedicaDAOFacade getFacade() {
         return ejbFacade;
     }
 
@@ -99,37 +73,34 @@ public class PerfilDAOController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        current = new PerfilDAO();
-        return "manterPerfil";
+        return "List";
     }
 
     public String prepareView() {
-        current = (PerfilDAO) getItems().getRowData();
+        current = (EspecialidademedicaDAO) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new PerfilDAO();
+        current = new EspecialidademedicaDAO();
         selectedItemIndex = -1;
         return "Create";
     }
 
     public String create() {
         try {
-
             getFacade().create(current);
-
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
-            return prepareList();
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("EspecialidademedicaDAOCreated"));
+            return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
     public String prepareEdit() {
-        current = (PerfilDAO) getItems().getRowData();
+        current = (EspecialidademedicaDAO) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -137,7 +108,7 @@ public class PerfilDAOController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("PerfilDAOUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("EspecialidademedicaDAOUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
@@ -146,7 +117,7 @@ public class PerfilDAOController implements Serializable {
     }
 
     public String destroy() {
-        current = (PerfilDAO) getItems().getRowData();
+        current = (EspecialidademedicaDAO) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -170,7 +141,7 @@ public class PerfilDAOController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("PerfilDAODeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("EspecialidademedicaDAODeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
         }
@@ -226,21 +197,21 @@ public class PerfilDAOController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public PerfilDAO getPerfilDAO(java.lang.Integer id) {
+    public EspecialidademedicaDAO getEspecialidademedicaDAO(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = PerfilDAO.class, value = "perfilConverter")
-    public static class PerfilDAOControllerConverter implements Converter {
+    @FacesConverter(forClass = EspecialidademedicaDAO.class, value = "especialidadeMedicaConverter")
+    public static class EspecialidademedicaDAOControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PerfilDAOController controller = (PerfilDAOController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "perfilDAOController");
-            return controller.getPerfilDAO(getKey(value));
+            EspecialidademedicaDAOController controller = (EspecialidademedicaDAOController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "especialidademedicaDAOController");
+            return controller.getEspecialidademedicaDAO(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -260,14 +231,42 @@ public class PerfilDAOController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof PerfilDAO) {
-                PerfilDAO o = (PerfilDAO) object;
-                return getStringKey(o.getIdperfil());
+            if (object instanceof EspecialidademedicaDAO) {
+                EspecialidademedicaDAO o = (EspecialidademedicaDAO) object;
+                return getStringKey(o.getIdespecialidademedica());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + PerfilDAO.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EspecialidademedicaDAO.class.getName());
             }
         }
 
+    }
+
+    /**
+     * @return the especialidademedicaList
+     */
+    public List<EspecialidademedicaDAO> getEspecialidademedicaList() {
+        return especialidademedicaList;
+    }
+
+    /**
+     * @param especialidademedicaList the especialidademedicaList to set
+     */
+    public void setEspecialidademedicaList(List<EspecialidademedicaDAO> especialidademedicaList) {
+        this.especialidademedicaList = especialidademedicaList;
+    }
+
+    /**
+     * @return the idEspecialidademedica
+     */
+    public Integer getIdEspecialidademedica() {
+        return idEspecialidademedica;
+    }
+
+    /**
+     * @param idEspecialidademedica the idEspecialidademedica to set
+     */
+    public void setIdEspecialidademedica(Integer idEspecialidademedica) {
+        this.idEspecialidademedica = idEspecialidademedica;
     }
 
 }

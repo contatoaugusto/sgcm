@@ -6,7 +6,6 @@
 package br.com.sgcm.dao;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,18 +31,20 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PessoaDAO.findAll", query = "SELECT p FROM PessoaDAO p")
     , @NamedQuery(name = "PessoaDAO.findByIdpessoa", query = "SELECT p FROM PessoaDAO p WHERE p.idpessoa = :idpessoa")
     , @NamedQuery(name = "PessoaDAO.findByNmpessoa", query = "SELECT p FROM PessoaDAO p WHERE p.nmpessoa = :nmpessoa")
+    , @NamedQuery(name = "PessoaDAO.findByDesexo", query = "SELECT p FROM PessoaDAO p WHERE p.desexo = :desexo")
     , @NamedQuery(name = "PessoaDAO.findByNucpf", query = "SELECT p FROM PessoaDAO p WHERE p.nucpf = :nucpf")
     , @NamedQuery(name = "PessoaDAO.findByNurg", query = "SELECT p FROM PessoaDAO p WHERE p.nurg = :nurg")
     , @NamedQuery(name = "PessoaDAO.findByDeendereco", query = "SELECT p FROM PessoaDAO p WHERE p.deendereco = :deendereco")
     , @NamedQuery(name = "PessoaDAO.findByNmbairro", query = "SELECT p FROM PessoaDAO p WHERE p.nmbairro = :nmbairro")
     , @NamedQuery(name = "PessoaDAO.findByNmcidade", query = "SELECT p FROM PessoaDAO p WHERE p.nmcidade = :nmcidade")
+    , @NamedQuery(name = "PessoaDAO.findByNucep", query = "SELECT p FROM PessoaDAO p WHERE p.nucep = :nucep")
     , @NamedQuery(name = "PessoaDAO.findByDeemail", query = "SELECT p FROM PessoaDAO p WHERE p.deemail = :deemail")
     , @NamedQuery(name = "PessoaDAO.findByNutelefone", query = "SELECT p FROM PessoaDAO p WHERE p.nutelefone = :nutelefone")
     , @NamedQuery(name = "PessoaDAO.findByNucelular", query = "SELECT p FROM PessoaDAO p WHERE p.nucelular = :nucelular")
     , @NamedQuery(name = "PessoaDAO.findByNucrm", query = "SELECT p FROM PessoaDAO p WHERE p.nucrm = :nucrm")
-    , @NamedQuery(name = "PessoaDAO.findByNmespecialidademedica", query = "SELECT p FROM PessoaDAO p WHERE p.nmespecialidademedica = :nmespecialidademedica")
     , @NamedQuery(name = "PessoaDAO.findByNucrt", query = "SELECT p FROM PessoaDAO p WHERE p.nucrt = :nucrt")
-    , @NamedQuery(name = "PessoaDAO.findByNucoren", query = "SELECT p FROM PessoaDAO p WHERE p.nucoren = :nucoren")})
+    , @NamedQuery(name = "PessoaDAO.findByNucoren", query = "SELECT p FROM PessoaDAO p WHERE p.nucoren = :nucoren")
+    , @NamedQuery(name = "PessoaDAO.findByNmespecialidademedica", query = "SELECT p FROM PessoaDAO p WHERE p.idespecialidademedica.nmespecialidademedica = :nmespecialidademedica")})
 public class PessoaDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -81,17 +80,16 @@ public class PessoaDAO implements Serializable {
     private String nucelular;
     @Size(max = 15)
     private String nucrm;
-    @Size(max = 150)
-    private String nmespecialidademedica;
     @Size(max = 15)
     private String nucrt;
     @Size(max = 15)
-    private String nucoren;    
+    private String nucoren;
+    @JoinColumn(name = "idespecialidademedica", referencedColumnName = "idespecialidademedica")
+    @ManyToOne
+    private EspecialidademedicaDAO idespecialidademedica;
     @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")
     @ManyToOne(optional = false)
     private PerfilDAO idperfil;
-    @OneToMany(mappedBy = "idpessoa")
-    private Collection<UsuarioDAO> usuarioDAOCollection;
 
     public PessoaDAO() {
     }
@@ -121,13 +119,15 @@ public class PessoaDAO implements Serializable {
     public void setNmpessoa(String nmpessoa) {
         this.nmpessoa = nmpessoa;
     }
+
     public String getDesexo() {
         return desexo;
     }
 
     public void setDesexo(String desexo) {
         this.desexo = desexo;
-    }    
+    }
+
     public String getNucpf() {
         return nucpf;
     }
@@ -175,7 +175,7 @@ public class PessoaDAO implements Serializable {
     public void setNucep(String nucep) {
         this.nucep = nucep;
     }
-    
+
     public String getDeemail() {
         return deemail;
     }
@@ -208,14 +208,6 @@ public class PessoaDAO implements Serializable {
         this.nucrm = nucrm;
     }
 
-    public String getNmespecialidademedica() {
-        return nmespecialidademedica;
-    }
-
-    public void setNmespecialidademedica(String nmespecialidademedica) {
-        this.nmespecialidademedica = nmespecialidademedica;
-    }
-
     public String getNucrt() {
         return nucrt;
     }
@@ -232,21 +224,20 @@ public class PessoaDAO implements Serializable {
         this.nucoren = nucoren;
     }
 
+    public EspecialidademedicaDAO getIdespecialidademedica() {
+        return idespecialidademedica;
+    }
+
+    public void setIdespecialidademedica(EspecialidademedicaDAO idespecialidademedica) {
+        this.idespecialidademedica = idespecialidademedica;
+    }
+
     public PerfilDAO getIdperfil() {
         return idperfil;
     }
 
     public void setIdperfil(PerfilDAO idperfil) {
         this.idperfil = idperfil;
-    }
-
-    @XmlTransient
-    public Collection<UsuarioDAO> getUsuarioDAOCollection() {
-        return usuarioDAOCollection;
-    }
-
-    public void setUsuarioDAOCollection(Collection<UsuarioDAO> usuarioDAOCollection) {
-        this.usuarioDAOCollection = usuarioDAOCollection;
     }
 
     @Override

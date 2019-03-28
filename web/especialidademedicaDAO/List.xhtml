@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.ListEspecialidademedicaDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundleTemp.ListEspecialidademedicaDAOEmpty}" rendered="#{especialidademedicaDAOController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{especialidademedicaDAOController.items.rowCount > 0}">
+                    <h:outputText value="#{especialidademedicaDAOController.pagination.pageFirstItem + 1}..#{especialidademedicaDAOController.pagination.pageLastItem + 1}/#{especialidademedicaDAOController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{especialidademedicaDAOController.previous}" value="#{bundleTemp.Previous} #{especialidademedicaDAOController.pagination.pageSize}" rendered="#{especialidademedicaDAOController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{especialidademedicaDAOController.next}" value="#{bundleTemp.Next} #{especialidademedicaDAOController.pagination.pageSize}" rendered="#{especialidademedicaDAOController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{especialidademedicaDAOController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListEspecialidademedicaDAOTitle_idespecialidademedica}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idespecialidademedica}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListEspecialidademedicaDAOTitle_nmespecialidademedica}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nmespecialidademedica}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListEspecialidademedicaDAOTitle_deobservacao}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deobservacao}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{especialidademedicaDAOController.prepareView}" value="#{bundleTemp.ListEspecialidademedicaDAOViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{especialidademedicaDAOController.prepareEdit}" value="#{bundleTemp.ListEspecialidademedicaDAOEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{especialidademedicaDAOController.destroy}" value="#{bundleTemp.ListEspecialidademedicaDAODestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{especialidademedicaDAOController.prepareCreate}" value="#{bundleTemp.ListEspecialidademedicaDAOCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.ListEspecialidademedicaDAOIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

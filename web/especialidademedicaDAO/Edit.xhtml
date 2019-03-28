@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.EditEspecialidademedicaDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleTemp.EditEspecialidademedicaDAOLabel_idespecialidademedica}" for="idespecialidademedica" />
+                    <h:inputText id="idespecialidademedica" value="#{especialidademedicaDAOController.selected.idespecialidademedica}" title="#{bundleTemp.EditEspecialidademedicaDAOTitle_idespecialidademedica}" required="true" requiredMessage="#{bundleTemp.EditEspecialidademedicaDAORequiredMessage_idespecialidademedica}"/>
+                    <h:outputLabel value="#{bundleTemp.EditEspecialidademedicaDAOLabel_nmespecialidademedica}" for="nmespecialidademedica" />
+                    <h:inputText id="nmespecialidademedica" value="#{especialidademedicaDAOController.selected.nmespecialidademedica}" title="#{bundleTemp.EditEspecialidademedicaDAOTitle_nmespecialidademedica}" />
+                    <h:outputLabel value="#{bundleTemp.EditEspecialidademedicaDAOLabel_deobservacao}" for="deobservacao" />
+                    <h:inputText id="deobservacao" value="#{especialidademedicaDAOController.selected.deobservacao}" title="#{bundleTemp.EditEspecialidademedicaDAOTitle_deobservacao}" />
+                </h:panelGrid>
+                <h:commandLink action="#{especialidademedicaDAOController.update}" value="#{bundleTemp.EditEspecialidademedicaDAOSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundleTemp.EditEspecialidademedicaDAOViewLink}"/>
+                <br />
+                <h:commandLink action="#{especialidademedicaDAOController.prepareList}" value="#{bundleTemp.EditEspecialidademedicaDAOShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.EditEspecialidademedicaDAOIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
