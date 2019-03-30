@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.EditConsultaDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_idconsulta}" for="idconsulta" />
+                    <h:inputText id="idconsulta" value="#{consultaDAOController.selected.idconsulta}" title="#{bundleTemp.EditConsultaDAOTitle_idconsulta}" required="true" requiredMessage="#{bundleTemp.EditConsultaDAORequiredMessage_idconsulta}"/>
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_idatendente}" for="idatendente" />
+                    <h:inputText id="idatendente" value="#{consultaDAOController.selected.idatendente}" title="#{bundleTemp.EditConsultaDAOTitle_idatendente}" />
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_dtconsulta}" for="dtconsulta" />
+                    <h:inputText id="dtconsulta" value="#{consultaDAOController.selected.dtconsulta}" title="#{bundleTemp.EditConsultaDAOTitle_dtconsulta}" required="true" requiredMessage="#{bundleTemp.EditConsultaDAORequiredMessage_dtconsulta}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_hrinicio}" for="hrinicio" />
+                    <h:inputText id="hrinicio" value="#{consultaDAOController.selected.hrinicio}" title="#{bundleTemp.EditConsultaDAOTitle_hrinicio}" required="true" requiredMessage="#{bundleTemp.EditConsultaDAORequiredMessage_hrinicio}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_hrfim}" for="hrfim" />
+                    <h:inputText id="hrfim" value="#{consultaDAOController.selected.hrfim}" title="#{bundleTemp.EditConsultaDAOTitle_hrfim}" required="true" requiredMessage="#{bundleTemp.EditConsultaDAORequiredMessage_hrfim}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_deobservacao}" for="deobservacao" />
+                    <h:inputText id="deobservacao" value="#{consultaDAOController.selected.deobservacao}" title="#{bundleTemp.EditConsultaDAOTitle_deobservacao}" />
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_idpaciente}" for="idpaciente" />
+                    <h:selectOneMenu id="idpaciente" value="#{consultaDAOController.selected.idpaciente}" title="#{bundleTemp.EditConsultaDAOTitle_idpaciente}" required="true" requiredMessage="#{bundleTemp.EditConsultaDAORequiredMessage_idpaciente}">
+                        <f:selectItems value="#{pessoaDAOController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundleTemp.EditConsultaDAOLabel_idmedico}" for="idmedico" />
+                    <h:selectOneMenu id="idmedico" value="#{consultaDAOController.selected.idmedico}" title="#{bundleTemp.EditConsultaDAOTitle_idmedico}" required="true" requiredMessage="#{bundleTemp.EditConsultaDAORequiredMessage_idmedico}">
+                        <f:selectItems value="#{pessoaDAOController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{consultaDAOController.update}" value="#{bundleTemp.EditConsultaDAOSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundleTemp.EditConsultaDAOViewLink}"/>
+                <br />
+                <h:commandLink action="#{consultaDAOController.prepareList}" value="#{bundleTemp.EditConsultaDAOShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.EditConsultaDAOIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

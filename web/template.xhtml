@@ -39,6 +39,7 @@
                                 <p:menuitem value="" url="" disabled="true"/>  
                                 <p:menuitem value="Início" url="/index.xhtml" rendered="#{usuario == null}"/>   
                                 <p:menuitem value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem value="Cadastro de Especialidade Médica" url="./manterEspecialidadeMedica.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                                 <p:menuitem value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                                 <p:menuitem value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente')}"/>
                                 <p:menuitem value="Cadastro de Medicamento" url="./manterMedicamento.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>

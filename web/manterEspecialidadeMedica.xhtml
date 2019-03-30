@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+        <link href="resources/css/tabelas.css" rel="stylesheet" type="text/css"/>
+        <p:panel header="Cadastro de Especialidade Médica" style="border-style: none"> 
+            <center>
+                <h:form id="form_cadastro">
+                    <p >Os campos destacados são de preenchimento obrigatório.</p>
+                    <h:panelGrid id="pngCadastro" columns="1">
+
+                        <p:outputLabel for="nome" value="Nome:" />
+                        <p:inputText id="nome" required="true" value="#{especialidademedicaDAOController.selected.nmespecialidademedica}" size="50"/>
+                        <p:message for="nome" />
+
+                        <p:outputLabel for="descricao" value="Descrição da Especialidade Médica" />
+                        <p:inputTextarea id="descricao" required="true" value="#{especialidademedicaDAOController.selected.deobservacao}" 
+                                         cols="93" maxlength="200"  rows="5" counter="display"  autoResize="true" 
+                                         counterTemplate="{0} caráteres restantes."/>
+                        <h:outputText id="display" />
+                        <p:message for="descricao" />
+
+                        <br></br>
+                        <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{especialidademedicaDAOController.create()}" update=":lista"/>
+<!--                        <p:commandButton value="Limpar" type="reset"/>-->
+                    </h:panelGrid>        
+                    <p:autoUpdate />
+                </h:form>
+
+                <br></br><br></br>
+
+                <p:dataTable 
+                    value="#{especialidademedicaDAOController.items}"                      
+                    var="lista"
+                    style="margin-bottom:20px"
+                    paginator="false" id="lista"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16"  rowIndexVar="indiceLinha"
+                    rowStyleClass="#{(indiceLinha mod 2) eq 0 ? 'highlight' : 'highlight2'}">
+
+                    <f:facet name="header">
+                        <h:outputText value="Especialidades Cadastradas"/>
+                    </f:facet>
+
+                    <p:column headerText="Nome" >
+                        <h:outputText value="#{lista.nmespecialidademedica}"/>
+                    </p:column>
+
+                    <p:column headerText="Descrição" >
+                        <h:outputText value="#{lista.deobservacao}" />
+                    </p:column>
+
+                </p:dataTable>
+            </center>
+        </p:panel>    
+    </ui:define>
+
+</ui:composition>
+

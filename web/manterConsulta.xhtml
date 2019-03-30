@@ -14,84 +14,24 @@
                 <h:form id="form_cadastro">
                     <p>Os campos destacados são de preenchimento obrigatório.</p>
 
-                    <h:panelGrid id="pngPaciente" columns="6" >
-                        <h:inputHidden id="idPerfil" value="#{perfilDAOController.selected.idperfil}"/>
-                        <p:outputLabel for="perfil" value="Perfil:"/>
-                        <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" valueChangeListener="">
-                            <f:selectItem itemLabel="Selecione" itemValue="" />
-                            <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
-                        </p:selectOneMenu>
-                        <p:message for="perfil" />
-                    </h:panelGrid>  
-
-                    <h:panelGrid id="pngCadastro" columns="6">   
-                        <p:outputLabel for="nome" value="Nome:" />
-                        <p:inputText id="nome" required="true" value="#{pessoaDAOController.selected.nmpessoa}" size="50"/>
-                        <p:message for="nome" />
-
-                        <p:outputLabel for="sexo" value="Sexo:" />
-                        <p:selectOneRadio id="sexo" value="#{pessoaDAOController.selected.desexo}">
-                            <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
-                            <f:selectItem itemLabel="Feminino" itemValue="Feminino" />
-                        </p:selectOneRadio>
-                        <p:message for="sexo" />
-
-                        <p:outputLabel for="cpf" value="CPF:" />
-                        <p:inputMask id="cpf" required="true" value="#{pessoaDAOController.selected.nucpf}" mask="999.999.999-99"/>
-                        <p:message for="cpf" />
-
-                        <p:outputLabel for="rg" value="RG:" />
-                        <p:inputText id="rg" required="true" value="#{pessoaDAOController.selected.nurg}"/>
-                        <p:message for="rg" />
-
-                        <p:outputLabel for="endereco" value="Endereço:" />
-                        <p:inputText id="endereco" required="true" value="#{pessoaDAOController.selected.deendereco}" size="100"/>
-                        <p:message for="endereco" />
-
-                        <p:outputLabel for="bairro" value="Bairro:" />
-                        <p:inputText id="bairro" required="true" value="#{pessoaDAOController.selected.nmbairro}" size="50"/>
-                        <p:message for="bairro" />
-
-                        <p:outputLabel for="nmcidade" value="Cidade:" />
-                        <p:inputText id="nmcidade" required="true" value="#{pessoaDAOController.selected.nmcidade}" size="100"/>
-                        <p:message for="nmcidade" />
-
-                        <p:outputLabel for="nucep" value="CEP:" />
-                        <p:inputMask id="nucep" required="true" value="#{pessoaDAOController.selected.nucep}" mask="99999-999"/>
-                        <p:message for="nucep" />
-
-                        <p:outputLabel for="deemail" value="E-mail:" />
-                        <p:inputText id="deemail" required="true" value="#{pessoaDAOController.selected.deemail}" size="100"/>
-                        <p:message for="deemail" />
-
-                        <p:outputLabel for="telefone" value="Telefone:" />
-                        <p:inputMask id="telefone" value="#{pessoaDAOController.selected.nutelefone}" mask="(99) 9999-9999"/>
-                        <p:message for="telefone" />
-
-                        <p:outputLabel for="nucelular" value="Celular:" />
-                        <p:inputMask id="nucelular" value="#{pessoaDAOController.selected.nucelular}" mask="(99) 9999-9999"/>
-                        <p:message for="nucelular" />                        
-
-                        <p:outputLabel for="nucrm" value="CRM:" />
-                        <p:inputText id="nucrm" value="#{pessoaDAOController.selected.nucrm}"/>
-                        <p:message for="nucrm" />
-
-                        <p:outputLabel for="nmespecialidademedica" value="Especialidade Médica" />
-                        <p:inputText id="nmespecialidademedica" value="#{pessoaDAOController.selected.nmespecialidademedica}"/>
-                        <p:message for="nmespecialidademedica" />
-                    </h:panelGrid>   
-                    <br></br>    
-                    <p:panel id="usuario" header="Usuário" style="width: 20%">
-                        <h:panelGrid id="pngUsuario">
-                            <p:outputLabel for="email" value="Email/Usuário:" />
-                            <p:inputText id="email" required="true" value="#{pessoaDAOController.nmUsuario}" size="20"/>
-                            <p:message for="email" />
-
-                            <p:outputLabel for="senha" value="Senha:" />
-                            <p:password id="senha" required="true" value="#{pessoaDAOController.deSenha}" size="20"/>
-                            <p:message for="senha" />
+                    <p:panel id="usuario" header="Paciente" >
+                        <h:panelGrid id="pngPaciente" columns="6" >
+<!--                            <h:inputHidden id="idPerfil" value="#{perfilDAOController.selected.idperfil}"/>
+                            <p:outputLabel for="perfil" value="Perfil:"/>
+                            <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" valueChangeListener="">
+                                <f:selectItem itemLabel="Selecione" itemValue="" />
+                                <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
+                            </p:selectOneMenu>
+                            <p:message for="perfil" />-->
+                            
+                            <p:outputLabel value="Nome:"/>
+                            <p:outputLabel value="#{consultaDAOController.selected.idpaciente.nmpessoa}" style="font-weight: bold;"/>
+                        
                         </h:panelGrid>
-                    </p:panel>
+
+                        
+                    </p:panel>        
+
                     <br></br>
                     <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
                     <p:commandButton value="Limpar" type="reset"/>

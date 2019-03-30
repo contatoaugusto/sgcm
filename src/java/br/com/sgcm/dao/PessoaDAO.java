@@ -6,7 +6,9 @@
 package br.com.sgcm.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -47,7 +51,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "PessoaDAO.findByNmespecialidademedica", query = "SELECT p FROM PessoaDAO p WHERE p.idespecialidademedica.nmespecialidademedica = :nmespecialidademedica")})
 public class PessoaDAO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -84,6 +87,15 @@ public class PessoaDAO implements Serializable {
     private String nucrt;
     @Size(max = 15)
     private String nucoren;
+    @Size(max = 150)
+    private String nmespecialidademedica;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
+    private Collection<ConsultaDAO> consultaDAOCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedico")
+    private Collection<ConsultaDAO> consultaDAOCollection1;
+
+    private static final long serialVersionUID = 1L;
+    
     @JoinColumn(name = "idespecialidademedica", referencedColumnName = "idespecialidademedica")
     @ManyToOne
     private EspecialidademedicaDAO idespecialidademedica;
@@ -264,5 +276,30 @@ public class PessoaDAO implements Serializable {
     public String toString() {
         return "br.com.sgcm.dao.PessoaDAO[ idpessoa=" + idpessoa + " ]";
     }
-    
+
+    public String getNmespecialidademedica() {
+        return nmespecialidademedica;
+    }
+
+    public void setNmespecialidademedica(String nmespecialidademedica) {
+        this.nmespecialidademedica = nmespecialidademedica;
+    }
+
+    @XmlTransient
+    public Collection<ConsultaDAO> getConsultaDAOCollection() {
+        return consultaDAOCollection;
+    }
+
+    public void setConsultaDAOCollection(Collection<ConsultaDAO> consultaDAOCollection) {
+        this.consultaDAOCollection = consultaDAOCollection;
+    }
+
+    @XmlTransient
+    public Collection<ConsultaDAO> getConsultaDAOCollection1() {
+        return consultaDAOCollection1;
+    }
+
+    public void setConsultaDAOCollection1(Collection<ConsultaDAO> consultaDAOCollection1) {
+        this.consultaDAOCollection1 = consultaDAOCollection1;
+    }   
 }
