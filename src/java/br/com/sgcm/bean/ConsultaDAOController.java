@@ -3,9 +3,12 @@ package br.com.sgcm.bean;
 import br.com.sgcm.dao.ConsultaDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
+import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -17,6 +20,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.SelectEvent;
 
 @Named("consultaDAOController")
 @SessionScoped
@@ -28,6 +32,10 @@ public class ConsultaDAOController implements Serializable {
     private br.com.sgcm.facade.ConsultaDAOFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    private String nmPessoa;
+    private String nucpf;
+    private String deendereco;
 
     public ConsultaDAOController() {
     }
@@ -229,7 +237,55 @@ public class ConsultaDAOController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ConsultaDAO.class.getName());
             }
         }
-
     }
 
+    /**
+     * @return the nmPessoa
+     */
+    public String getNmPessoa() {
+        return nmPessoa;
+    }
+
+    /**
+     * @param nmPessoa the nmPessoa to set
+     */
+    public void setNmPessoa(String nmPessoa) {
+        this.nmPessoa = nmPessoa;
+    }
+
+    /**
+     * @return the nucpf
+     */
+    public String getNucpf() {
+        return nucpf;
+    }
+
+    /**
+     * @param nucpf the nucpf to set
+     */
+    public void setNucpf(String nucpf) {
+        this.nucpf = nucpf;
+    }
+
+    /**
+     * @return the deendereco
+     */
+    public String getDeendereco() {
+        return deendereco;
+    }
+
+    /**
+     * @param deendereco the deendereco to set
+     */
+    public void setDeendereco(String deendereco) {
+        this.deendereco = deendereco;
+    }
+
+    public void onItemSelect(SelectEvent event) {
+        PessoaDAO pessoa = (PessoaDAO) event.getObject();
+        setNmPessoa(pessoa.getNmpessoa());
+        setNucpf(pessoa.getNucpf());
+        setDeendereco(pessoa.getDeendereco());
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
+    }
 }

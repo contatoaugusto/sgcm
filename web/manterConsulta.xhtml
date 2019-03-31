@@ -15,28 +15,45 @@
                     <p>Os campos destacados são de preenchimento obrigatório.</p>
 
                     <p:panel id="usuario" header="Paciente" >
-                        <h:panelGrid id="pngPaciente" columns="6" >
-<!--                            <h:inputHidden id="idPerfil" value="#{perfilDAOController.selected.idperfil}"/>
-                            <p:outputLabel for="perfil" value="Perfil:"/>
-                            <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" valueChangeListener="">
-                                <f:selectItem itemLabel="Selecione" itemValue="" />
-                                <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
-                            </p:selectOneMenu>
-                            <p:message for="perfil" />-->
-                            
-                            <p:outputLabel value="Nome:"/>
-                            <p:outputLabel value="#{consultaDAOController.selected.idpaciente.nmpessoa}" style="font-weight: bold;"/>
-                        
+                        <h:panelGrid id="pngPaciente" columns="3" >
+                            <h:inputHidden id="idPerfil" value="#{pessoaDAOController.selected.idpessoa}"/>
+                            <p:outputLabel value="Paciente:" for="paciente" />
+
+                            <p:autoComplete 
+                                id="paciente"
+                                value="#{consultaDAOController.selected.idpaciente}"
+                                completeMethod="#{pessoaDAOController.completePessoa}"
+                                converter="pessoaConverter"
+                                var="pessoa" 
+                                itemLabel="#{pessoa.nmpessoa}" itemValue="#{pessoa}"
+                                forceSelection="true" 
+                                size="50"
+                                minQueryLength="3"
+                                maxResults="5">
+                                <f:attribute name="filterPessoa" value="#{pessoa.nmpessoa}" />
+                                <p:ajax event="itemSelect" listener="#{consultaDAOController.onItemSelect}" update="outputPanelPaciente" />
+                            </p:autoComplete>
                         </h:panelGrid>
 
-                        
+
+                        <h:panelGrid id="outputPanelPaciente" columns="2" >
+                            <p:outputLabel value="Nome:"/>
+                            <p:outputLabel value="#{consultaDAOController.nmPessoa}" style="font-weight: bold;font-size: 12"/>
+
+                            <p:outputLabel value="CPF:"/>
+                            <p:outputLabel value="#{consultaDAOController.nucpf}" style="font-weight: bold;font-size: 12"/>
+
+                            <p:outputLabel value="Endereço:"/>
+                            <p:outputLabel value="#{consultaDAOController.deendereco}" style="font-weight: bold;font-size: 12"/>
+                        </h:panelGrid>
+
                     </p:panel>        
 
                     <br></br>
                     <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
                     <p:commandButton value="Limpar" type="reset"/>
 
-                    <p:autoUpdate />
+                    <!--                    <p:autoUpdate />-->
                 </h:form>
 
                 <br></br><br></br>

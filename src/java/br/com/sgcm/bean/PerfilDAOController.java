@@ -59,6 +59,7 @@ public class PerfilDAOController implements Serializable {
     private int selectedItemIndex;
 
     private List<PerfilDAO> perfilList;
+    // Apenas pra usarmos o hidden que força o carregamento de selected
     private Integer idPerfil;
 
     public PerfilDAOController() {
