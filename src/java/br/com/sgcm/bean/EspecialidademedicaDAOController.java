@@ -3,9 +3,11 @@ package br.com.sgcm.bean;
 import br.com.sgcm.dao.EspecialidademedicaDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
+import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.EspecialidademedicaDAOFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -18,22 +20,25 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.SelectEvent;
 
 @Named("especialidademedicaDAOController")
 @SessionScoped
 public class EspecialidademedicaDAOController implements Serializable {
 
-    
-    
     private EspecialidademedicaDAO current;
     private DataModel items = null;
     @EJB
     private br.com.sgcm.facade.EspecialidademedicaDAOFacade ejbFacade;
+    @EJB
+    private br.com.sgcm.facade.PessoaDAOFacade ejbFacadePessoa;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     private List<EspecialidademedicaDAO> especialidademedicaList;
     private Integer idEspecialidademedica;
+    
+    private List<PessoaDAO> medicoEspecialidadeList;
     
     public EspecialidademedicaDAOController() {
     }
@@ -271,4 +276,44 @@ public class EspecialidademedicaDAOController implements Serializable {
         this.idEspecialidademedica = idEspecialidademedica;
     }
 
+    public List<EspecialidademedicaDAO> completeEspecialidade(String query) {
+        
+        List<EspecialidademedicaDAO> especialidades = new ArrayList<EspecialidademedicaDAO>();
+        for (EspecialidademedicaDAO especialidade : especialidademedicaList) {
+            if (especialidade.getNmespecialidademedica().toLowerCase().contains(query.toLowerCase())) {
+                especialidades.add(especialidade);
+            }
+        }
+        
+        return especialidades;
+    }
+    
+    /***
+     * Quando seleciona uma especialidade deve mostrar todos os médico esppecialista nela
+     * @param event 
+     */
+    
+    public void onEspecialidadeSelect(SelectEvent event) {
+        medicoEspecialidadeList = new ArrayList<PessoaDAO>();
+        EspecialidademedicaDAO especialidade = (EspecialidademedicaDAO) event.getObject();
+        List<PessoaDAO> medicosEspecialidade = ejbFacadePessoa.findAll();
+        for (PessoaDAO item : medicosEspecialidade) {
+            if (item.getIdespecialidademedica() != null && item.getIdespecialidademedica().getIdespecialidademedica() == especialidade.getIdespecialidademedica())
+                medicoEspecialidadeList.add(item);
+        }
+    }
+
+    /**
+     * @return the medicoEspecialidadeList
+     */
+    public List<PessoaDAO> getMedicoEspecialidadeList() {
+        return medicoEspecialidadeList;
+    }
+
+    /**
+     * @param medicoEspecialidadeList the medicoEspecialidadeList to set
+     */
+    public void setMedicoEspecialidadeList(List<PessoaDAO> medicoEspecialidadeList) {
+        this.medicoEspecialidadeList = medicoEspecialidadeList;
+    }
 }

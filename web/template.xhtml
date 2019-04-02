@@ -41,7 +41,7 @@
                                 <p:menuitem value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                                 <p:menuitem value="Cadastro de Especialidade Médica" url="./manterEspecialidadeMedica.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                                 <p:menuitem value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente')}"/>
+                                <p:menuitem value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" />
                                 <p:menuitem value="Cadastro de Medicamento" url="./manterMedicamento.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                                 <p:menuitem value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                                 <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>

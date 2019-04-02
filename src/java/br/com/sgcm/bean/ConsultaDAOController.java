@@ -3,6 +3,7 @@ package br.com.sgcm.bean;
 import br.com.sgcm.dao.ConsultaDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
+import br.com.sgcm.dao.EspecialidademedicaDAO;
 import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
 
@@ -37,6 +38,9 @@ public class ConsultaDAOController implements Serializable {
     private String nucpf;
     private String deendereco;
 
+    private EspecialidademedicaDAO especialidadeMedica;
+    
+    
     public ConsultaDAOController() {
     }
 
@@ -281,11 +285,28 @@ public class ConsultaDAOController implements Serializable {
         this.deendereco = deendereco;
     }
 
-    public void onItemSelect(SelectEvent event) {
+    public void onPacienteSelect(SelectEvent event) {
         PessoaDAO pessoa = (PessoaDAO) event.getObject();
         setNmPessoa(pessoa.getNmpessoa());
         setNucpf(pessoa.getNucpf());
         setDeendereco(pessoa.getDeendereco());
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
+    
+    
+
+    /**
+     * @return the especialidadeMedica
+     */
+    public EspecialidademedicaDAO getEspecialidadeMedica() {
+        return especialidadeMedica;
+    }
+
+    /**
+     * @param especialidadeMedica the especialidadeMedica to set
+     */
+    public void setEspecialidadeMedica(EspecialidademedicaDAO especialidadeMedica) {
+        this.especialidadeMedica = especialidadeMedica;
+    }
+    
 }

@@ -14,7 +14,7 @@
                 <h:form id="form_cadastro">
                     <p>Os campos destacados são de preenchimento obrigatório.</p>
 
-                    <p:panel id="usuario" header="Paciente" >
+                    <p:panel id="pnlPaciente" header="Paciente" >
                         <h:panelGrid id="pngPaciente" columns="3" >
                             <h:inputHidden id="idPerfil" value="#{pessoaDAOController.selected.idpessoa}"/>
                             <p:outputLabel value="Paciente:" for="paciente" />
@@ -31,7 +31,7 @@
                                 minQueryLength="3"
                                 maxResults="5">
                                 <f:attribute name="filterPessoa" value="#{pessoa.nmpessoa}" />
-                                <p:ajax event="itemSelect" listener="#{consultaDAOController.onItemSelect}" update="outputPanelPaciente" />
+                                <p:ajax event="itemSelect" listener="#{consultaDAOController.onPacienteSelect}" update="outputPanelPaciente" />
                             </p:autoComplete>
                         </h:panelGrid>
 
@@ -49,6 +49,39 @@
 
                     </p:panel>        
 
+
+                    <p:panel id="pnlEspecialidademedica" header="Especialidade e Médico" >
+                        <h:panelGrid id="pngEspecialidade" columns="3" >
+                            <h:inputHidden id="idEspecialidadeMedica" value="#{especialidademedicaDAOController.selected.idespecialidademedica}"/>
+                            <p:outputLabel value="Especialidade Médica:" for="especialidademedica" />
+
+                            <p:autoComplete 
+                                id="especialidademedica"
+                                value="#{consultaDAOController.especialidadeMedica}"
+                                completeMethod="#{especialidademedicaDAOController.completeEspecialidade}"
+                                converter="especialidadeMedicaConverter"
+                                var="especialidade" 
+                                itemLabel="#{especialidade.nmespecialidademedica}" itemValue="#{especialidade}"
+                                forceSelection="true" 
+                                size="50"
+                                minQueryLength="3"
+                                maxResults="5">
+                                <f:attribute name="filterMedicoEspecialidade" value="#{especialidade.idespecialidademedica}" />
+                                <p:ajax event="itemSelect" listener="#{especialidademedicaDAOController.onEspecialidadeSelect}" update="pngMedicoConsulta"/>
+                            </p:autoComplete>
+                        </h:panelGrid>
+                    </p:panel>  
+                    
+                    <h:panelGrid id="pngMedicoConsulta" columns="6" >
+
+                        <p:outputLabel for="medico" value="Médico:"/>
+                        <p:selectOneMenu converter="pessoaConverter" id="medico" value="#{consultaDAOController.selected.idmedico}">
+                            <f:selectItem itemLabel="Selecione" itemValue="" />
+                            <f:selectItems value="#{especialidademedicaDAOController.medicoEspecialidadeList}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nmpessoa}" />
+                        </p:selectOneMenu>
+                        <p:message for="medico" />
+                    </h:panelGrid> 
+                    
                     <br></br>
                     <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
                     <p:commandButton value="Limpar" type="reset"/>
