@@ -11,11 +11,11 @@
         <link href="resources/css/tabelas.css" rel="stylesheet" type="text/css"/>
         <p:panel header="Cadastro de Pessoa" style="border-style: none"> 
             <center>
-                <h:form id="form_cadastro">
+                <h:form id="form_cadastro" >
                     <p>Os campos destacados são de preenchimento obrigatório.</p>
 
                     <p:panel id="pnlPaciente" header="Paciente" >
-                        <h:panelGrid id="pngPaciente" columns="3" >
+                        <h:panelGrid id="pngPaciente" columns="4" >
                             <h:inputHidden id="idPerfil" value="#{pessoaDAOController.selected.idpessoa}"/>
                             <p:outputLabel value="Paciente:" for="paciente" />
 
@@ -33,10 +33,12 @@
                                 <f:attribute name="filterPessoa" value="#{pessoa.nmpessoa}" />
                                 <p:ajax event="itemSelect" listener="#{consultaDAOController.onPacienteSelect}" update="outputPanelPaciente" />
                             </p:autoComplete>
+                            
+                            <p:commandButton value="Cadastrar Paciente" icon="ui-icon-disk" actionListener="#{pessoaDAOController.PrepareCadastroCliente()}" update=":lista"/>
                         </h:panelGrid>
 
 
-                        <h:panelGrid id="outputPanelPaciente" columns="2" >
+                        <h:panelGrid id="outputPanelPaciente" columns="6" >
                             <p:outputLabel value="Nome:"/>
                             <p:outputLabel value="#{consultaDAOController.nmPessoa}" style="font-weight: bold;font-size: 12"/>
 

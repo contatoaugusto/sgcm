@@ -5,17 +5,22 @@ import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
 import br.com.sgcm.dao.PerfilDAO;
 import br.com.sgcm.dao.UsuarioDAO;
+import br.com.sgcm.facade.PerfilDAOFacade;
 import br.com.sgcm.facade.PessoaDAOFacade;
 import br.com.sgcm.facade.UsuarioDAOFacade;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -27,24 +32,30 @@ import org.primefaces.event.SelectEvent;
 @Named("pessoaDAOController")
 @SessionScoped
 public class PessoaDAOController implements Serializable {
-
-       
+    
+    private int IDPERFIL_PACIENTE = 10;
+    private int IDPERFIL_MEDICO = 8;
+    private int IDPERFIL_ATENDENTE = 7;
+    
     private PessoaDAO current;
     private DataModel items = null;
     @EJB
-    private br.com.sgcm.facade.PessoaDAOFacade ejbFacade;
+    private PessoaDAOFacade ejbFacade;
+    @EJB
+    private UsuarioDAOFacade usuarioDAOFacade;
+    @EJB
+    private PerfilDAOFacade perfilDAOFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
     private String nmUsuario = "";
     private String deSenha = "";
     
-    @EJB
-    private UsuarioDAOFacade usuarioDAOFacade;
-    
     private List<PessoaDAO> pessoaList;
     // Apenas pra usarmos o hidden que força o carregamento de selected
     private Integer idPessoa;
+    
+    private String nmPessoaPesquisaCadastro;
     
     public PessoaDAOController() {
     }
@@ -91,6 +102,38 @@ public class PessoaDAOController implements Serializable {
         current = (PessoaDAO) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
+    }
+
+    /**
+     * *
+     * Prepara o cadastro de paciente/pessoa vindo a partir da tela de consulta
+     *
+     * @return
+     */
+    public String PrepareCadastroCliente() {
+        
+        current = new PessoaDAO();
+        current.setNmpessoa(getNmPessoaPesquisaCadastro());
+        
+        PerfilDAO pefil = perfilDAOFacade.find(IDPERFIL_PACIENTE);
+        current.setIdperfil(pefil);
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        PerfilDAOController perfilDAOController = (PerfilDAOController) facesContext.getApplication().getELResolver().
+//                getValue(facesContext.getELContext(), null, "perfilDAOController");
+//
+//        List<PerfilDAO> perfilList = new ArrayList<PerfilDAO>();
+//        perfilList.add(pefil);
+//        perfilDAOController.setPerfilList(perfilList);
+
+        selectedItemIndex = -1;
+        
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath() + "/manterPessoa.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(PessoaDAOController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "manterPessoa";
     }
     
     public String prepareCreate() {
@@ -248,7 +291,7 @@ public class PessoaDAOController implements Serializable {
      */
     public void setDeSenha(String deSenha) {
         this.deSenha = deSenha;
-    }    
+    }
     
     @FacesConverter(forClass = PessoaDAO.class, value = "pessoaConverter")
     public static class PessoaDAOControllerConverter implements Converter {
@@ -289,7 +332,7 @@ public class PessoaDAOController implements Serializable {
         }
         
     }
-    
+
     /**
      * @return the pessoaList
      */
@@ -318,7 +361,6 @@ public class PessoaDAOController implements Serializable {
         this.idPessoa = idPessoa;
     }
     
-   
     public List<PessoaDAO> completePessoa(String query) {
         
         List<PessoaDAO> pessoas = new ArrayList<PessoaDAO>();
@@ -328,6 +370,21 @@ public class PessoaDAOController implements Serializable {
             }
         }
         
+        setNmPessoaPesquisaCadastro(query);
         return pessoas;
+    }
+
+    /**
+     * @return the nmPessoaPesquisaCadastro
+     */
+    public String getNmPessoaPesquisaCadastro() {
+        return nmPessoaPesquisaCadastro;
+    }
+
+    /**
+     * @param nmPessoaPesquisaCadastro the nmPessoaPesquisaCadastro to set
+     */
+    public void setNmPessoaPesquisaCadastro(String nmPessoaPesquisaCadastro) {
+        this.nmPessoaPesquisaCadastro = nmPessoaPesquisaCadastro;
     }
 }

@@ -17,7 +17,7 @@
 
                         <h:inputHidden id="idPerfil" value="#{perfilDAOController.selected.idperfil}"/>
                         <p:outputLabel for="perfil" value="Perfil:"/>
-                        <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}">
+                        <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}">
                             <f:selectItem itemLabel="Selecione" itemValue="" />
                             <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
                         </p:selectOneMenu>
@@ -76,7 +76,7 @@
                         <p:message for="nucrm" />
                     
                         <p:outputLabel for="especialidademedica" value="Especialidade Médica:"/>
-                        <p:selectOneMenu converter="especialidadeMedicaConverter" id="especialidademedica" value="#{pessoaDAOController.selected.idperfil}">
+                        <p:selectOneMenu converter="especialidadeMedicaConverter" id="especialidademedica" value="#{pessoaDAOController.selected.idespecialidademedica}">
                             <f:selectItem itemLabel="Selecione" itemValue="" />
                             <f:selectItems value="#{especialidademedicaDAOController.especialidademedicaList}" var="especialidademedica" itemValue="#{especialidademedica}" itemLabel="#{especialidademedica.nmespecialidademedica}" />
                         </p:selectOneMenu>

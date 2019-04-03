@@ -66,7 +66,7 @@ public class PerfilDAOController implements Serializable {
     }
 
     public PerfilDAO getSelected() {
-
+        
         setPerfilList(ejbFacade.findAll());
 
         if (current == null) {
