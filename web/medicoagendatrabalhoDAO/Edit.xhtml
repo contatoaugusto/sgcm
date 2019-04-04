@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.EditMedicoagendatrabalhoDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleTemp.EditMedicoagendatrabalhoDAOLabel_idmedicoagendatrabalho}" for="idmedicoagendatrabalho" />
+                    <h:inputText id="idmedicoagendatrabalho" value="#{medicoagendatrabalhoDAOController.selected.idmedicoagendatrabalho}" title="#{bundleTemp.EditMedicoagendatrabalhoDAOTitle_idmedicoagendatrabalho}" required="true" requiredMessage="#{bundleTemp.EditMedicoagendatrabalhoDAORequiredMessage_idmedicoagendatrabalho}"/>
+                    <h:outputLabel value="#{bundleTemp.EditMedicoagendatrabalhoDAOLabel_dtAgenda}" for="dtAgenda" />
+                    <h:inputText id="dtAgenda" value="#{medicoagendatrabalhoDAOController.selected.dtAgenda}" title="#{bundleTemp.EditMedicoagendatrabalhoDAOTitle_dtAgenda}" required="true" requiredMessage="#{bundleTemp.EditMedicoagendatrabalhoDAORequiredMessage_dtAgenda}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundleTemp.EditMedicoagendatrabalhoDAOLabel_hrinicio}" for="hrinicio" />
+                    <h:inputText id="hrinicio" value="#{medicoagendatrabalhoDAOController.selected.hrinicio}" title="#{bundleTemp.EditMedicoagendatrabalhoDAOTitle_hrinicio}" required="true" requiredMessage="#{bundleTemp.EditMedicoagendatrabalhoDAORequiredMessage_hrinicio}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundleTemp.EditMedicoagendatrabalhoDAOLabel_hrfim}" for="hrfim" />
+                    <h:inputText id="hrfim" value="#{medicoagendatrabalhoDAOController.selected.hrfim}" title="#{bundleTemp.EditMedicoagendatrabalhoDAOTitle_hrfim}" required="true" requiredMessage="#{bundleTemp.EditMedicoagendatrabalhoDAORequiredMessage_hrfim}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundleTemp.EditMedicoagendatrabalhoDAOLabel_idmedico}" for="idmedico" />
+                    <h:selectOneMenu id="idmedico" value="#{medicoagendatrabalhoDAOController.selected.idmedico}" title="#{bundleTemp.EditMedicoagendatrabalhoDAOTitle_idmedico}" required="true" requiredMessage="#{bundleTemp.EditMedicoagendatrabalhoDAORequiredMessage_idmedico}">
+                        <f:selectItems value="#{pessoaDAOController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{medicoagendatrabalhoDAOController.update}" value="#{bundleTemp.EditMedicoagendatrabalhoDAOSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundleTemp.EditMedicoagendatrabalhoDAOViewLink}"/>
+                <br />
+                <h:commandLink action="#{medicoagendatrabalhoDAOController.prepareList}" value="#{bundleTemp.EditMedicoagendatrabalhoDAOShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.EditMedicoagendatrabalhoDAOIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

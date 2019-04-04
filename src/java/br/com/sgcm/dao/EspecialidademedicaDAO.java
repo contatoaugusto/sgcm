@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "EspecialidademedicaDAO.findByDeobservacao", query = "SELECT e FROM EspecialidademedicaDAO e WHERE e.deobservacao = :deobservacao")})
 public class EspecialidademedicaDAO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -42,9 +43,6 @@ public class EspecialidademedicaDAO implements Serializable {
     private String nmespecialidademedica;
     @Size(max = 1000)
     private String deobservacao;
-
-    private static final long serialVersionUID = 1L;
-    
     @OneToMany(mappedBy = "idespecialidademedica")
     private Collection<PessoaDAO> pessoaDAOCollection;
 
@@ -112,4 +110,5 @@ public class EspecialidademedicaDAO implements Serializable {
     public String toString() {
         return "br.com.sgcm.dao.EspecialidademedicaDAO[ idespecialidademedica=" + idespecialidademedica + " ]";
     }
+    
 }

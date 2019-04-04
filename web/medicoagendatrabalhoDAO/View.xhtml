@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.ViewMedicoagendatrabalhoDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundleTemp.ViewMedicoagendatrabalhoDAOLabel_idmedicoagendatrabalho}"/>
+                    <h:outputText value="#{medicoagendatrabalhoDAOController.selected.idmedicoagendatrabalho}" title="#{bundleTemp.ViewMedicoagendatrabalhoDAOTitle_idmedicoagendatrabalho}"/>
+                    <h:outputText value="#{bundleTemp.ViewMedicoagendatrabalhoDAOLabel_dtAgenda}"/>
+                    <h:outputText value="#{medicoagendatrabalhoDAOController.selected.dtAgenda}" title="#{bundleTemp.ViewMedicoagendatrabalhoDAOTitle_dtAgenda}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundleTemp.ViewMedicoagendatrabalhoDAOLabel_hrinicio}"/>
+                    <h:outputText value="#{medicoagendatrabalhoDAOController.selected.hrinicio}" title="#{bundleTemp.ViewMedicoagendatrabalhoDAOTitle_hrinicio}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundleTemp.ViewMedicoagendatrabalhoDAOLabel_hrfim}"/>
+                    <h:outputText value="#{medicoagendatrabalhoDAOController.selected.hrfim}" title="#{bundleTemp.ViewMedicoagendatrabalhoDAOTitle_hrfim}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundleTemp.ViewMedicoagendatrabalhoDAOLabel_idmedico}"/>
+                    <h:outputText value="#{medicoagendatrabalhoDAOController.selected.idmedico}" title="#{bundleTemp.ViewMedicoagendatrabalhoDAOTitle_idmedico}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{medicoagendatrabalhoDAOController.destroyAndView}" value="#{bundleTemp.ViewMedicoagendatrabalhoDAODestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundleTemp.ViewMedicoagendatrabalhoDAOEditLink}"/>
+                <br />
+                <h:commandLink action="#{medicoagendatrabalhoDAOController.prepareCreate}" value="#{bundleTemp.ViewMedicoagendatrabalhoDAOCreateLink}" />
+                <br />
+                <h:commandLink action="#{medicoagendatrabalhoDAOController.prepareList}" value="#{bundleTemp.ViewMedicoagendatrabalhoDAOShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.ViewMedicoagendatrabalhoDAOIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

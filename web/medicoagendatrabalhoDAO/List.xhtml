@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleTemp.ListMedicoagendatrabalhoDAOTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundleTemp.ListMedicoagendatrabalhoDAOEmpty}" rendered="#{medicoagendatrabalhoDAOController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{medicoagendatrabalhoDAOController.items.rowCount > 0}">
+                    <h:outputText value="#{medicoagendatrabalhoDAOController.pagination.pageFirstItem + 1}..#{medicoagendatrabalhoDAOController.pagination.pageLastItem + 1}/#{medicoagendatrabalhoDAOController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{medicoagendatrabalhoDAOController.previous}" value="#{bundleTemp.Previous} #{medicoagendatrabalhoDAOController.pagination.pageSize}" rendered="#{medicoagendatrabalhoDAOController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{medicoagendatrabalhoDAOController.next}" value="#{bundleTemp.Next} #{medicoagendatrabalhoDAOController.pagination.pageSize}" rendered="#{medicoagendatrabalhoDAOController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{medicoagendatrabalhoDAOController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListMedicoagendatrabalhoDAOTitle_idmedicoagendatrabalho}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmedicoagendatrabalho}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListMedicoagendatrabalhoDAOTitle_dtAgenda}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dtAgenda}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListMedicoagendatrabalhoDAOTitle_hrinicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hrinicio}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListMedicoagendatrabalhoDAOTitle_hrfim}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hrfim}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleTemp.ListMedicoagendatrabalhoDAOTitle_idmedico}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmedico}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{medicoagendatrabalhoDAOController.prepareView}" value="#{bundleTemp.ListMedicoagendatrabalhoDAOViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{medicoagendatrabalhoDAOController.prepareEdit}" value="#{bundleTemp.ListMedicoagendatrabalhoDAOEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{medicoagendatrabalhoDAOController.destroy}" value="#{bundleTemp.ListMedicoagendatrabalhoDAODestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{medicoagendatrabalhoDAOController.prepareCreate}" value="#{bundleTemp.ListMedicoagendatrabalhoDAOCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundleTemp.ListMedicoagendatrabalhoDAOIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

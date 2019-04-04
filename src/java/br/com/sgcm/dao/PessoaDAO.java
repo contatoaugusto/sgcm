@@ -6,9 +6,7 @@
 package br.com.sgcm.dao;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,22 +15,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto
  */
 @Entity
 @Table(name = "pessoa")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PessoaDAO.findAll", query = "SELECT p FROM PessoaDAO p")
+    @NamedQuery(name = "PessoaDAO.findAll", query = "SELECT p FROM PessoaDAO p WHERE p.icAtivo = 1")
     , @NamedQuery(name = "PessoaDAO.findByIdpessoa", query = "SELECT p FROM PessoaDAO p WHERE p.idpessoa = :idpessoa")
     , @NamedQuery(name = "PessoaDAO.findByNmpessoa", query = "SELECT p FROM PessoaDAO p WHERE p.nmpessoa = :nmpessoa")
     , @NamedQuery(name = "PessoaDAO.findByDesexo", query = "SELECT p FROM PessoaDAO p WHERE p.desexo = :desexo")
@@ -48,9 +44,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "PessoaDAO.findByNucrm", query = "SELECT p FROM PessoaDAO p WHERE p.nucrm = :nucrm")
     , @NamedQuery(name = "PessoaDAO.findByNucrt", query = "SELECT p FROM PessoaDAO p WHERE p.nucrt = :nucrt")
     , @NamedQuery(name = "PessoaDAO.findByNucoren", query = "SELECT p FROM PessoaDAO p WHERE p.nucoren = :nucoren")
-    , @NamedQuery(name = "PessoaDAO.findByNmespecialidademedica", query = "SELECT p FROM PessoaDAO p WHERE p.idespecialidademedica.nmespecialidademedica = :nmespecialidademedica")})
+    , @NamedQuery(name = "PessoaDAO.findByNmespecialidademedica", query = "SELECT p FROM PessoaDAO p WHERE p.nmespecialidademedica = :nmespecialidademedica")
+    , @NamedQuery(name = "PessoaDAO.findByPerfil", query = "SELECT p FROM PessoaDAO p WHERE p.idperfil.idperfil = :idperfil AND p.icAtivo = 1")
+    , @NamedQuery(name = "PessoaDAO.findByIcAtivo", query = "SELECT p FROM PessoaDAO p WHERE p.icAtivo = :icAtivo")})
 public class PessoaDAO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -89,13 +88,9 @@ public class PessoaDAO implements Serializable {
     private String nucoren;
     @Size(max = 150)
     private String nmespecialidademedica;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
-    private Collection<ConsultaDAO> consultaDAOCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedico")
-    private Collection<ConsultaDAO> consultaDAOCollection1;
-
-    private static final long serialVersionUID = 1L;
-    
+    @Basic(optional = false)
+    @NotNull
+    private short icAtivo;
     @JoinColumn(name = "idespecialidademedica", referencedColumnName = "idespecialidademedica")
     @ManyToOne
     private EspecialidademedicaDAO idespecialidademedica;
@@ -110,10 +105,11 @@ public class PessoaDAO implements Serializable {
         this.idpessoa = idpessoa;
     }
 
-    public PessoaDAO(Integer idpessoa, String nmpessoa, String nucpf) {
+    public PessoaDAO(Integer idpessoa, String nmpessoa, String nucpf, short icAtivo) {
         this.idpessoa = idpessoa;
         this.nmpessoa = nmpessoa;
         this.nucpf = nucpf;
+        this.icAtivo = icAtivo;
     }
 
     public Integer getIdpessoa() {
@@ -236,6 +232,22 @@ public class PessoaDAO implements Serializable {
         this.nucoren = nucoren;
     }
 
+    public String getNmespecialidademedica() {
+        return nmespecialidademedica;
+    }
+
+    public void setNmespecialidademedica(String nmespecialidademedica) {
+        this.nmespecialidademedica = nmespecialidademedica;
+    }
+
+    public short getIcAtivo() {
+        return icAtivo;
+    }
+
+    public void setIcAtivo(short icAtivo) {
+        this.icAtivo = icAtivo;
+    }
+
     public EspecialidademedicaDAO getIdespecialidademedica() {
         return idespecialidademedica;
     }
@@ -277,29 +289,4 @@ public class PessoaDAO implements Serializable {
         return "br.com.sgcm.dao.PessoaDAO[ idpessoa=" + idpessoa + " ]";
     }
 
-    public String getNmespecialidademedica() {
-        return nmespecialidademedica;
-    }
-
-    public void setNmespecialidademedica(String nmespecialidademedica) {
-        this.nmespecialidademedica = nmespecialidademedica;
-    }
-
-    @XmlTransient
-    public Collection<ConsultaDAO> getConsultaDAOCollection() {
-        return consultaDAOCollection;
-    }
-
-    public void setConsultaDAOCollection(Collection<ConsultaDAO> consultaDAOCollection) {
-        this.consultaDAOCollection = consultaDAOCollection;
-    }
-
-    @XmlTransient
-    public Collection<ConsultaDAO> getConsultaDAOCollection1() {
-        return consultaDAOCollection1;
-    }
-
-    public void setConsultaDAOCollection1(Collection<ConsultaDAO> consultaDAOCollection1) {
-        this.consultaDAOCollection1 = consultaDAOCollection1;
-    }   
 }

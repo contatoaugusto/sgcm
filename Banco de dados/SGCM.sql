@@ -52,6 +52,31 @@ LOCK TABLES `consulta` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `especialidademedica`
+--
+
+DROP TABLE IF EXISTS `especialidademedica`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `especialidademedica` (
+  `idespecialidademedica` int(11) NOT NULL AUTO_INCREMENT,
+  `nmespecialidademedica` varchar(150) DEFAULT NULL,
+  `deobservacao` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`idespecialidademedica`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Diz respeito a cada especialidades médicas disponíveis  na clinica';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `especialidademedica`
+--
+
+LOCK TABLES `especialidademedica` WRITE;
+/*!40000 ALTER TABLE `especialidademedica` DISABLE KEYS */;
+INSERT INTO `especialidademedica` VALUES (1,'Cardiologia','Cardiologista da clínica'),(2,'Neurologia','Especialidades de neurologia e coisas relacionadas'),(3,'Ginecologista','Atendimento a mulher');
+/*!40000 ALTER TABLE `especialidademedica` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `examepedido`
 --
 
@@ -149,6 +174,7 @@ CREATE TABLE `historicoclinico` (
   `idmedico` int(11) NOT NULL,
   `dthistoricoclinico` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deobservacao` varchar(1000) NOT NULL,
+  `icAtivo` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idhistoricoclinico`),
   KEY `historicoclinico_paciente_idx` (`idpaciente`),
   KEY `historicoclinico_medico_idx` (`idmedico`),
@@ -245,13 +271,13 @@ DROP TABLE IF EXISTS `medicoagendatrabalho`;
 CREATE TABLE `medicoagendatrabalho` (
   `idmedicoagendatrabalho` int(11) NOT NULL AUTO_INCREMENT,
   `idmedico` int(11) NOT NULL,
-  `dtmedicoagendatrabalho` date NOT NULL COMMENT 'A data de disponibilidade de trabalho do médico na clínica',
-  `hrinicio` time NOT NULL,
-  `hrfim` time NOT NULL,
+  `dthorainicio` datetime NOT NULL,
+  `dthorafim` datetime NOT NULL,
+  `deobservacao` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`idmedicoagendatrabalho`),
   KEY `medicoagendatrabalho_medico_idx` (`idmedico`),
   CONSTRAINT `medicoagendatrabalho_medico` FOREIGN KEY (`idmedico`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabela que corresponde aos dias do mês e da semana, assim como os horários de atendimento dos médicos';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Tabela que corresponde aos dias do mês e da semana, assim como os horários de atendimento dos médicos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,6 +286,7 @@ CREATE TABLE `medicoagendatrabalho` (
 
 LOCK TABLES `medicoagendatrabalho` WRITE;
 /*!40000 ALTER TABLE `medicoagendatrabalho` DISABLE KEYS */;
+INSERT INTO `medicoagendatrabalho` VALUES (1,5,'2019-04-03 08:00:00','2019-04-03 12:00:00',NULL);
 /*!40000 ALTER TABLE `medicoagendatrabalho` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -275,7 +302,7 @@ CREATE TABLE `perfil` (
   `nmperfil` varchar(100) NOT NULL,
   `deperfil` varchar(200) DEFAULT NULL COMMENT 'Descrição do perfil',
   PRIMARY KEY (`idperfil`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +311,7 @@ CREATE TABLE `perfil` (
 
 LOCK TABLES `perfil` WRITE;
 /*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
-INSERT INTO `perfil` VALUES (6,'Administrador','A pessoa que manda na coisa toda'),(7,'Atendente','Perfil das pessoas que realizam o atendimento na clínica'),(8,'Medico','Os perfis dos médicos da clinica'),(9,'Enfermeiro','Os enfermeiros da clínica ou auxiliares de enfermagem');
+INSERT INTO `perfil` VALUES (6,'Administrador','A pessoa que manda na coisa toda'),(7,'Atendente','Perfil das pessoas que realizam o atendimento na clínica'),(8,'Medico','Os perfis dos médicos da clinica'),(9,'Enfermeiro','Os enfermeiros da clínica ou auxiliares de enfermagem'),(10,'Paciente','Pacientes da clinica');
 /*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,14 +336,18 @@ CREATE TABLE `pessoa` (
   `nutelefone` varchar(15) DEFAULT NULL,
   `nucelular` varchar(15) DEFAULT NULL,
   `nucrm` varchar(15) DEFAULT NULL COMMENT 'Quando a pessoa for médico precisa do cadastro do conselho regional de medicina',
-  `nmespecialidademedica` varchar(150) DEFAULT NULL COMMENT 'Quando se tratar do cadastro de pessoa ser um médico, precisa informa sua especialidade: cardiologista, Neurologista, Crlinico Geral, Pediatra, Ginecologista, etc.',
   `nucrt` varchar(15) DEFAULT NULL COMMENT 'Número da carteira de trabalho, quando se tratar de funcionário',
   `nucoren` varchar(15) DEFAULT NULL COMMENT 'Quando se tratar de enfermeiro, precisa do registro do conselho regional de enfermegem',
   `idperfil` int(11) NOT NULL COMMENT 'Define se a pessoa é um paciente, médico, atendente ou enfermeiro',
+  `idespecialidademedica` int(11) DEFAULT NULL,
+  `nmespecialidademedica` varchar(150) DEFAULT NULL,
+  `icAtivo` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idpessoa`),
   KEY `pessoa_perfil_idx` (`idperfil`),
+  KEY `pessoa_especialidademedica_idx` (`idespecialidademedica`),
+  CONSTRAINT `pessoa_especialidademedica` FOREIGN KEY (`idespecialidademedica`) REFERENCES `especialidademedica` (`idespecialidademedica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pessoa_perfil` FOREIGN KEY (`idperfil`) REFERENCES `perfil` (`idperfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,7 +356,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','','',NULL,NULL,6),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','','',NULL,NULL,7);
+INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','',NULL,NULL,6,NULL,NULL,1),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','',NULL,NULL,7,NULL,NULL,1),(4,'Alexandre Ferreira','Masculino','454.555.555-44','12345','Quadra 89 rua paineira castelo','Veredas','Goiania','88888-888','certo',NULL,NULL,NULL,NULL,NULL,7,1,NULL,1),(5,'Agenor Teixeira Filho','Masculino','222.222.222-22','1234123','Quadra 15 Conjunto 12 Casa 16','Lago Sul','Brasilia','71625-320','conta@hotmaila.com','','','',NULL,NULL,8,NULL,NULL,1);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,7 +405,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `idusuario_pessoa_idx` (`idpessoa`),
   CONSTRAINT `idusuario_pessoa` FOREIGN KEY (`idpessoa`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -383,7 +414,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3);
+INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3),(37,'agenor','123',5);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -396,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-24 16:28:44
+-- Dump completed on 2019-04-03 23:00:33
