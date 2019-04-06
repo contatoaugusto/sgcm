@@ -6,6 +6,13 @@ import br.com.sgcm.bean.util.PaginationHelper;
 import br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -28,6 +35,11 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
     private br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    private Date dtinicio;
+    private Date dtfim;
+    private Date hrinicio;
+    private Date hrfim;
 
     public MedicoagendatrabalhoDAOController() {
     }
@@ -81,11 +93,28 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
 
     public String create() {
         try {
+            Calendar calendar = Calendar.getInstance();
+
+            LocalDateTime localDateTime = LocalDateTime.parse(dtinicio.toString()); 
+            
+            //SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(dtinicio.toString());
+            //Time time = new Time(date.getTime());
+      
+            LocalDate datePart = LocalDate.parse(dtinicio.toString());
+            LocalTime timePart = LocalTime.parse(dtfim.getHours() + ":" + dtfim.getMinutes());
+            LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+
+//            calendar.setTime(dthorainicio);
+//            calendar.add(Calendar.DATE, 1);
+//            current.setDthorainicio(calendar.getTime());
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("MedicoagendatrabalhoDAOCreated"));
-            return prepareCreate();
+
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
+            return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
             return null;
         }
     }
@@ -99,10 +128,10 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("MedicoagendatrabalhoDAOUpdated"));
-            return "View";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
+            return prepareList();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
             return null;
         }
     }
@@ -232,4 +261,59 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
 
     }
 
+    /**
+     * @return the dtinicio
+     */
+    public Date getDtinicio() {
+        return dtinicio;
+    }
+
+    /**
+     * @param dtinicio the dtinicio to set
+     */
+    public void setDtinicio(Date dtinicio) {
+        this.dtinicio = dtinicio;
+    }
+
+    /**
+     * @return the dtfim
+     */
+    public Date getDtfim() {
+        return dtfim;
+    }
+
+    /**
+     * @param dtfim the dtfim to set
+     */
+    public void setDtfim(Date dtfim) {
+        this.dtfim = dtfim;
+    }
+
+    /**
+     * @return the hrinicio
+     */
+    public Date getHrinicio() {
+        return hrinicio;
+    }
+
+    /**
+     * @param hrinicio the hrinicio to set
+     */
+    public void setHrinicio(Date hrinicio) {
+        this.hrinicio = hrinicio;
+    }
+
+    /**
+     * @return the hrfim
+     */
+    public Date getHrfim() {
+        return hrfim;
+    }
+
+    /**
+     * @param hrfim the hrfim to set
+     */
+    public void setHrfim(Date hrfim) {
+        this.hrfim = hrfim;
+    }
 }
