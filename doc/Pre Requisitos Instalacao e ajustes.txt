@@ -1,3 +1,6 @@
+JDK 8
+https://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html
+
 NetBeans
 https://netbeans.org/downloads/8.2
 
