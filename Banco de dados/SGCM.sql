@@ -29,9 +29,8 @@ CREATE TABLE `consulta` (
   `idpaciente` int(11) NOT NULL,
   `idmedico` int(11) NOT NULL,
   `idatendente` int(11) DEFAULT NULL,
-  `dtconsulta` date NOT NULL,
-  `hrinicio` time NOT NULL,
-  `hrfim` time NOT NULL,
+  `dthorainicio` datetime NOT NULL,
+  `dthorafim` datetime NOT NULL,
   `deobservacao` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`idconsulta`),
   KEY `consulta_paciente_idx` (`idpaciente`),
@@ -277,7 +276,7 @@ CREATE TABLE `medicoagendatrabalho` (
   PRIMARY KEY (`idmedicoagendatrabalho`),
   KEY `medicoagendatrabalho_medico_idx` (`idmedico`),
   CONSTRAINT `medicoagendatrabalho_medico` FOREIGN KEY (`idmedico`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Tabela que corresponde aos dias do mês e da semana, assim como os horários de atendimento dos médicos';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Tabela que corresponde aos dias do mês e da semana, assim como os horários de atendimento dos médicos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +285,7 @@ CREATE TABLE `medicoagendatrabalho` (
 
 LOCK TABLES `medicoagendatrabalho` WRITE;
 /*!40000 ALTER TABLE `medicoagendatrabalho` DISABLE KEYS */;
-INSERT INTO `medicoagendatrabalho` VALUES (1,5,'2019-04-03 08:00:00','2019-04-03 12:00:00',NULL);
+INSERT INTO `medicoagendatrabalho` VALUES (1,5,'2019-04-03 08:00:00','2019-04-03 12:00:00',NULL),(2,5,'2019-04-10 11:00:00','2019-04-10 16:00:00','Grande teste');
 /*!40000 ALTER TABLE `medicoagendatrabalho` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,4 +426,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-03 23:00:33
+-- Dump completed on 2019-04-08 23:51:47
