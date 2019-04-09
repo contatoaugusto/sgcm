@@ -8,9 +8,9 @@ import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -21,7 +21,13 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.ScheduleEntryMoveEvent;
+import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleEvent;
+import org.primefaces.model.ScheduleModel;
 
 @Named("consultaDAOController")
 @SessionScoped
@@ -39,9 +45,17 @@ public class ConsultaDAOController implements Serializable {
     private String deendereco;
 
     private EspecialidademedicaDAO especialidadeMedica;
-    
-    
+
+    private ScheduleModel eventModel;
+    private ScheduleEvent event = new DefaultScheduleEvent();
+
     public ConsultaDAOController() {
+    }
+
+    @PostConstruct
+    public void init() {
+        eventModel = new DefaultScheduleModel();
+
     }
 
     public ConsultaDAO getSelected() {
@@ -292,8 +306,6 @@ public class ConsultaDAOController implements Serializable {
         setDeendereco(pessoa.getDeendereco());
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
-    
-    
 
     /**
      * @return the especialidadeMedica
@@ -308,5 +320,61 @@ public class ConsultaDAOController implements Serializable {
     public void setEspecialidadeMedica(EspecialidademedicaDAO especialidadeMedica) {
         this.especialidadeMedica = especialidadeMedica;
     }
-    
+
+    // Abenda - Evento
+    public ScheduleEvent getEvent() {
+        return event;
+    }
+
+    public void setEvent(ScheduleEvent event) {
+        this.event = event;
+    }
+
+    public void addEvent() {
+        if (event.getId() == null) {
+            getEventModel().addEvent(event);
+        } else {
+            getEventModel().updateEvent(event);
+        }
+
+        event = new DefaultScheduleEvent();
+    }
+
+    public void onEventSelect(SelectEvent selectEvent) {
+        event = (ScheduleEvent) selectEvent.getObject();
+    }
+
+    public void onDateSelect(SelectEvent selectEvent) {
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    }
+
+    /**
+     * Remove o agendamento da consulta
+     *
+     * @param event
+     */
+    public void onEventMove(ScheduleEntryMoveEvent event) {
+//            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
+//            addMessage(message);
+    }
+
+    public void onEventResize(ScheduleEntryResizeEvent event) {
+//            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
+//            addMessage(message);
+    }
+
+    /**
+     * @return the eventModel
+     */
+    public ScheduleModel getEventModel() {
+        return eventModel;
+    }
+
+    /**
+     * @param eventModel the eventModel to set
+     */
+    public void setEventModel(ScheduleModel eventModel) {
+        this.eventModel = eventModel;
+    }
+
 }

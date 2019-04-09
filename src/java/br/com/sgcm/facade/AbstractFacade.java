@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto Teixeira
  */
 public abstract class AbstractFacade<T> {
 

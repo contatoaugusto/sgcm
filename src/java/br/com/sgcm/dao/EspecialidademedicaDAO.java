@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto Teixeira
  */
 @Entity
 @Table(name = "especialidademedica")

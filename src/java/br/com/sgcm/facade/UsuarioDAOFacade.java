@@ -16,7 +16,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto Teixeira
  */
 @Stateless
 public class UsuarioDAOFacade extends AbstractFacade<UsuarioDAO> {

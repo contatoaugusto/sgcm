@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto Teixeira
  */
 @Stateless
 public class MedicoagendatrabalhoDAOFacade extends AbstractFacade<MedicoagendatrabalhoDAO> {

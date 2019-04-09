@@ -25,70 +25,14 @@
                     <br></br>
                     <h:panelGrid id="pngCadastro" columns="6">
 
-                        <!--                        <p:outputLabel for="hrinicio" value="Data Hora Início" />
-                                                <p:inputMask id="hrinicio" required="true" value="#{medicoagendatrabalhoDAOController.selected.dthorainicio}" mask="99/99/9999 99:99" size="16"/>
-                                                <p:message for="hrinicio" />
-                        
-                                                <p:outputLabel for="hrfim" value="Data Hora Fim" />
-                                                <p:inputMask id="hrfim" required="true" value="#{medicoagendatrabalhoDAOController.selected.dthorafim}" mask="99/99/9999 99:99" size="16"/>
-                                                <p:message for="hrfim" />-->
-
-<!--                        <p:outputLabel value="Data início:" for="dataInicio" />
-                        <f:event type="preRenderView" listener="#{tarefaBean.init()}" />
-                        <p:calendar id="dataInicio" value="#{tarefaBean.tarefa.dataInicio}" pattern="dd/MM/yyyy HH:mm"  size="20" required="true"/>-->
-
-                        
                         <p:outputLabel for="dtinicio" value="Data Início" />
-                        <p:calendar 
-                            id="dtinicio" 
-                            required="true" 
-                            value="#{medicoagendatrabalhoDAOController.dtinicio}" 
-                            mask="99/99/9999" 
-                            size="10"
-                            navigator="true" 
-                             pattern="dd/MM/yyyy">
-                            <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-                        </p:calendar>
+                        <p:calendar id="dtinicio" pattern="dd/MM/yyyy HH:mm:ss"  value="#{medicoagendatrabalhoDAOController.selected.dthorainicio}" placeholder="Data Início" required="true"></p:calendar>          
                         <p:message for="dtinicio" />
 
-                        <p:outputLabel for="hrinicio" value="Hora Início" />
-                        <p:calendar 
-                            id="hrinicio" 
-                            required="true" 
-                            value="#{medicoagendatrabalhoDAOController.hrinicio}" 
-                            mask="99:99" 
-                            size="5"
-                            navigator="true"
-                            pattern="HH:mm">
-                            <f:convertDateTime type="time" pattern="HH:mm" />
-                        </p:calendar>
-                        <p:message for="hrinicio" />
-
                         <p:outputLabel for="dtfim" value="Data Fim" />
-                        <p:calendar 
-                            id="dtfim" 
-                            required="true" 
-                            value="#{medicoagendatrabalhoDAOController.dtfim}" 
-                            mask="99/99/9999" 
-                            size="10"
-                            navigator="true" yearRange="c-0:c+10"
-                            locale="pt_BR" pattern="dd/MM/yyyy">
-                            <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-                        </p:calendar>
+                        <p:calendar id="dtfim" pattern="dd/MM/yyyy HH:mm:ss"  value="#{medicoagendatrabalhoDAOController.selected.dthorafim}" placeholder="Data Fim" required="true">  </p:calendar>   
                         <p:message for="dtfim" />
 
-                        <p:outputLabel for="hrfim" value="Hora Fim" />
-                        <p:calendar 
-                            id="hrfim" 
-                            required="true" 
-                            value="#{medicoagendatrabalhoDAOController.hrfim}" 
-                            mask="99:99" 
-                            size="5"
-                            navigator="true"
-                            locale="pt_BR" pattern="HH:mm">
-                            <f:convertDateTime type="time" pattern="HH:mm" />
-                        </p:calendar>
-                        <p:message for="hrfim" />
 
                     </h:panelGrid>    
 
@@ -128,7 +72,13 @@
                     </p:column>
 
                     <p:column headerText="Agenda" >
-                        <h:outputText value="#{lista.idmedicoagendatrabalho}" />
+                        De <p:spacer width="10"/>
+                        <h:outputText value="#{lista.dthorainicio}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText> <p:spacer width="10"/> á <p:spacer width="10"/>
+                        <h:outputText value="#{lista.dthorafim}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
                     </p:column>
 
                 </p:dataTable>

@@ -24,6 +24,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.model.ScheduleModel;
 
 @Named("medicoagendatrabalhoDAOController")
 @SessionScoped
@@ -35,11 +36,6 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
     private br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
-    private Date dtinicio;
-    private Date dtfim;
-    private Date hrinicio;
-    private Date hrfim;
 
     public MedicoagendatrabalhoDAOController() {
     }
@@ -93,22 +89,12 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
 
     public String create() {
         try {
-            Calendar calendar = Calendar.getInstance();
 
-            LocalDateTime localDateTime = LocalDateTime.parse(dtinicio.toString()); 
-            
-            //SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
-            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse(dtinicio.toString());
-            //Time time = new Time(date.getTime());
-      
-            LocalDate datePart = LocalDate.parse(dtinicio.toString());
-            LocalTime timePart = LocalTime.parse(dtfim.getHours() + ":" + dtfim.getMinutes());
-            LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+            if (current.getDthorafim().getTime() < current.getDthorainicio().getTime()) {
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("AgendaMedicoDataFinalMenor"));
+                return prepareList();
+            }
 
-//            calendar.setTime(dthorainicio);
-//            calendar.add(Calendar.DATE, 1);
-//            current.setDthorainicio(calendar.getTime());
             getFacade().create(current);
 
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
@@ -258,62 +244,5 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MedicoagendatrabalhoDAO.class.getName());
             }
         }
-
-    }
-
-    /**
-     * @return the dtinicio
-     */
-    public Date getDtinicio() {
-        return dtinicio;
-    }
-
-    /**
-     * @param dtinicio the dtinicio to set
-     */
-    public void setDtinicio(Date dtinicio) {
-        this.dtinicio = dtinicio;
-    }
-
-    /**
-     * @return the dtfim
-     */
-    public Date getDtfim() {
-        return dtfim;
-    }
-
-    /**
-     * @param dtfim the dtfim to set
-     */
-    public void setDtfim(Date dtfim) {
-        this.dtfim = dtfim;
-    }
-
-    /**
-     * @return the hrinicio
-     */
-    public Date getHrinicio() {
-        return hrinicio;
-    }
-
-    /**
-     * @param hrinicio the hrinicio to set
-     */
-    public void setHrinicio(Date hrinicio) {
-        this.hrinicio = hrinicio;
-    }
-
-    /**
-     * @return the hrfim
-     */
-    public Date getHrfim() {
-        return hrfim;
-    }
-
-    /**
-     * @param hrfim the hrfim to set
-     */
-    public void setHrfim(Date hrfim) {
-        this.hrfim = hrfim;
     }
 }

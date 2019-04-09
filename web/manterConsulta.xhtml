@@ -9,10 +9,9 @@
 
     <ui:define name="content">
         <link href="resources/css/tabelas.css" rel="stylesheet" type="text/css"/>
-        <p:panel header="Cadastro de Pessoa" style="border-style: none"> 
+        <p:panel header="Marcação de Consulta" style="border-style: none"> 
             <center>
                 <h:form id="form_cadastro" >
-                    <p>Os campos destacados são de preenchimento obrigatório.</p>
 
                     <p:panel id="pnlPaciente" header="Paciente" >
                         <h:panelGrid id="pngPaciente" columns="4" >
@@ -29,11 +28,12 @@
                                 forceSelection="true" 
                                 size="50"
                                 minQueryLength="3"
-                                maxResults="5">
+                                maxResults="5"
+                                placeholder="Digite o nome do cliente">
                                 <f:attribute name="filterPessoa" value="#{pessoa.nmpessoa}" />
                                 <p:ajax event="itemSelect" listener="#{consultaDAOController.onPacienteSelect}" update="outputPanelPaciente" />
                             </p:autoComplete>
-                            
+
                             <p:commandButton value="Cadastrar Paciente" icon="ui-icon-disk" actionListener="#{pessoaDAOController.PrepareCadastroCliente()}" update=":lista"/>
                         </h:panelGrid>
 
@@ -53,7 +53,7 @@
 
 
                     <p:panel id="pnlEspecialidademedica" header="Especialidade e Médico" >
-                        <h:panelGrid id="pngEspecialidade" columns="3" >
+                        <h:panelGrid id="pngEspecialidade" columns="6" >
                             <h:inputHidden id="idEspecialidadeMedica" value="#{especialidademedicaDAOController.selected.idespecialidademedica}"/>
                             <p:outputLabel value="Especialidade Médica:" for="especialidademedica" />
 
@@ -67,23 +67,57 @@
                                 forceSelection="true" 
                                 size="50"
                                 minQueryLength="3"
-                                maxResults="5">
+                                maxResults="5"
+                                placeholder="Digite a especialidade médica">
                                 <f:attribute name="filterMedicoEspecialidade" value="#{especialidade.idespecialidademedica}" />
-                                <p:ajax event="itemSelect" listener="#{especialidademedicaDAOController.onEspecialidadeSelect}" update="pngMedicoConsulta"/>
+                                <p:ajax event="itemSelect" listener="#{especialidademedicaDAOController.onEspecialidadeSelect}" update="medico"/>
                             </p:autoComplete>
-                        </h:panelGrid>
-                    </p:panel>  
-                    
-                    <h:panelGrid id="pngMedicoConsulta" columns="6" >
 
-                        <p:outputLabel for="medico" value="Médico:"/>
-                        <p:selectOneMenu converter="pessoaConverter" id="medico" value="#{consultaDAOController.selected.idmedico}">
-                            <f:selectItem itemLabel="Selecione" itemValue="" />
-                            <f:selectItems value="#{especialidademedicaDAOController.medicoEspecialidadeList}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nmpessoa}" />
-                        </p:selectOneMenu>
-                        <p:message for="medico" />
-                    </h:panelGrid> 
-                    
+
+                            <!--<h:panelGrid id="pngMedicoConsulta" columns="6" >-->
+                            <p:outputLabel for="medico" value="Médico:" />
+                            <p:selectOneMenu converter="pessoaConverter" id="medico" value="#{consultaDAOController.selected.idmedico}" style="width: 100%">
+                                <f:selectItem itemLabel="Selecione" itemValue="" />
+                                <f:selectItems value="#{especialidademedicaDAOController.medicoEspecialidadeList}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nmpessoa}" />
+                            </p:selectOneMenu>
+                            <p:message for="medico" />
+                            <!--</h:panelGrid>-->
+                        </h:panelGrid>
+                            
+                        <br></br>
+                        <p:schedule id="schedule" value="#{consultaDAOController.eventModel}" widgetVar="myschedule" timeZone="America/Brasilia" locale="pt_BR" style="width: 50%">
+
+                            <p:ajax event="dateSelect" listener="#{consultaDAOController.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventSelect" listener="#{consultaDAOController.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventMove" listener="#{consultaDAOController.onEventMove}"  />
+                            <p:ajax event="eventResize" listener="#{consultaDAOController.onEventResize}"/>
+
+                        </p:schedule>
+
+                    </p:panel>  
+
+                    <p:dialog widgetVar="eventDialog" header="Agendamento Consulta" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <p:outputLabel for="idPacienteConsulta" value="Paciente:" />
+                            <p:inputText id="idPacienteConsulta" value="#{pessoaDAOController.selected.idpessoa}" required="true" />
+
+                            <p:outputLabel for="from" value="From:" />
+                            <p:calendar id="from" value="#{consultaDAOController.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                            <p:outputLabel for="to" value="To:" />
+                            <p:calendar id="to" value="#{consultaDAOController.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                            <p:outputLabel for="allDay" value="All Day:" />
+                            <h:selectBooleanCheckbox id="allDay" value="#{consultaDAOController.event.allDay}" />
+
+                            <p:commandButton type="reset" value="Reset" />
+                            <p:commandButton id="addButton" value="Save" action="#{consultaDAOController.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                        </h:panelGrid>
+                    </p:dialog> 
+
+
+
+
                     <br></br>
                     <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
                     <p:commandButton value="Limpar" type="reset"/>

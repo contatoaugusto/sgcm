@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto Teixeira
  */
 @Entity
 @Table(name = "usuario")

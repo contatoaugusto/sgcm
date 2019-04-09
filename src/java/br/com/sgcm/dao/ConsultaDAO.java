@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto Teixeira
  */
 @Entity
 @Table(name = "consulta")
@@ -34,9 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ConsultaDAO.findAll", query = "SELECT c FROM ConsultaDAO c")
     , @NamedQuery(name = "ConsultaDAO.findByIdconsulta", query = "SELECT c FROM ConsultaDAO c WHERE c.idconsulta = :idconsulta")
     , @NamedQuery(name = "ConsultaDAO.findByIdatendente", query = "SELECT c FROM ConsultaDAO c WHERE c.idatendente = :idatendente")
-    , @NamedQuery(name = "ConsultaDAO.findByDtconsulta", query = "SELECT c FROM ConsultaDAO c WHERE c.dtconsulta = :dtconsulta")
-    , @NamedQuery(name = "ConsultaDAO.findByHrinicio", query = "SELECT c FROM ConsultaDAO c WHERE c.hrinicio = :hrinicio")
-    , @NamedQuery(name = "ConsultaDAO.findByHrfim", query = "SELECT c FROM ConsultaDAO c WHERE c.hrfim = :hrfim")
+    , @NamedQuery(name = "ConsultaDAO.findByDthorainicio", query = "SELECT c FROM ConsultaDAO c WHERE c.dthorainicio = :dthorainicio")
+    , @NamedQuery(name = "ConsultaDAO.findByDthorafim", query = "SELECT c FROM ConsultaDAO c WHERE c.dthorafim = :dthorafim")
     , @NamedQuery(name = "ConsultaDAO.findByDeobservacao", query = "SELECT c FROM ConsultaDAO c WHERE c.deobservacao = :deobservacao")})
 public class ConsultaDAO implements Serializable {
 
@@ -48,16 +47,12 @@ public class ConsultaDAO implements Serializable {
     private Integer idatendente;
     @Basic(optional = false)
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date dtconsulta;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dthorainicio;
     @Basic(optional = false)
     @NotNull
-    @Temporal(TemporalType.TIME)
-    private Date hrinicio;
-    @Basic(optional = false)
-    @NotNull
-    @Temporal(TemporalType.TIME)
-    private Date hrfim;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dthorafim;
     @Size(max = 1000)
     private String deobservacao;
     @JoinColumn(name = "idpaciente", referencedColumnName = "idpessoa")
@@ -74,11 +69,10 @@ public class ConsultaDAO implements Serializable {
         this.idconsulta = idconsulta;
     }
 
-    public ConsultaDAO(Integer idconsulta, Date dtconsulta, Date hrinicio, Date hrfim) {
+    public ConsultaDAO(Integer idconsulta, Date dthorainicio, Date dthorafim) {
         this.idconsulta = idconsulta;
-        this.dtconsulta = dtconsulta;
-        this.hrinicio = hrinicio;
-        this.hrfim = hrfim;
+        this.dthorainicio = dthorainicio;
+        this.dthorafim = dthorafim;
     }
 
     public Integer getIdconsulta() {
@@ -97,28 +91,20 @@ public class ConsultaDAO implements Serializable {
         this.idatendente = idatendente;
     }
 
-    public Date getDtconsulta() {
-        return dtconsulta;
+    public Date getDthorainicio() {
+        return dthorainicio;
     }
 
-    public void setDtconsulta(Date dtconsulta) {
-        this.dtconsulta = dtconsulta;
+    public void setDthorainicio(Date dthorainicio) {
+        this.dthorainicio = dthorainicio;
     }
 
-    public Date getHrinicio() {
-        return hrinicio;
+    public Date getDthorafim() {
+        return dthorafim;
     }
 
-    public void setHrinicio(Date hrinicio) {
-        this.hrinicio = hrinicio;
-    }
-
-    public Date getHrfim() {
-        return hrfim;
-    }
-
-    public void setHrfim(Date hrfim) {
-        this.hrfim = hrfim;
+    public void setDthorafim(Date dthorafim) {
+        this.dthorafim = dthorafim;
     }
 
     public String getDeobservacao() {
