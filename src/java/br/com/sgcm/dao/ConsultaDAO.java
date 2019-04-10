@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ConsultaDAO.findByIdatendente", query = "SELECT c FROM ConsultaDAO c WHERE c.idatendente = :idatendente")
     , @NamedQuery(name = "ConsultaDAO.findByDthorainicio", query = "SELECT c FROM ConsultaDAO c WHERE c.dthorainicio = :dthorainicio")
     , @NamedQuery(name = "ConsultaDAO.findByDthorafim", query = "SELECT c FROM ConsultaDAO c WHERE c.dthorafim = :dthorafim")
+    , @NamedQuery(name = "ConsultaDAO.findByIdmedico", query = "SELECT c FROM ConsultaDAO c WHERE c.idmedico.idpessoa = :idmedico")
     , @NamedQuery(name = "ConsultaDAO.findByDeobservacao", query = "SELECT c FROM ConsultaDAO c WHERE c.deobservacao = :deobservacao")})
 public class ConsultaDAO implements Serializable {
 
@@ -155,5 +156,5 @@ public class ConsultaDAO implements Serializable {
     public String toString() {
         return "br.com.sgcm.dao.ConsultaDAO[ idconsulta=" + idconsulta + " ]";
     }
-    
+
 }

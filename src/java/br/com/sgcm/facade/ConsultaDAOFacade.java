@@ -6,8 +6,12 @@
 package br.com.sgcm.facade;
 
 import br.com.sgcm.dao.ConsultaDAO;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -22,6 +26,10 @@ public class ConsultaDAOFacade extends AbstractFacade<ConsultaDAO> {
 
     @Override
     protected EntityManager getEntityManager() {
+        if (em == null) {
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("sgcmPU");
+            em = factory.createEntityManager();
+        }
         return em;
     }
 
@@ -29,4 +37,13 @@ public class ConsultaDAOFacade extends AbstractFacade<ConsultaDAO> {
         super(ConsultaDAO.class);
     }
     
+    public List<ConsultaDAO> findByMedico(int idMedico) throws NoResultException {
+
+        getEntityManager();
+        try {
+            return em.createNamedQuery("ConsultaDAO.findByIdmedico").setParameter("idmedico", idMedico).getResultList();
+        } catch (NoResultException e) {
+            throw new NoResultException("Médico " + idMedico + " não encontrado");
+        }
+    }
 }

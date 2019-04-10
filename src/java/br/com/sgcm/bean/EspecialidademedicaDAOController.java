@@ -305,6 +305,7 @@ public class EspecialidademedicaDAOController implements Serializable {
             }
         }
     }
+    
 
     /**
      * @return the medicoEspecialidadeList

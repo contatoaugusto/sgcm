@@ -79,16 +79,17 @@
                             <p:selectOneMenu converter="pessoaConverter" id="medico" value="#{consultaDAOController.selected.idmedico}" style="width: 100%">
                                 <f:selectItem itemLabel="Selecione" itemValue="" />
                                 <f:selectItems value="#{especialidademedicaDAOController.medicoEspecialidadeList}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nmpessoa}" />
+                                <p:ajax event="itemSelect" listener="#{consultaDAOController.onMedicoSelect}" update="schedule"/>
                             </p:selectOneMenu>
                             <p:message for="medico" />
                             <!--</h:panelGrid>-->
                         </h:panelGrid>
-                            
+
                         <br></br>
                         <p:schedule id="schedule" value="#{consultaDAOController.eventModel}" widgetVar="myschedule" timeZone="America/Brasilia" locale="pt_BR" style="width: 50%">
 
-                            <p:ajax event="dateSelect" listener="#{consultaDAOController.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                            <p:ajax event="eventSelect" listener="#{consultaDAOController.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="dateSelect" listener="#{consultaDAOController.onDateSelect}"  update=":form_dialogEvent:eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventSelect" listener="#{consultaDAOController.onEventSelect}"  update=":form_dialogEvent:eventDetails" oncomplete="PF('eventDialog').show();" />
                             <p:ajax event="eventMove" listener="#{consultaDAOController.onEventMove}"  />
                             <p:ajax event="eventResize" listener="#{consultaDAOController.onEventResize}"/>
 
@@ -96,10 +97,21 @@
 
                     </p:panel>  
 
+                    <br></br>
+
+                    <p:commandButton value="Limpar" type="reset"/>
+                    <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{consultaDAOController.create()}" update=":lista"/>
+                    <!--                    <p:autoUpdate />-->
+                </h:form>
+
+
+                <h:form id="form_dialogEvent" >
                     <p:dialog widgetVar="eventDialog" header="Agendamento Consulta" showEffect="clip" hideEffect="clip">
+
                         <h:panelGrid id="eventDetails" columns="2">
-                            <p:outputLabel for="idPacienteConsulta" value="Paciente:" />
-                            <p:inputText id="idPacienteConsulta" value="#{pessoaDAOController.selected.idpessoa}" required="true" />
+                            <p:outputLabel value="Paciente:" />
+<!--                            <p:outputLabel value="#{consultaDAOController.nmPessoa}" style="font-weight: bold;font-size: 12"/>-->
+                            <p:inputText id="title" value="#{consultaDAOController.event.title}" required="true" />
 
                             <p:outputLabel for="from" value="From:" />
                             <p:calendar id="from" value="#{consultaDAOController.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
@@ -110,20 +122,13 @@
                             <p:outputLabel for="allDay" value="All Day:" />
                             <h:selectBooleanCheckbox id="allDay" value="#{consultaDAOController.event.allDay}" />
 
-                            <p:commandButton type="reset" value="Reset" />
-                            <p:commandButton id="addButton" value="Save" action="#{consultaDAOController.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+
+                            <p:commandButton value="Adicionar" actionListener="#{consultaDAOController.addEvent()}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>
                         </h:panelGrid>
+
                     </p:dialog> 
-
-
-
-
-                    <br></br>
-                    <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
-                    <p:commandButton value="Limpar" type="reset"/>
-
-                    <!--                    <p:autoUpdate />-->
                 </h:form>
+
 
                 <br></br><br></br>
 

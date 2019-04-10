@@ -8,7 +8,9 @@ import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -307,6 +309,20 @@ public class ConsultaDAOController implements Serializable {
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
 
+    public void onMedicoSelect(SelectEvent event) {
+        PessoaDAO medico = (PessoaDAO) event.getObject();
+
+        if (medico != null) {
+            List<ConsultaDAO> consultaList = ejbFacade.findByMedico(medico.getIdpessoa());
+
+            eventModel = new DefaultScheduleModel();
+
+            for (ConsultaDAO consulta : consultaList) {
+                eventModel.addEvent(new DefaultScheduleEvent(consulta.getIdpaciente().getNmpessoa(), consulta.getDthorainicio(), consulta.getDthorafim()));
+            }
+        }
+    }
+
     /**
      * @return the especialidadeMedica
      */
@@ -330,14 +346,22 @@ public class ConsultaDAOController implements Serializable {
         this.event = event;
     }
 
-    public void addEvent() {
-        if (event.getId() == null) {
-            getEventModel().addEvent(event);
-        } else {
-            getEventModel().updateEvent(event);
-        }
+    public String addEvent() {
+        try {
+            if (event.getId() == null) {
+                getEventModel().addEvent(event);
+            } else {
+                getEventModel().updateEvent(event);
+            }
 
-        event = new DefaultScheduleEvent();
+            event = new DefaultScheduleEvent();
+
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
+            return prepareList();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
+            return null;
+        }
     }
 
     public void onEventSelect(SelectEvent selectEvent) {
