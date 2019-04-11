@@ -8,10 +8,15 @@ import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -45,6 +50,8 @@ public class ConsultaDAOController implements Serializable {
     private String nmPessoa;
     private String nucpf;
     private String deendereco;
+
+    private String nmMedico;
 
     private EspecialidademedicaDAO especialidadeMedica;
 
@@ -306,20 +313,47 @@ public class ConsultaDAOController implements Serializable {
         setNmPessoa(pessoa.getNmpessoa());
         setNucpf(pessoa.getNucpf());
         setDeendereco(pessoa.getDeendereco());
+
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
 
     public void onMedicoSelect(SelectEvent event) {
         PessoaDAO medico = (PessoaDAO) event.getObject();
+        try {
+            if (medico != null) {
+                
+                eventModel = new DefaultScheduleModel();
+                
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                //String dateString = format.format(new Date());
+                Date dateMomento = format.parse("2019-01-01");
+                Date dateFim = format.parse("2022-01-01");
 
-        if (medico != null) {
-            List<ConsultaDAO> consultaList = ejbFacade.findByMedico(medico.getIdpessoa());
+                Calendar cal = Calendar.getInstance();
+                
+                
+                while (dateMomento.getTime() < dateFim.getTime()){
+                    
+                    DefaultScheduleEvent evento =  new DefaultScheduleEvent("", dateMomento, dateMomento, "agendamentoconsulta_day_disable");
+                    evento.setEditable(false);
+                    evento.setAllDay(true);
+                    eventModel.addEvent(evento);
+                    
+                    cal.setTime(dateMomento);
+                    cal.add(Calendar.DATE, 1);
+                    dateMomento = cal.getTime();
+                }
+                
+                setNmMedico(medico.getNmpessoa());
 
-            eventModel = new DefaultScheduleModel();
+                List<ConsultaDAO > consultaList = ejbFacade.findByMedico(medico.getIdpessoa());
 
-            for (ConsultaDAO consulta : consultaList) {
-                eventModel.addEvent(new DefaultScheduleEvent(consulta.getIdpaciente().getNmpessoa(), consulta.getDthorainicio(), consulta.getDthorafim()));
+                for (ConsultaDAO consulta : consultaList) {
+                    eventModel.addEvent(new DefaultScheduleEvent(consulta.getIdpaciente().getNmpessoa(), consulta.getDthorainicio(), consulta.getDthorafim()));
+                }
             }
+        } catch (ParseException ex) {
+            Logger.getLogger(ConsultaDAOController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -346,6 +380,10 @@ public class ConsultaDAOController implements Serializable {
         this.event = event;
     }
 
+    /*
+     * Quando clica no botão Adicionar no dialog que ctria um novo agendamento no calendario
+     * @return 
+     */
     public String addEvent() {
         try {
             if (event.getId() == null) {
@@ -399,6 +437,20 @@ public class ConsultaDAOController implements Serializable {
      */
     public void setEventModel(ScheduleModel eventModel) {
         this.eventModel = eventModel;
+    }
+
+    /**
+     * @return the nmMedico
+     */
+    public String getNmMedico() {
+        return nmMedico;
+    }
+
+    /**
+     * @param nmMedico the nmMedico to set
+     */
+    public void setNmMedico(String nmMedico) {
+        this.nmMedico = nmMedico;
     }
 
 }

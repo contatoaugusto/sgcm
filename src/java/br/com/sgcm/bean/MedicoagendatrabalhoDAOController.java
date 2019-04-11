@@ -24,7 +24,6 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import org.primefaces.model.ScheduleModel;
 
 @Named("medicoagendatrabalhoDAOController")
 @SessionScoped
