@@ -1,14 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <f:view contentType="text/html" id="fview" class="ui-fluid" >
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+        <link href="resources/css/estilo.css" rel="stylesheet" type="text/css"/>
+        
+        
         <title>SGCM</title>
         <ui:debug />
         <f:metadata>
@@ -19,53 +21,56 @@
             <p:growl id="mensagens" autoUpdate="true"  sticky="false" life="5000"/>
 
             <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
-              
+
                 <p:layoutUnit position="north" size="120" id="top" resizable="false">
                     <ui:include src="/controleacesso/sessionTimeOut.xhtml" />
                 </p:layoutUnit>
-                
-                <p:layoutUnit size="250" 
-	        		position="west" 
-	        		id="left"  
-	        		resizable="true" 
-	        		collapsible="true" 
-	        		closable="false" style="font-size:large;padding:1px;">
-                
+
+                <p:layoutUnit size="290" 
+                              position="west" 
+                              id="left"  
+                              resizable="true" 
+                              collapsible="true" 
+                              closable="false" style="font-size:large;padding:1px;">
+
                     <h:form>
-                        
-                        <p:menu style="border-style: solid; width: 235px">
-                           
-                            <p:submenu label="MENU DE ACESSO">
-                                <p:menuitem value="" url="" disabled="true"/>  
-                                <p:menuitem value="Início" url="/index.xhtml" rendered="#{usuario == null}"/>   
-                                <p:menuitem value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Cadastro de Especialidade Médica" url="./manterEspecialidadeMedica.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Cadastro Agenda Médico" url="./manterMedicoAgenda.xhtml" rendered="true" />
-                                <p:menuitem value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" />
-                                <p:menuitem value="Cadastro de Medicamento" url="./manterMedicamento.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Histórico Clínico" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                
-                                <p:menuitem value="Login" url="./controleacesso/login.xhtml" rendered="true" disabled="#{usuario != null}"/>
+
+                        <p:menu style="border-style: none; width: 98%" styleClass="fa" toggleable="true">
+
+                            <p:submenu label="Administração" style="font-size: 18px">
+                                <p:menuitem style="font-size: 16px" value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Cadastro de Especialidade Médica" url="./manterEspecialidadeMedica.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                             </p:submenu>
+                            <p:submenu label="Consultas" style="font-size: 18px">   
+                                <p:menuitem style="font-size: 16px" value="Cadastro Agenda Médico" url="./manterMedicoAgenda.xhtml" rendered="true" />
+                                <p:menuitem style="font-size: 16px" value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" />
+                                <p:menuitem style="font-size: 16px" value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Histórico Clínico" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                            </p:submenu>
+                            <p:submenu label="Medicamentos" style="font-size: 18px">
+                                <p:menuitem style="font-size: 16px" value="Cadastro de Medicamento" url="./manterMedicamento.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                            </p:submenu>
+                            <p:submenu label="Exames" style="font-size: 18px">
+                                <p:menuitem style="font-size: 16px" value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                            </p:submenu>
+                            <p:menuitem value="Login" url="./controleacesso/login.xhtml" rendered="true" disabled="#{usuario != null}" style="font-size: 16px"/>
+                            
                         </p:menu>
                     </h:form>
                 </p:layoutUnit>
-                
-                <p:layoutUnit styleClass="layoutUnitCenter" position="center" id="layoutUnitCentr">
+
+                <p:layoutUnit position="center" id="layoutUnitCentr">
                     <h:panelGroup id="entryDiv" layout="block">
                         <div>
                             <ui:insert name="content" />
                         </div>
                     </h:panelGroup>
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit position="south" id="bottom">
                     <center>
                         <ui:insert name="bottom">© SGCM - 2019 - Antonio Augusto Teixeira</ui:insert>

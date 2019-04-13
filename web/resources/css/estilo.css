@@ -1,6 +1,4 @@
 .agendamentoconsulta_day_disable {
-
-
     background-color: #ddd;
     font-size: medium;
     background-image: url("../images/unlock-icon.png");
@@ -11,7 +9,11 @@
     height: 150px;
     border: 0px solid;
     content: "";
+}
 
+.imgagem{
+  width: 10% ;
+  height: auto;
 }
 
 

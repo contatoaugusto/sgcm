@@ -6,8 +6,12 @@
 package br.com.sgcm.facade;
 
 import br.com.sgcm.dao.MedicoagendatrabalhoDAO;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -22,6 +26,10 @@ public class MedicoagendatrabalhoDAOFacade extends AbstractFacade<Medicoagendatr
 
     @Override
     protected EntityManager getEntityManager() {
+        if (em == null) {
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("sgcmPU");
+            em = factory.createEntityManager();
+        }
         return em;
     }
 
@@ -29,4 +37,13 @@ public class MedicoagendatrabalhoDAOFacade extends AbstractFacade<Medicoagendatr
         super(MedicoagendatrabalhoDAO.class);
     }
     
+    public List<MedicoagendatrabalhoDAO> findByMedico(int idMedico) throws NoResultException {
+
+        getEntityManager();
+        try {
+            return em.createNamedQuery("MedicoagendatrabalhoDAO.findByMedico").setParameter("idmedico", idMedico).getResultList();
+        } catch (NoResultException e) {
+            throw new NoResultException("Médico " + idMedico + " não encontrado");
+        }
+    }
 }

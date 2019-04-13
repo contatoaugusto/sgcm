@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MedicoagendatrabalhoDAO.findByIdmedicoagendatrabalho", query = "SELECT m FROM MedicoagendatrabalhoDAO m WHERE m.idmedicoagendatrabalho = :idmedicoagendatrabalho")
     , @NamedQuery(name = "MedicoagendatrabalhoDAO.findByDthorainicio", query = "SELECT m FROM MedicoagendatrabalhoDAO m WHERE m.dthorainicio = :dthorainicio")
     , @NamedQuery(name = "MedicoagendatrabalhoDAO.findByDthorafim", query = "SELECT m FROM MedicoagendatrabalhoDAO m WHERE m.dthorafim = :dthorafim")
+    , @NamedQuery(name = "MedicoagendatrabalhoDAO.findByMedico", query = "SELECT m FROM MedicoagendatrabalhoDAO m WHERE m.idmedico.idpessoa = :idmedico")
     , @NamedQuery(name = "MedicoagendatrabalhoDAO.findByDeobservacao", query = "SELECT m FROM MedicoagendatrabalhoDAO m WHERE m.deobservacao = :deobservacao")})
 public class MedicoagendatrabalhoDAO implements Serializable {
 
@@ -134,5 +135,5 @@ public class MedicoagendatrabalhoDAO implements Serializable {
     public String toString() {
         return "br.com.sgcm.dao.MedicoagendatrabalhoDAO[ idmedicoagendatrabalho=" + idmedicoagendatrabalho + " ]";
     }
-    
+
 }

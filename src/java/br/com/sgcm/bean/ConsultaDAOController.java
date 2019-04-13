@@ -4,8 +4,10 @@ import br.com.sgcm.dao.ConsultaDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
 import br.com.sgcm.dao.EspecialidademedicaDAO;
+import br.com.sgcm.dao.MedicoagendatrabalhoDAO;
 import br.com.sgcm.dao.PessoaDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
+import br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -43,7 +45,9 @@ public class ConsultaDAOController implements Serializable {
     private ConsultaDAO current;
     private DataModel items = null;
     @EJB
-    private br.com.sgcm.facade.ConsultaDAOFacade ejbFacade;
+    private ConsultaDAOFacade ejbFacade;
+    @EJB
+    private MedicoagendatrabalhoDAOFacade ejbFacadeAgendaMedico;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -321,33 +325,47 @@ public class ConsultaDAOController implements Serializable {
         PessoaDAO medico = (PessoaDAO) event.getObject();
         try {
             if (medico != null) {
-                
+
+                //Recupera a agenda do médico, ou seja, os dias e horários em que o médico estrá em atendimento na clínica
+                List<MedicoagendatrabalhoDAO> agendaMedico = ejbFacadeAgendaMedico.findByMedico(medico.getIdpessoa());
+
                 eventModel = new DefaultScheduleModel();
-                
+
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 //String dateString = format.format(new Date());
                 Date dateMomento = format.parse("2019-01-01");
                 Date dateFim = format.parse("2022-01-01");
 
                 Calendar cal = Calendar.getInstance();
-                
-                
-                while (dateMomento.getTime() < dateFim.getTime()){
-                    
-                    DefaultScheduleEvent evento =  new DefaultScheduleEvent("", dateMomento, dateMomento, "agendamentoconsulta_day_disable");
-                    evento.setEditable(false);
-                    evento.setAllDay(true);
-                    eventModel.addEvent(evento);
-                    
+
+                // trava os dias do calendário para marcação de consulta onde o médico não tenha agenda criada. Não pode haver marcação de consulta
+                while (dateMomento.getTime() < dateFim.getTime()) {
+
+                    String classeAgenda = "agendamentoconsulta_day_disable";
+                    for (MedicoagendatrabalhoDAO item : agendaMedico) {
+                        if ((item.getDthorainicio().getYear() == dateMomento.getYear()
+                                && item.getDthorainicio().getMonth() == dateMomento.getMonth()
+                                && item.getDthorainicio().getDate() == dateMomento.getDate())) {
+                            classeAgenda = "";
+                        }
+                    }
+
+                    if (!classeAgenda.isEmpty()) {
+                        DefaultScheduleEvent evento = new DefaultScheduleEvent("", dateMomento, dateMomento, classeAgenda);
+                        evento.setEditable(false);
+                        evento.setAllDay(true);
+                        eventModel.addEvent(evento);
+                    }
+
                     cal.setTime(dateMomento);
                     cal.add(Calendar.DATE, 1);
                     dateMomento = cal.getTime();
                 }
-                
+
                 setNmMedico(medico.getNmpessoa());
 
-                List<ConsultaDAO > consultaList = ejbFacade.findByMedico(medico.getIdpessoa());
-
+                // Preenche as consultas já marcadas
+                List<ConsultaDAO> consultaList = ejbFacade.findByMedico(medico.getIdpessoa());
                 for (ConsultaDAO consulta : consultaList) {
                     eventModel.addEvent(new DefaultScheduleEvent(consulta.getIdpaciente().getNmpessoa(), consulta.getDthorainicio(), consulta.getDthorafim()));
                 }

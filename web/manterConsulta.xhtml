@@ -8,8 +8,6 @@
                 xmlns="http://www.w3.org/1999/xhtml">
 
     <ui:define name="content">
-        <link href="resources/css/tabelas.css" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/estilo.css" rel="stylesheet" type="text/css"/>
         
         <script src="resources/javascript/handle.js" type="text/javascript"></script>
         
@@ -118,10 +116,10 @@
                             <p:inputText id="titleAgendaConsulta" value="#{consultaDAOController.event.title}" required="true" style="width:100%"/>
 
                             <p:outputLabel for="from" value="From:" />
-                            <p:calendar id="from" value="#{consultaDAOController.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                            <p:calendar id="from" value="#{consultaDAOController.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" minHour="07" maxHour="20"/>
 
                             <p:outputLabel for="to" value="To:" />
-                            <p:calendar id="to" value="#{consultaDAOController.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                            <p:calendar id="to" value="#{consultaDAOController.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" minHour="07" maxHour="20"/>
 
                             <p:outputLabel for="allDay" value="All Day:" />
                             <h:selectBooleanCheckbox id="allDay" value="#{consultaDAOController.event.allDay}" />

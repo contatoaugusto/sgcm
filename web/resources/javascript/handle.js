@@ -8,6 +8,6 @@ function atribuiPacienteTitleAgenda (){
      var paciente = document.getElementById("form_cadastro:paciente_input");
      var titleAgendaConsulta = document.getElementById("form_dialogEvent:titleAgendaConsulta");
      titleAgendaConsulta.value = paciente.value;
-     alert("Teeeeeee")
+
 }
 
