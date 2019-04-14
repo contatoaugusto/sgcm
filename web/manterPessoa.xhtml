@@ -17,11 +17,13 @@
 
                         <h:inputHidden id="idPerfil" value="#{perfilDAOController.selected.idperfil}"/>
                         <p:outputLabel for="perfil" value="Perfil:"/>
-                        <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}">
+                        <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}" >
                             <f:selectItem itemLabel="Selecione" itemValue="" />
                             <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
+                            <p:ajax event="itemSelect" update="especialidademedica nucrm"/>
                         </p:selectOneMenu>
                         <p:message for="perfil" />
+                        
                     </h:panelGrid>        
                     <h:panelGrid id="pngCadastro" columns="6">   
                         <p:outputLabel for="nome" value="Nome:" />
@@ -72,11 +74,12 @@
                         <p:message for="nucelular" />                        
 
                         <p:outputLabel for="nucrm" value="CRM:" />
-                        <p:inputText id="nucrm" value="#{pessoaDAOController.selected.nucrm}"/>
+                        <p:inputText id="nucrm" value="#{pessoaDAOController.selected.nucrm}" disabled="#{pessoaDAOController.selected.idperfil.nmperfil != 'Medico'}"/>
                         <p:message for="nucrm" />
                     
-                        <p:outputLabel for="especialidademedica" value="Especialidade Médica:"/>
-                        <p:selectOneMenu converter="especialidadeMedicaConverter" id="especialidademedica" value="#{pessoaDAOController.selected.idespecialidademedica}">
+                        <p:outputLabel for="especialidademedica" value="Especialidade Médica:"/> 
+                        <p:selectOneMenu converter="especialidadeMedicaConverter" id="especialidademedica" 
+                                         value="#{pessoaDAOController.selected.idespecialidademedica}" disabled="#{pessoaDAOController.selected.idperfil.nmperfil != 'Medico'}">
                             <f:selectItem itemLabel="Selecione" itemValue="" />
                             <f:selectItems value="#{especialidademedicaDAOController.especialidademedicaList}" var="especialidademedica" itemValue="#{especialidademedica}" itemLabel="#{especialidademedica.nmespecialidademedica}" />
                         </p:selectOneMenu>

@@ -320,6 +320,13 @@ public class ConsultaDAOController implements Serializable {
 
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
+    
+    public void onPacienteKeyup() {
+        setNmPessoa("");
+        setNucpf("");
+        setDeendereco("");
+
+    }
 
     public void onMedicoSelect(SelectEvent event) {
         PessoaDAO medico = (PessoaDAO) event.getObject();
