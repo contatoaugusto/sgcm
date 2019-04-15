@@ -9,9 +9,9 @@
         <title>Controle de acesso!</title>
     </h:head>
 
-    <h:body style="background-image:url('../resources/images/Tools-icon.png');background-position: 50% -60%;background-repeat: no-repeat">
+    <h:body style="background-color: #D9EDF7">
 
-        <p:dialog header="Login" visible="true" closable="false" draggable="true" resizable="false" width="500" height="210" styleClass="disable-scroll">
+        <p:dialog header="Login" visible="true" closable="false" draggable="true" resizable="false" width="500" height="210" styleClass="disable-scroll" position="center center" >
             <p:growl id="mensagens" autoUpdate="true"  sticky="false" life="5000"/>    
             <center>
                 <h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>

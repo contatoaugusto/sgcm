@@ -26,7 +26,7 @@
                     <ui:include src="/controleacesso/sessionTimeOut.xhtml" />
                 </p:layoutUnit>
 
-                <p:layoutUnit size="290" 
+                <p:layoutUnit size="295" 
                               position="west" 
                               id="left"  
                               resizable="true" 
@@ -35,7 +35,7 @@
 
                     <h:form>
 
-                        <p:menu style="border-style: none; width: 98%" styleClass="fa" toggleable="true">
+                        <p:menu style="border-style: none; width: 95%" styleClass="fa" toggleable="true">
 
                             <p:submenu label="Administração" style="font-size: 18px">
                                 <p:menuitem style="font-size: 16px" value="Cadastro de Perfil" url="./manterPerfil.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
@@ -43,19 +43,19 @@
                                 <p:menuitem style="font-size: 16px" value="Cadastro de Pessoa" url="./manterPessoa.xhtml" rendered="true"  disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
                             </p:submenu>
                             <p:submenu label="Consultas" style="font-size: 18px">   
-                                <p:menuitem style="font-size: 16px" value="Cadastro Agenda Médico" url="./manterMedicoAgenda.xhtml" rendered="true" />
-                                <p:menuitem style="font-size: 16px" value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" />
-                                <p:menuitem style="font-size: 16px" value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem style="font-size: 16px" value="Histórico Clínico" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Cadastro Agenda Médico" url="./manterMedicoAgenda.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" value="Marcação de Consultas" url="./manterConsulta.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" value="Emissão de Receita" url="./manterReceitaEmissao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" value="Histórico Clínico" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
                             </p:submenu>
                             <p:submenu label="Medicamentos" style="font-size: 18px">
                                 <p:menuitem style="font-size: 16px" value="Cadastro de Medicamento" url="./manterMedicamento.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem style="font-size: 16px" value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Aplicação de Medicamento" url="./manterMedicamentoAplicacao.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Enfermeiro')}"/>
                             </p:submenu>
                             <p:submenu label="Exames" style="font-size: 18px">
-                                <p:menuitem style="font-size: 16px" value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem style="font-size: 16px" value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
-                                <p:menuitem style="font-size: 16px" value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}"/>
+                                <p:menuitem style="font-size: 16px" value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
                             </p:submenu>
                             <p:menuitem value="Login" url="./controleacesso/login.xhtml" rendered="true" disabled="#{usuario != null}" style="font-size: 16px"/>
                             

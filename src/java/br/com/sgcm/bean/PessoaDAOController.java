@@ -147,6 +147,13 @@ public class PessoaDAOController implements Serializable {
 
     public String create() {
         try {
+            
+            PessoaDAO pessoa = ejbFacade.findByCPF(current.getNucpf());
+
+            if (pessoa != null && pessoa.getIdperfil().getIdperfil() == current.getIdperfil().getIdperfil()) {
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PessoaCPFDuplicado"));
+                return prepareList();
+            }
 
             getFacade().create(current);
 
@@ -306,10 +313,11 @@ public class PessoaDAOController implements Serializable {
             }
             PessoaDAOController controller = (PessoaDAOController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "pessoaDAOController");
-            if (tryParseInt(value))
+            if (tryParseInt(value)) {
                 return controller.getPessoaDAO(getKey(value));
-            else 
+            } else {
                 return null;
+            }
         }
 
         java.lang.Integer getKey(String value) {
@@ -379,7 +387,7 @@ public class PessoaDAOController implements Serializable {
 
         List<PessoaDAO> pessoas = new ArrayList<PessoaDAO>();
         List<PessoaDAO> pacientes = ejbFacade.findByPerfil(PERFIL_PACIENTE);
-       
+
         for (PessoaDAO pessoa : pacientes) {
             if (pessoa.getNmpessoa().toLowerCase().contains(query.toLowerCase())) {
                 pessoas.add(pessoa);

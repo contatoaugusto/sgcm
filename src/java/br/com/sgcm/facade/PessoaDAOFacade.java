@@ -46,4 +46,14 @@ public class PessoaDAOFacade extends AbstractFacade<PessoaDAO> {
             throw new NoResultException("Perfil " + idperfil + " não encontrado");
         }
     }
+
+    public PessoaDAO findByCPF(String nuCPF) throws NoResultException {
+
+        getEntityManager();
+        try {
+            return (PessoaDAO) em.createNamedQuery("PessoaDAO.findByNucpf").setParameter("nucpf", nuCPF).getSingleResult();
+        } catch (NoResultException e) {
+            throw new NoResultException("CPF " + nuCPF + " não encontrado");
+        }
+    }
 }

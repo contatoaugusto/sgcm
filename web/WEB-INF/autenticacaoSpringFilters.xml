@@ -14,7 +14,17 @@
     <http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPoint">
         <custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER"/>
         <logout logout-success-url="/controleacesso/login.xhtml" />
-
+        <intercept-url pattern="/manterPerfil.xhtml" access="hasAnyRole('Administrador')" /> 
+        <intercept-url pattern="/manterEspecialidadeMedica.xhtml" access="hasAnyRole('Administrador')" /> 
+        <intercept-url pattern="/manterPessoa.xhtml" access="hasAnyRole('Administrador')" /> 
+        <intercept-url pattern="/manterMedicoAgenda.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
+        
+        <intercept-url pattern="/manterMedicoAgenda.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
+        <intercept-url pattern="/manterConsulta.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
+        <intercept-url pattern="/manterReceitaEmissao.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
+        <intercept-url pattern="/manterHistoricoClinico.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
+        
+        <intercept-url pattern="/manterMedicamento.xhtml" access="hasAnyRole('Administrador')" />
     </http>
 
 
