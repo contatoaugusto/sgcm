@@ -48,7 +48,8 @@ public class UsuarioDAOFacade extends AbstractFacade<UsuarioDAO> {
                 usuario = (UsuarioDAO) em.createNamedQuery("UsuarioDAO.findByNmusuario")
                                 .setParameter("nmusuario", nmUsuario).getSingleResult();
         }catch (NoResultException e){
-                throw new NoResultException("Usuário "+ nmUsuario + " não encontrado");
+                //throw new NoResultException("Usuário "+ nmUsuario + " não encontrado");
+                return null;
         }
         return usuario;
     }

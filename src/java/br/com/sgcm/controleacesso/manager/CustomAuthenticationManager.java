@@ -70,7 +70,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
             log.error(e.getMessage());
             throw new BadCredentialsException(e.getMessage());
         } catch (Exception e) {
-            JsfUtil.addSuccessMessage(e.getMessage());
+            //JsfUtil.addSuccessMessage(e.getMessage());
             log.error(e.getMessage());
             throw new BadCredentialsException(e.getMessage());
         }

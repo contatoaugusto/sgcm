@@ -42,7 +42,7 @@ public class PessoaDAOController implements Serializable {
     @EJB
     private PessoaDAOFacade ejbFacade;
     @EJB
-    private UsuarioDAOFacade usuarioDAOFacade;
+    private UsuarioDAOFacade ejbFacadeUsuario;
     @EJB
     private PerfilDAOFacade perfilDAOFacade;
     private PaginationHelper pagination;
@@ -147,23 +147,28 @@ public class PessoaDAOController implements Serializable {
 
     public String create() {
         try {
-            
+
+            current.setIcAtivo((byte)01);
             PessoaDAO pessoa = ejbFacade.findByCPF(current.getNucpf());
+            UsuarioDAO usuario = ejbFacadeUsuario.findUsuarioByName(getNmUsuario());
 
             if (pessoa != null && pessoa.getIdperfil().getIdperfil() == current.getIdperfil().getIdperfil()) {
                 JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PessoaCPFDuplicado"));
+                return prepareList();
+            }
+            if (usuario != null) {
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("UsuarioDuplicado"));
                 return prepareList();
             }
 
             getFacade().create(current);
 
             // Cria o usuario
-            UsuarioDAO currentUsuario = new UsuarioDAO();
-            currentUsuario = new UsuarioDAO();
-            currentUsuario.setNmusuario(getNmUsuario());
-            currentUsuario.setDeSenha(getDeSenha());
-            currentUsuario.setIdpessoa(current);
-            usuarioDAOFacade.create(currentUsuario);
+            usuario = new UsuarioDAO();
+            usuario.setNmusuario(getNmUsuario());
+            usuario.setDeSenha(getDeSenha());
+            usuario.setIdpessoa(current);
+            ejbFacadeUsuario.create(usuario);
 
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
             return prepareList();
@@ -388,6 +393,10 @@ public class PessoaDAOController implements Serializable {
         List<PessoaDAO> pessoas = new ArrayList<PessoaDAO>();
         List<PessoaDAO> pacientes = ejbFacade.findByPerfil(PERFIL_PACIENTE);
 
+        if (pacientes.isEmpty()) {
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PacienteNaoEncontrado"));
+            return null;
+        }
         for (PessoaDAO pessoa : pacientes) {
             if (pessoa.getNmpessoa().toLowerCase().contains(query.toLowerCase())) {
                 pessoas.add(pessoa);
