@@ -347,7 +347,7 @@ CREATE TABLE `pessoa` (
   KEY `pessoa_especialidademedica_idx` (`idespecialidademedica`),
   CONSTRAINT `pessoa_especialidademedica` FOREIGN KEY (`idespecialidademedica`) REFERENCES `especialidademedica` (`idespecialidademedica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pessoa_perfil` FOREIGN KEY (`idperfil`) REFERENCES `perfil` (`idperfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','',NULL,NULL,6,NULL,NULL,1),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','',NULL,NULL,7,2,NULL,1),(4,'Alexandre Ferreira','Masculino','454.555.555-44','12345','Quadra 89 rua paineira castelo','Veredas','Goiania','88888-888','certo',NULL,NULL,NULL,NULL,NULL,8,1,NULL,1),(5,'Agenor Teixeira Filho','Masculino','222.222.222-22','1234123','Quadra 15 Conjunto 12 Casa 16','Lago Sul','Brasilia','71625-320','conta@hotmaila.com','','','',NULL,NULL,8,NULL,NULL,1),(6,'Francisco Neres Monteiro',NULL,'333.444.555-11','as1233','Bairro Vera Cruz Rua 12 Gelba 12','Vera Cruz','Patos de Minas','78542-000','enfermeiro@gmail.com','','',NULL,NULL,NULL,9,NULL,NULL,0),(7,'Fernando Moreira Nunes Coelho','Masculino','998.334.882-88','1234','QI 15 Conjunto 12 Casa 16','Lago Sul','Brasília','71635-320','fernando@hotmail.com','(12) 3333-1233','','12354',NULL,NULL,8,1,NULL,0);
+INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','',NULL,NULL,6,NULL,NULL,1),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','',NULL,NULL,7,2,NULL,1),(4,'Alexandre Ferreira','Masculino','454.555.555-44','12345','Quadra 89 rua paineira castelo','Veredas','Goiania','88888-888','certo',NULL,NULL,'6666',NULL,NULL,8,1,NULL,1),(5,'Agenor Teixeira Filho','Masculino','222.222.222-22','1234123','Quadra 15 Conjunto 12 Casa 16','Lago Sul','Brasilia','71625-320','conta@hotmaila.com','','','5555',NULL,NULL,8,2,NULL,1),(6,'Francisco Neres Monteiro',NULL,'333.444.555-11','as1233','Bairro Vera Cruz Rua 12 Gelba 12','Vera Cruz','Patos de Minas','78542-000','enfermeiro@gmail.com','','',NULL,NULL,NULL,9,NULL,NULL,1),(7,'Fernando Moreira Nunes Coelho','Masculino','998.334.882-88','1234','QI 15 Conjunto 12 Casa 16','Lago Sul','Brasília','71635-320','fernando@hotmail.com','(12) 3333-1233','','12354',NULL,NULL,8,1,NULL,1),(8,'Sergio Contreira','Masculino','888.888.888-88','123455','Quadra 8','Norte','Brasilia','44444-444','sergio@gmail.com','','',NULL,NULL,NULL,10,NULL,NULL,1);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +405,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `idusuario_pessoa_idx` (`idpessoa`),
   CONSTRAINT `idusuario_pessoa` FOREIGN KEY (`idpessoa`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +414,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3),(37,'agenor','123',5),(38,'enfermeiro','123',6),(39,'medico','123',7);
+INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3),(37,'agenor','123',5),(38,'enfermeiro','123',6),(39,'medico','123',7),(40,'sergio','123',8);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -427,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-15 20:48:36
+-- Dump completed on 2019-04-18 12:18:30

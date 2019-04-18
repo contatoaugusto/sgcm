@@ -3,6 +3,7 @@ package br.com.sgcm.bean;
 import br.com.sgcm.dao.MedicoagendatrabalhoDAO;
 import br.com.sgcm.bean.util.JsfUtil;
 import br.com.sgcm.bean.util.PaginationHelper;
+import br.com.sgcm.dao.UsuarioDAO;
 import br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -24,6 +26,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Named("medicoagendatrabalhoDAOController")
 @SessionScoped
@@ -35,6 +39,23 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
     private br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    private String nmPessoaMedico;
+    private String nuCRM;
+
+    @PostConstruct
+    public void init() {
+
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        UsuarioDAO usuario = (UsuarioDAO) attr.getRequest().getSession().getAttribute("usuario");
+        if (usuario != null && usuario.getIdpessoa().getIdperfil().getNmperfil().equals("Medico")) {
+            current = new MedicoagendatrabalhoDAO();
+            current.setIdmedico(usuario.getIdpessoa());
+            
+            setNmPessoaMedico(usuario.getIdpessoa().getNmpessoa());
+            setNuCRM(usuario.getIdpessoa().getNucrm());
+        }
+    }
 
     public MedicoagendatrabalhoDAOController() {
     }
@@ -243,5 +264,33 @@ public class MedicoagendatrabalhoDAOController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MedicoagendatrabalhoDAO.class.getName());
             }
         }
+    }
+
+    /**
+     * @return the nmPessoaMedico
+     */
+    public String getNmPessoaMedico() {
+        return nmPessoaMedico;
+    }
+
+    /**
+     * @param nmPessoaMedico the nmPessoaMedico to set
+     */
+    public void setNmPessoaMedico(String nmPessoaMedico) {
+        this.nmPessoaMedico = nmPessoaMedico;
+    }
+
+    /**
+     * @return the nuCRM
+     */
+    public String getNuCRM() {
+        return nuCRM;
+    }
+
+    /**
+     * @param nuCRM the nuCRM to set
+     */
+    public void setNuCRM(String nuCRM) {
+        this.nuCRM = nuCRM;
     }
 }

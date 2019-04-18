@@ -9,18 +9,28 @@
 
     <ui:define name="content">
         <link href="resources/css/tabelas.css" rel="stylesheet" type="text/css"/>   
-        <p:panel header="Cadastro de Especialidade Médica" style="border-style: none"> 
+        <p:panel header="Cadastro de Agenda Médica" style="border-style: none"> 
             <center>
                 <h:form id="form_cadastro">
                     <p >Os campos destacados são de preenchimento obrigatório.</p>
 
                     <h:inputHidden id="idPessoa" value="#{pessoaDAOController.selected.idpessoa}"/>
                     <p:outputLabel for="medico" value="Médico: "/>
-                    <p:selectOneMenu required="true" converter="pessoaConverter" id="medico" value="#{medicoagendatrabalhoDAOController.selected.idmedico}" style="width: 340px">
+                    <p:selectOneMenu required="true" converter="pessoaConverter" id="medico" value="#{medicoagendatrabalhoDAOController.selected.idmedico}" style="width: 340px"
+                                     disabled='#{medicoagendatrabalhoDAOController.nmPessoaMedico != null}'>
                         <f:selectItem itemLabel="Selecione" itemValue="" />
                         <f:selectItems value="#{pessoaDAOController.medicoList}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nmpessoa}" />
                     </p:selectOneMenu>
                     <p:message for="medico" />
+
+<!--                    <h:panelGrid id="outputPanelMedico" columns="4" >
+                        <p:outputLabel value="Nome:"/>
+                        <p:outputLabel value="#{consultaDAOController.nmPessoaMedico}" style="font-weight: bold;font-size: 12"/>
+
+                        <p:outputLabel value="CPF:"/>
+                        <p:outputLabel value="#{consultaDAOController.nuCRM}" style="font-weight: bold;font-size: 12"/>
+
+                    </h:panelGrid>-->
 
                     <br></br>
                     <h:panelGrid id="pngCadastro" columns="6">

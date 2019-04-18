@@ -8,6 +8,9 @@ package br.com.sgcm.facade;
 import br.com.sgcm.dao.EspecialidademedicaDAO;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -22,6 +25,10 @@ public class EspecialidademedicaDAOFacade extends AbstractFacade<Especialidademe
 
     @Override
     protected EntityManager getEntityManager() {
+        if (em == null) {
+            EntityManagerFactory factory = Persistence.createEntityManagerFactory("sgcmPU");
+            em = factory.createEntityManager();
+        }
         return em;
     }
 
@@ -29,4 +36,18 @@ public class EspecialidademedicaDAOFacade extends AbstractFacade<Especialidademe
         super(EspecialidademedicaDAO.class);
     }
     
+    public EspecialidademedicaDAO findByNmEspecialidademedica(String parametro) throws NoResultException{
+            //log.debug("Obtendo Usuario com o nome: " + nmLogin);
+
+        getEntityManager();
+        EspecialidademedicaDAO objeto;
+        try {
+                objeto = (EspecialidademedicaDAO) em.createNamedQuery("EspecialidademedicaDAO.findByNmespecialidademedica")
+                                .setParameter("nmespecialidademedica", parametro).getSingleResult();
+        }catch (NoResultException e){
+                //throw new NoResultException("Usuário "+ nmUsuario + " não encontrado");
+                return null;
+        }
+        return objeto;
+    }
 }

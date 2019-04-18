@@ -20,12 +20,12 @@
                         <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}" >
                             <f:selectItem itemLabel="Selecione" itemValue="" />
                             <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
-                            <p:ajax event="itemSelect" update="especialidademedica nucrm"/>
+                            <p:ajax event="itemSelect" update="especialidademedica nucrm pngCadastro usuario"/>
                         </p:selectOneMenu>
                         <p:message for="perfil" />
                         
                     </h:panelGrid>        
-                    <h:panelGrid id="pngCadastro" columns="6">   
+                    <h:panelGrid id="pngCadastro" columns="6" rendered="#{pessoaDAOController.selected.idperfil.idperfil > 0}">   
                         <p:outputLabel for="nome" value="Nome:" />
                         <p:inputText id="nome" required="true" value="#{pessoaDAOController.selected.nmpessoa}" size="50"/>
                         <p:message for="nome" />
@@ -88,7 +88,7 @@
                     </h:panelGrid> 
 
                     <br></br>    
-                    <p:panel id="usuario" header="Usuário" style="width: 20%">
+                    <p:panel id="usuario" header="Usuário" style="width: 20%" rendered="#{pessoaDAOController.selected.idperfil.idperfil > 0}">
                         <h:panelGrid id="pngUsuario">
                             <p:outputLabel for="email" value="Email/Usuário:" />
                             <p:inputText id="email" required="true" value="#{pessoaDAOController.nmUsuario}" size="20"/>
@@ -100,7 +100,8 @@
                         </h:panelGrid>
                     </p:panel>
                     <br></br>
-                    <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
+                    
+                    <p:commandButton id="btnCadastrar" value="Cadastrar" icon="ui-icon-disk" actionListener="#{pessoaDAOController.create()}" update=":lista"/>
                     <p:commandButton value="Limpar" type="reset"/>
 
                     <p:autoUpdate />

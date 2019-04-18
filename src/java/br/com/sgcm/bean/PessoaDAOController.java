@@ -120,13 +120,6 @@ public class PessoaDAOController implements Serializable {
 
         PerfilDAO pefil = perfilDAOFacade.find(PERFIL_PACIENTE);
         current.setIdperfil(pefil);
-//        FacesContext facesContext = FacesContext.getCurrentInstance();
-//        PerfilDAOController perfilDAOController = (PerfilDAOController) facesContext.getApplication().getELResolver().
-//                getValue(facesContext.getELContext(), null, "perfilDAOController");
-//
-//        List<PerfilDAO> perfilList = new ArrayList<PerfilDAO>();
-//        perfilList.add(pefil);
-//        perfilDAOController.setPerfilList(perfilList);
 
         selectedItemIndex = -1;
 

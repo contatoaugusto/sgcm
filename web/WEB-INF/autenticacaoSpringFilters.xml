@@ -16,7 +16,7 @@
         <logout logout-success-url="/controleacesso/login.xhtml" />
         <intercept-url pattern="/manterPerfil.xhtml" access="hasAnyRole('Administrador')" /> 
         <intercept-url pattern="/manterEspecialidadeMedica.xhtml" access="hasAnyRole('Administrador')" /> 
-        <intercept-url pattern="/manterPessoa.xhtml" access="hasAnyRole('Administrador')" /> 
+        <intercept-url pattern="/manterPessoa.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
         <intercept-url pattern="/manterMedicoAgenda.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 
         
         <intercept-url pattern="/manterMedicoAgenda.xhtml" access="hasAnyRole('Administrador','Atendente', 'Medico')" /> 

@@ -6,6 +6,7 @@ import br.com.sgcm.bean.util.PaginationHelper;
 import br.com.sgcm.dao.EspecialidademedicaDAO;
 import br.com.sgcm.dao.MedicoagendatrabalhoDAO;
 import br.com.sgcm.dao.PessoaDAO;
+import br.com.sgcm.dao.UsuarioDAO;
 import br.com.sgcm.facade.ConsultaDAOFacade;
 import br.com.sgcm.facade.MedicoagendatrabalhoDAOFacade;
 
@@ -37,10 +38,40 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Named("consultaDAOController")
 @SessionScoped
 public class ConsultaDAOController implements Serializable {
+
+    /**
+     * @return the nmPessoaMedico
+     */
+    public String getNmPessoaMedico() {
+        return nmPessoaMedico;
+    }
+
+    /**
+     * @param nmPessoaMedico the nmPessoaMedico to set
+     */
+    public void setNmPessoaMedico(String nmPessoaMedico) {
+        this.nmPessoaMedico = nmPessoaMedico;
+    }
+
+    /**
+     * @return the nuCRM
+     */
+    public String getNuCRM() {
+        return nuCRM;
+    }
+
+    /**
+     * @param nuCRM the nuCRM to set
+     */
+    public void setNuCRM(String nuCRM) {
+        this.nuCRM = nuCRM;
+    }
 
     private ConsultaDAO current;
     private DataModel items = null;
@@ -54,6 +85,8 @@ public class ConsultaDAOController implements Serializable {
     private String nmPessoa;
     private String nucpf;
     private String deendereco;
+    private String nmPessoaMedico;
+    private String nuCRM;
 
     private String nmMedico;
 
@@ -69,6 +102,16 @@ public class ConsultaDAOController implements Serializable {
     public void init() {
         eventModel = new DefaultScheduleModel();
 
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        UsuarioDAO usuario = (UsuarioDAO) attr.getRequest().getSession().getAttribute("usuario");
+        if (usuario != null && usuario.getIdpessoa().getIdperfil().getNmperfil().equals("Medico")) {
+            MontaAgendaMedico(usuario.getIdpessoa());
+            current = new ConsultaDAO();
+            current.setIdmedico(usuario.getIdpessoa());
+            setEspecialidadeMedica(usuario.getIdpessoa().getIdespecialidademedica());
+            setNmPessoaMedico(usuario.getIdpessoa().getNmpessoa());
+            setNuCRM(usuario.getIdpessoa().getNucrm());
+        }
     }
 
     public ConsultaDAO getSelected() {
@@ -320,7 +363,7 @@ public class ConsultaDAOController implements Serializable {
 
         //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Item Selected", event.getObject().toString()));
     }
-    
+
     public void onPacienteKeyup() {
         setNmPessoa("");
         setNucpf("");
@@ -328,8 +371,22 @@ public class ConsultaDAOController implements Serializable {
 
     }
 
+    /**
+     * chamado pelo evento ajax da página ao selecionar um médico
+     *
+     * @param event
+     */
     public void onMedicoSelect(SelectEvent event) {
         PessoaDAO medico = (PessoaDAO) event.getObject();
+        MontaAgendaMedico(medico);
+        setNmPessoaMedico(medico.getNmpessoa());
+        setNuCRM(medico.getNucrm());
+    }
+
+    /*
+     * Pesquisa e monta agenda de um dado médico
+     */
+    private void MontaAgendaMedico(PessoaDAO medico) {
         try {
             if (medico != null) {
 

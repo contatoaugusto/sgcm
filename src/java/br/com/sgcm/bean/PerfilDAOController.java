@@ -66,7 +66,7 @@ public class PerfilDAOController implements Serializable {
     }
 
     public PerfilDAO getSelected() {
-        
+
         setPerfilList(ejbFacade.findAll());
 
         if (current == null) {
@@ -118,6 +118,12 @@ public class PerfilDAOController implements Serializable {
 
     public String create() {
         try {
+
+            PerfilDAO objeto = ejbFacade.findByNmperfil(current.getNmperfil());
+            if (objeto != null) {
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PerfilDuplicado"));
+                return prepareList();
+            }
 
             getFacade().create(current);
 

@@ -96,6 +96,13 @@ public class EspecialidademedicaDAOController implements Serializable {
 
     public String create() {
         try {
+            
+            EspecialidademedicaDAO objeto = ejbFacade.findByNmEspecialidademedica(current.getNmespecialidademedica());
+            if (objeto != null) {
+                JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("EspecialidadeMedicaDuplicado"));
+                return prepareList();
+            }
+            
             getFacade().create(current);
 
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
