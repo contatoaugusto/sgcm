@@ -6,7 +6,9 @@
 package br.com.sgcm.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -49,7 +53,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "PessoaDAO.findByIcAtivo", query = "SELECT p FROM PessoaDAO p WHERE p.icAtivo = :icAtivo")})
 public class PessoaDAO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -91,6 +94,27 @@ public class PessoaDAO implements Serializable {
     @Basic(optional = false)
     @NotNull
     private short icAtivo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedico")
+    private Collection<HistoricoclinicoDAO> historicoclinicoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
+    private Collection<HistoricoclinicoDAO> historicoclinicoCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedico")
+    private Collection<ExamepedidoDAO> examepedidoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
+    private Collection<ExamepedidoDAO> examepedidoCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedico")
+    private Collection<ReceitaDAO> receitaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
+    private Collection<ReceitaDAO> receitaCollection1;
+    @OneToMany(mappedBy = "idenfermeiro")
+    private Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection;
+    @OneToMany(mappedBy = "idmedico")
+    private Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
+    private Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection2;
+
+    private static final long serialVersionUID = 1L;
+    
     @JoinColumn(name = "idespecialidademedica", referencedColumnName = "idespecialidademedica")
     @ManyToOne
     private EspecialidademedicaDAO idespecialidademedica;
@@ -287,6 +311,88 @@ public class PessoaDAO implements Serializable {
     @Override
     public String toString() {
         return "br.com.sgcm.dao.PessoaDAO[ idpessoa=" + idpessoa + " ]";
+    }
+
+
+    @XmlTransient
+    public Collection<HistoricoclinicoDAO> getHistoricoclinicoCollection() {
+        return historicoclinicoCollection;
+    }
+
+    public void setHistoricoclinicoCollection(Collection<HistoricoclinicoDAO> historicoclinicoCollection) {
+        this.historicoclinicoCollection = historicoclinicoCollection;
+    }
+
+    @XmlTransient
+    public Collection<HistoricoclinicoDAO> getHistoricoclinicoCollection1() {
+        return historicoclinicoCollection1;
+    }
+
+    public void setHistoricoclinicoCollection1(Collection<HistoricoclinicoDAO> historicoclinicoCollection1) {
+        this.historicoclinicoCollection1 = historicoclinicoCollection1;
+    }
+
+    @XmlTransient
+    public Collection<ExamepedidoDAO> getExamepedidoCollection() {
+        return examepedidoCollection;
+    }
+
+    public void setExamepedidoCollection(Collection<ExamepedidoDAO> examepedidoCollection) {
+        this.examepedidoCollection = examepedidoCollection;
+    }
+
+    @XmlTransient
+    public Collection<ExamepedidoDAO> getExamepedidoCollection1() {
+        return examepedidoCollection1;
+    }
+
+    public void setExamepedidoCollection1(Collection<ExamepedidoDAO> examepedidoCollection1) {
+        this.examepedidoCollection1 = examepedidoCollection1;
+    }
+
+    @XmlTransient
+    public Collection<ReceitaDAO> getReceitaCollection() {
+        return receitaCollection;
+    }
+
+    public void setReceitaCollection(Collection<ReceitaDAO> receitaCollection) {
+        this.receitaCollection = receitaCollection;
+    }
+
+    @XmlTransient
+    public Collection<ReceitaDAO> getReceitaCollection1() {
+        return receitaCollection1;
+    }
+
+    public void setReceitaCollection1(Collection<ReceitaDAO> receitaCollection1) {
+        this.receitaCollection1 = receitaCollection1;
+    }
+
+    @XmlTransient
+    public Collection<MedicamentoaplicacaoDAO> getMedicamentoaplicacaoCollection() {
+        return medicamentoaplicacaoCollection;
+    }
+
+    public void setMedicamentoaplicacaoCollection(Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection) {
+        this.medicamentoaplicacaoCollection = medicamentoaplicacaoCollection;
+    }
+
+    @XmlTransient
+    public Collection<MedicamentoaplicacaoDAO> getMedicamentoaplicacaoCollection1() {
+        return medicamentoaplicacaoCollection1;
+    }
+
+    public void setMedicamentoaplicacaoCollection1(Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection1) {
+        this.medicamentoaplicacaoCollection1 = medicamentoaplicacaoCollection1;
+    }
+
+    @XmlTransient
+    public Collection<MedicamentoaplicacaoDAO> getMedicamentoaplicacaoCollection2() {
+        return medicamentoaplicacaoCollection2;
+    }
+
+    public void setMedicamentoaplicacaoCollection2(Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection2) {
+        this.medicamentoaplicacaoCollection2 = medicamentoaplicacaoCollection2;
     }
 
 }

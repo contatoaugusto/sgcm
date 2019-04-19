@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="content">
+
+        <script src="resources/javascript/handle.js" type="text/javascript"></script>
+
+        <p:panel header="Marcação de Consulta" style="border-style: none"> 
+            <center>
+                <h:form id="form_cadastro" >
+
+                    <p:panel id="pnlPaciente" header="Paciente" >
+                        <h:panelGrid id="pngPaciente" columns="4" >
+                            <h:inputHidden id="idPerfil" value="#{pessoaDAOController.selected.idpessoa}"/>
+                            <p:outputLabel value="Paciente:" for="paciente" />
+
+                            <p:autoComplete 
+                                id="paciente"
+                                value="#{consultaDAOController.selected.idpaciente}"
+                                completeMethod="#{pessoaDAOController.completePessoa}"
+                                converter="pessoaConverter"
+                                var="pessoa" 
+                                itemLabel="#{pessoa.nmpessoa}" itemValue="#{pessoa}"
+                                forceSelection="true" 
+                                size="50"
+                                minQueryLength="1"
+                                maxResults="10"
+                                placeholder="Digite o nome do paciente">
+                                <f:attribute name="filterPessoa" value="#{pessoa.nmpessoa}" />
+                                <p:ajax event="itemSelect" listener="#{consultaDAOController.onPacienteSelect}" update="outputPanelPaciente btnCadastrarNovoPaciente pnlEspecialidademedica" />
+                                <p:ajax event="keyup" listener="#{consultaDAOController.onPacienteKeyup}" update="outputPanelPaciente btnCadastrarNovoPaciente pnlEspecialidademedica" />
+                            </p:autoComplete>
+
+                            <p:commandButton id="btnCadastrarNovoPaciente" value="Cadastrar Paciente" icon="ui-icon-disk" actionListener="#{pessoaDAOController.PrepareCadastroCliente()}" update=":lista" title="Paciente não foi encontrato. Cadastrar um novo registro" 
+                                             disabled='#{consultaDAOController.nmPessoa != ""}'/>
+                        </h:panelGrid>
+
+
+                        <h:panelGrid id="outputPanelPaciente" columns="2" >
+                            <p:outputLabel value="Nome:"/>
+                            <p:outputLabel value="#{consultaDAOController.nmPessoa}" style="font-weight: bold;font-size: 12"/>
+
+                            <p:outputLabel value="CPF:"/>
+                            <p:outputLabel value="#{consultaDAOController.nucpf}" style="font-weight: bold;font-size: 12"/>
+
+                            <p:outputLabel value="Endereço:"/>
+                            <p:outputLabel value="#{consultaDAOController.deendereco}" style="font-weight: bold;font-size: 12"/>
+                        </h:panelGrid>
+
+                    </p:panel>        
+
+
+                    <p:panel id="pnlEspecialidademedica" header="Especialidade e Médico" >
+                        <h:panelGrid id="pngEspecialidade" columns="6" >
+                            <h:inputHidden id="idEspecialidadeMedica" value="#{especialidademedicaDAOController.selected.idespecialidademedica}"/>
+                            <p:outputLabel value="Especialidade Médica:" for="especialidademedica" />
+
+                            <p:autoComplete 
+                                id="especialidademedica"
+                                value="#{consultaDAOController.especialidadeMedica}"
+                                completeMethod="#{especialidademedicaDAOController.completeEspecialidade}"
+                                converter="especialidadeMedicaConverter"
+                                var="especialidade" 
+                                itemLabel="#{especialidade.nmespecialidademedica}" itemValue="#{especialidade}"
+                                forceSelection="true" 
+                                size="50"
+                                minQueryLength="3"
+                                maxResults="5"
+                                placeholder="Digite a especialidade médica"
+                                disabled='#{consultaDAOController.nmPessoa == null || consultaDAOController.nmPessoa == " " || consultaDAOController.nmPessoa == ""}'>
+                                <f:attribute name="filterMedicoEspecialidade" value="#{especialidade.idespecialidademedica}" />
+                                <p:ajax event="itemSelect" listener="#{especialidademedicaDAOController.onEspecialidadeSelect}" update="medico"/>
+                            </p:autoComplete>
+
+
+                            <!--<h:panelGrid id="pngMedicoConsulta" columns="6" >-->
+                            <p:outputLabel for="medico" value="Médico:" />
+                            <p:selectOneMenu converter="pessoaConverter" id="medico" value="#{consultaDAOController.selected.idmedico}" style="width: 200px" 
+                                             disabled='#{consultaDAOController.nmPessoa == null || consultaDAOController.nmPessoa == " " || consultaDAOController.nmPessoa == ""}'>
+                                <f:selectItem itemLabel="Selecione" itemValue="" />
+                                <f:selectItems value="#{especialidademedicaDAOController.medicoEspecialidadeList}" var="medico" itemValue="#{medico}" itemLabel="#{medico.nmpessoa}" />
+                                <p:ajax event="itemSelect" listener="#{consultaDAOController.onMedicoSelect}" update="schedule outputPanelMedico"/>
+                            </p:selectOneMenu>
+                            <p:message for="medico" />
+                            <!--</h:panelGrid>-->
+                        </h:panelGrid>
+
+                        <h:panelGrid id="outputPanelMedico" columns="4" >
+                            <p:outputLabel value="Nome:"/>
+                            <p:outputLabel value="#{consultaDAOController.nmPessoaMedico}" style="font-weight: bold;font-size: 12"/>
+
+                            <p:outputLabel value="CPF:"/>
+                            <p:outputLabel value="#{consultaDAOController.nuCRM}" style="font-weight: bold;font-size: 12"/>
+
+                        </h:panelGrid>
+
+                        <br></br>
+                        <p:schedule 
+                            id="schedule" 
+                            value="#{consultaDAOController.eventModel}" 
+                            widgetVar="myschedule" 
+                            timeZone="America/Brasilia" 
+                            locale="pt_BR" 
+                            style="width: 70%; height: auto; " 
+                            tooltip="true"
+                            >
+
+                            <p:ajax event="dateSelect" listener="#{consultaDAOController.onDateSelect}"  update=":form_dialogEvent:eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventSelect" listener="#{consultaDAOController.onEventSelect}"  update=":form_dialogEvent:eventDetails" oncomplete="PF('eventDialog').show();" />
+                            <p:ajax event="eventMove" listener="#{consultaDAOController.onEventMove}"  />
+                            <p:ajax event="eventResize" listener="#{consultaDAOController.onEventResize}"/>
+
+                        </p:schedule>
+
+                    </p:panel>  
+
+                    <br></br>
+
+                    <p:commandButton value="Limpar" type="reset"/>
+                    <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{consultaDAOController.create()}" update=":lista"/>
+                    <!--                    <p:autoUpdate />-->
+                </h:form>
+
+
+                <h:form id="form_dialogEvent" >
+                    <p:dialog widgetVar="eventDialog" header="Agendamento Consulta" showEffect="clip" hideEffect="clip" onShow="atribuiPacienteTitleAgenda()" width="300" >
+
+                        <h:panelGrid id="eventDetails" columns="2" style="width:100%">
+
+                            <p:outputLabel value="Paciente:" />
+                            <p:inputText id="titleAgendaConsulta" value="#{consultaDAOController.event.title}" required="true" style="width:100%"/>
+
+                            <p:outputLabel for="from" value="From:" />
+                            <p:calendar id="from" value="#{consultaDAOController.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" minHour="07" maxHour="20"/>
+
+                            <p:outputLabel for="to" value="To:" />
+                            <p:calendar id="to" value="#{consultaDAOController.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" minHour="07" maxHour="20"/>
+
+                            <p:outputLabel for="allDay" value="All Day:" />
+                            <h:selectBooleanCheckbox id="allDay" value="#{consultaDAOController.event.allDay}" />
+                            <h:selectBooleanCheckbox id="isEditable" value="#{consultaDAOController.event.editable}" />
+
+
+                            <p:commandButton value="Adicionar" actionListener="#{consultaDAOController.addEvent()}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();"/>
+                        </h:panelGrid>
+
+                    </p:dialog> 
+                </h:form>
+
+
+                <br></br><br></br>
+
+                <p:dataTable 
+                    value="#{pessoaDAOController.items}"                      
+                    var="lista"
+                    style="margin-bottom:20px"
+                    paginator="false" id="lista"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16"  rowIndexVar="indiceLinha"
+                    rowStyleClass="#{(indiceLinha mod 2) eq 0 ? 'highlight' : 'highlight2'}">
+
+                    <f:facet name="header">
+                        <h:outputText value="Pessoas Cadastradas"/>
+                    </f:facet>
+
+                    <p:column headerText="Nome" >
+                        <h:outputText value="#{lista.nmpessoa}"/>
+                    </p:column>
+
+                    <p:column headerText="CPF" >
+                        <h:outputText value="#{lista.nucpf}" />
+                    </p:column>
+
+                    <p:column headerText="Telefone">
+                        <h:outputText value="#{lista.nutelefone}" />
+                    </p:column>
+
+                    <p:column headerText="Endereço">
+                        <h:outputText value="#{lista.deendereco}" />
+                    </p:column>
+                    <p:column headerText="CEP">
+                        <h:outputText value="#{lista.nucep}" />
+                    </p:column>
+
+                </p:dataTable>
+            </center>
+        </p:panel>    
+    </ui:define>
+
+</ui:composition>
+
