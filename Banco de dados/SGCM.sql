@@ -63,7 +63,7 @@ CREATE TABLE `especialidademedica` (
   `nmespecialidademedica` varchar(150) DEFAULT NULL,
   `deobservacao` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`idespecialidademedica`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Diz respeito a cada especialidades médicas disponíveis  na clinica';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='Diz respeito a cada especialidades médicas disponíveis  na clinica';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `especialidademedica` (
 
 LOCK TABLES `especialidademedica` WRITE;
 /*!40000 ALTER TABLE `especialidademedica` DISABLE KEYS */;
-INSERT INTO `especialidademedica` VALUES (1,'Cardiologia','Cardiologista da clínica'),(2,'Neurologia','Especialidades de neurologia e coisas relacionadas'),(3,'Ginecologista','Atendimento a mulher');
+INSERT INTO `especialidademedica` VALUES (1,'Cardiologia','Cardiologista da clínica'),(2,'Neurologia','Especialidades de neurologia e coisas relacionadas'),(3,'Ginecologista','Atendimento a mulher'),(4,'Pediatria','Atendimento pediátrico');
 /*!40000 ALTER TABLE `especialidademedica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,7 +347,7 @@ CREATE TABLE `pessoa` (
   KEY `pessoa_especialidademedica_idx` (`idespecialidademedica`),
   CONSTRAINT `pessoa_especialidademedica` FOREIGN KEY (`idespecialidademedica`) REFERENCES `especialidademedica` (`idespecialidademedica`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pessoa_perfil` FOREIGN KEY (`idperfil`) REFERENCES `perfil` (`idperfil`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ CREATE TABLE `pessoa` (
 
 LOCK TABLES `pessoa` WRITE;
 /*!40000 ALTER TABLE `pessoa` DISABLE KEYS */;
-INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','',NULL,NULL,6,NULL,NULL,1),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','',NULL,NULL,7,2,NULL,1),(4,'Alexandre Ferreira','Masculino','454.555.555-44','12345','Quadra 89 rua paineira castelo','Veredas','Goiania','88888-888','certo',NULL,NULL,'6666',NULL,NULL,8,1,NULL,1),(5,'Agenor Teixeira Filho','Masculino','222.222.222-22','1234123','Quadra 15 Conjunto 12 Casa 16','Lago Sul','Brasilia','71625-320','conta@hotmaila.com','','','5555',NULL,NULL,8,2,NULL,1),(6,'Francisco Neres Monteiro',NULL,'333.444.555-11','as1233','Bairro Vera Cruz Rua 12 Gelba 12','Vera Cruz','Patos de Minas','78542-000','enfermeiro@gmail.com','','',NULL,NULL,NULL,9,NULL,NULL,1),(7,'Fernando Moreira Nunes Coelho','Masculino','998.334.882-88','1234','QI 15 Conjunto 12 Casa 16','Lago Sul','Brasília','71635-320','fernando@hotmail.com','(12) 3333-1233','','12354',NULL,NULL,8,1,NULL,1),(8,'Sergio Contreira','Masculino','888.888.888-88','123455','Quadra 8','Norte','Brasilia','44444-444','sergio@gmail.com','','',NULL,NULL,NULL,10,NULL,NULL,1);
+INSERT INTO `pessoa` VALUES (2,'Antonio Augusto Teixeira','Masculino','72724-123','123456','Teste de Endereço','Veredas','Braz',NULL,'asdd','','','',NULL,NULL,6,NULL,NULL,1),(3,'João Otávio Teixeira','Masculino','777.777.777-77','87878787','Quadra 55','Vila São José','Brazlândia','55555-555','contato','','','',NULL,NULL,7,2,NULL,1),(4,'Alexandre Ferreira','Masculino','454.555.555-44','12345','Quadra 89 rua paineira castelo','Veredas','Goiania','88888-888','certo',NULL,NULL,'6666',NULL,NULL,8,1,NULL,1),(5,'Agenor Teixeira Filho','Masculino','222.222.222-22','1234123','Quadra 15 Conjunto 12 Casa 16','Lago Sul','Brasilia','71625-320','conta@hotmaila.com','','','5555',NULL,NULL,8,2,NULL,1),(6,'Francisco Neres Monteiro',NULL,'333.444.555-11','as1233','Bairro Vera Cruz Rua 12 Gelba 12','Vera Cruz','Patos de Minas','78542-000','enfermeiro@gmail.com','','',NULL,NULL,NULL,9,NULL,NULL,1),(7,'Fernando Moreira Nunes Coelho','Masculino','998.334.882-88','1234','QI 15 Conjunto 12 Casa 16','Lago Sul','Brasília','71635-320','fernando@hotmail.com','(12) 3333-1233','','12354',NULL,NULL,8,1,NULL,1),(8,'Sergio Contreira','Masculino','888.888.888-88','123455','Quadra 8','Norte','Brasilia','44444-444','sergio@gmail.com','','',NULL,NULL,NULL,10,NULL,NULL,1),(9,'Sherlys Cristianne Sá Costa','Feminino','222.222.222-22','1235','Quadra 1 norte ','Setor Veredas','Brazlândia','72725-412','shrlys@nol.com.br','','',NULL,NULL,NULL,10,NULL,NULL,1),(10,'Jussara Pacheco Teles','Feminino','458.795.622-32','1235','Quadra 58 Conjunto 2541','Acentamento','Brazlândia','72725-412','jussara@uol.com.br','','',NULL,NULL,NULL,9,NULL,NULL,1);
 /*!40000 ALTER TABLE `pessoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -378,7 +378,7 @@ CREATE TABLE `receita` (
   KEY `receita_medico_idx` (`idmedico`),
   CONSTRAINT `receita_medico` FOREIGN KEY (`idmedico`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `receita_paciente` FOREIGN KEY (`idpaciente`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Representa as receitas emitidas pela clinica. Tudo deve ser armazenado e devidamente guardado por tempo indeterminado';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Representa as receitas emitidas pela clinica. Tudo deve ser armazenado e devidamente guardado por tempo indeterminado';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,6 +387,7 @@ CREATE TABLE `receita` (
 
 LOCK TABLES `receita` WRITE;
 /*!40000 ALTER TABLE `receita` DISABLE KEYS */;
+INSERT INTO `receita` VALUES (1,5,8,'Tomar anador de 4 em 4 horas','2019-04-19 22:07:09');
 /*!40000 ALTER TABLE `receita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +406,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idusuario`),
   KEY `idusuario_pessoa_idx` (`idpessoa`),
   CONSTRAINT `idusuario_pessoa` FOREIGN KEY (`idpessoa`) REFERENCES `pessoa` (`idpessoa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +415,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3),(37,'agenor','123',5),(38,'enfermeiro','123',6),(39,'medico','123',7),(40,'sergio','123',8);
+INSERT INTO `usuario` VALUES (35,'admin','123',2),(36,'atendente','123',3),(37,'agenor','123',5),(38,'enfermeiro','123',6),(39,'medico','123',7),(40,'sergio','123',8),(41,'sherlys','123',9),(42,'jussara','123',10);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -427,4 +428,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-18 12:18:30
+-- Dump completed on 2019-04-19 22:45:33
