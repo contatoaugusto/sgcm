@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -27,12 +28,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "receita")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Receita.findAll", query = "SELECT r FROM Receita r")
-    , @NamedQuery(name = "Receita.findByIdreceita", query = "SELECT r FROM Receita r WHERE r.idreceita = :idreceita")
-    , @NamedQuery(name = "Receita.findByDeobservacao", query = "SELECT r FROM Receita r WHERE r.deobservacao = :deobservacao")
-    , @NamedQuery(name = "Receita.findByDtreceita", query = "SELECT r FROM Receita r WHERE r.dtreceita = :dtreceita")})
+    @NamedQuery(name = "ReceitaDAO.findAll", query = "SELECT r FROM ReceitaDAO r")
+    , @NamedQuery(name = "ReceitaDAO.findByIdreceita", query = "SELECT r FROM ReceitaDAO r WHERE r.idreceita = :idreceita")
+    , @NamedQuery(name = "ReceitaDAO.findByDeobservacao", query = "SELECT r FROM ReceitaDAO r WHERE r.deobservacao = :deobservacao")
+    , @NamedQuery(name = "ReceitaDAO.findByDtreceita", query = "SELECT r FROM ReceitaDAO r WHERE r.dtreceita = :dtreceita")})
 public class ReceitaDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -127,7 +129,7 @@ public class ReceitaDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Receita[ idreceita=" + idreceita + " ]";
+        return "br.com.sgcm.dao.ReceitaDAO[ idreceita=" + idreceita + " ]";
     }
     
 }

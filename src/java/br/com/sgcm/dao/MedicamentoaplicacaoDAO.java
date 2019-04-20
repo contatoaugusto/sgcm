@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -27,12 +28,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "medicamentoaplicacao")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Medicamentoaplicacao.findAll", query = "SELECT m FROM Medicamentoaplicacao m")
-    , @NamedQuery(name = "Medicamentoaplicacao.findByIdmedicamentoaplicacao", query = "SELECT m FROM Medicamentoaplicacao m WHERE m.idmedicamentoaplicacao = :idmedicamentoaplicacao")
-    , @NamedQuery(name = "Medicamentoaplicacao.findByDtmedicamentoaplicacao", query = "SELECT m FROM Medicamentoaplicacao m WHERE m.dtmedicamentoaplicacao = :dtmedicamentoaplicacao")
-    , @NamedQuery(name = "Medicamentoaplicacao.findByDeobservacao", query = "SELECT m FROM Medicamentoaplicacao m WHERE m.deobservacao = :deobservacao")})
+    @NamedQuery(name = "Medicamentoaplicacao.findAll", query = "SELECT m FROM MedicamentoaplicacaoDAO m")
+    , @NamedQuery(name = "Medicamentoaplicacao.findByIdmedicamentoaplicacao", query = "SELECT m FROM MedicamentoaplicacaoDAO m WHERE m.idmedicamentoaplicacao = :idmedicamentoaplicacao")
+    , @NamedQuery(name = "Medicamentoaplicacao.findByDtmedicamentoaplicacao", query = "SELECT m FROM MedicamentoaplicacaoDAO m WHERE m.dtmedicamentoaplicacao = :dtmedicamentoaplicacao")
+    , @NamedQuery(name = "Medicamentoaplicacao.findByDeobservacao", query = "SELECT m FROM MedicamentoaplicacaoDAO m WHERE m.deobservacao = :deobservacao")})
 public class MedicamentoaplicacaoDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -149,7 +151,7 @@ public class MedicamentoaplicacaoDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Medicamentoaplicacao[ idmedicamentoaplicacao=" + idmedicamentoaplicacao + " ]";
+        return "br.com.sgcm.dao.MedicamentoaplicacaoDAO[ idmedicamentoaplicacao=" + idmedicamentoaplicacao + " ]";
     }
     
 }

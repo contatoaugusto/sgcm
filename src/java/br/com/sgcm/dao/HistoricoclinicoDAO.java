@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -27,13 +28,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "historicoclinico")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Historicoclinico.findAll", query = "SELECT h FROM Historicoclinico h")
-    , @NamedQuery(name = "Historicoclinico.findByIdhistoricoclinico", query = "SELECT h FROM Historicoclinico h WHERE h.idhistoricoclinico = :idhistoricoclinico")
-    , @NamedQuery(name = "Historicoclinico.findByDthistoricoclinico", query = "SELECT h FROM Historicoclinico h WHERE h.dthistoricoclinico = :dthistoricoclinico")
-    , @NamedQuery(name = "Historicoclinico.findByDeobservacao", query = "SELECT h FROM Historicoclinico h WHERE h.deobservacao = :deobservacao")
-    , @NamedQuery(name = "Historicoclinico.findByIcAtivo", query = "SELECT h FROM Historicoclinico h WHERE h.icAtivo = :icAtivo")})
+    @NamedQuery(name = "Historicoclinico.findAll", query = "SELECT h FROM HistoricoclinicoDAO h")
+    , @NamedQuery(name = "Historicoclinico.findByIdhistoricoclinico", query = "SELECT h FROM HistoricoclinicoDAO h WHERE h.idhistoricoclinico = :idhistoricoclinico")
+    , @NamedQuery(name = "Historicoclinico.findByDthistoricoclinico", query = "SELECT h FROM HistoricoclinicoDAO h WHERE h.dthistoricoclinico = :dthistoricoclinico")
+    , @NamedQuery(name = "Historicoclinico.findByDeobservacao", query = "SELECT h FROM HistoricoclinicoDAO h WHERE h.deobservacao = :deobservacao")
+    , @NamedQuery(name = "Historicoclinico.findByIcAtivo", query = "SELECT h FROM HistoricoclinicoDAO h WHERE h.icAtivo = :icAtivo")})
 public class HistoricoclinicoDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -143,7 +145,7 @@ public class HistoricoclinicoDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Historicoclinico[ idhistoricoclinico=" + idhistoricoclinico + " ]";
+        return "br.com.sgcm.dao.HistoricoclinicoDAO[ idhistoricoclinico=" + idhistoricoclinico + " ]";
     }
     
 }

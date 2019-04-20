@@ -45,34 +45,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @SessionScoped
 public class ConsultaDAOController implements Serializable {
 
-    /**
-     * @return the nmPessoaMedico
-     */
-    public String getNmPessoaMedico() {
-        return nmPessoaMedico;
-    }
-
-    /**
-     * @param nmPessoaMedico the nmPessoaMedico to set
-     */
-    public void setNmPessoaMedico(String nmPessoaMedico) {
-        this.nmPessoaMedico = nmPessoaMedico;
-    }
-
-    /**
-     * @return the nuCRM
-     */
-    public String getNuCRM() {
-        return nuCRM;
-    }
-
-    /**
-     * @param nuCRM the nuCRM to set
-     */
-    public void setNuCRM(String nuCRM) {
-        this.nuCRM = nuCRM;
-    }
-
     private ConsultaDAO current;
     private DataModel items = null;
     @EJB
@@ -460,6 +432,34 @@ public class ConsultaDAOController implements Serializable {
 
     public void setEvent(ScheduleEvent event) {
         this.event = event;
+    }
+    
+       /**
+     * @return the nmPessoaMedico
+     */
+    public String getNmPessoaMedico() {
+        return nmPessoaMedico;
+    }
+
+    /**
+     * @param nmPessoaMedico the nmPessoaMedico to set
+     */
+    public void setNmPessoaMedico(String nmPessoaMedico) {
+        this.nmPessoaMedico = nmPessoaMedico;
+    }
+
+    /**
+     * @return the nuCRM
+     */
+    public String getNuCRM() {
+        return nuCRM;
+    }
+
+    /**
+     * @param nuCRM the nuCRM to set
+     */
+    public void setNuCRM(String nuCRM) {
+        this.nuCRM = nuCRM;
     }
 
     /*

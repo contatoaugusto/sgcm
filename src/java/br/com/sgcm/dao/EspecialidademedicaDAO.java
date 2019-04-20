@@ -43,6 +43,7 @@ public class EspecialidademedicaDAO implements Serializable {
     @Size(max = 1000)
     private String deobservacao;
 
+    
     private static final long serialVersionUID = 1L;
     
     @OneToMany(mappedBy = "idespecialidademedica")

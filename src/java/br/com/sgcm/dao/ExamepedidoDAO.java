@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -31,12 +32,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "examepedido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Examepedido.findAll", query = "SELECT e FROM Examepedido e")
-    , @NamedQuery(name = "Examepedido.findByIdexamepedido", query = "SELECT e FROM Examepedido e WHERE e.idexamepedido = :idexamepedido")
-    , @NamedQuery(name = "Examepedido.findByDtexamepedido", query = "SELECT e FROM Examepedido e WHERE e.dtexamepedido = :dtexamepedido")
-    , @NamedQuery(name = "Examepedido.findByDeobservacoes", query = "SELECT e FROM Examepedido e WHERE e.deobservacoes = :deobservacoes")})
+    @NamedQuery(name = "Examepedido.findAll", query = "SELECT e FROM ExamepedidoDAO e")
+    , @NamedQuery(name = "Examepedido.findByIdexamepedido", query = "SELECT e FROM ExamepedidoDAO e WHERE e.idexamepedido = :idexamepedido")
+    , @NamedQuery(name = "Examepedido.findByDtexamepedido", query = "SELECT e FROM ExamepedidoDAO e WHERE e.dtexamepedido = :dtexamepedido")
+    , @NamedQuery(name = "Examepedido.findByDeobservacoes", query = "SELECT e FROM ExamepedidoDAO e WHERE e.deobservacoes = :deobservacoes")})
 public class ExamepedidoDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -153,7 +155,7 @@ public class ExamepedidoDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Examepedido[ idexamepedido=" + idexamepedido + " ]";
+        return "br.com.sgcm.dao.ExamepedidoDAO[ idexamepedido=" + idexamepedido + " ]";
     }
     
 }

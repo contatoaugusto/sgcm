@@ -94,6 +94,8 @@ public class PessoaDAO implements Serializable {
     @Basic(optional = false)
     @NotNull
     private short icAtivo;
+
+ 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmedico")
     private Collection<HistoricoclinicoDAO> historicoclinicoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpaciente")
@@ -394,5 +396,4 @@ public class PessoaDAO implements Serializable {
     public void setMedicamentoaplicacaoCollection2(Collection<MedicamentoaplicacaoDAO> medicamentoaplicacaoCollection2) {
         this.medicamentoaplicacaoCollection2 = medicamentoaplicacaoCollection2;
     }
-
 }

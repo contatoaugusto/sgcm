@@ -27,7 +27,6 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import org.primefaces.event.SelectEvent;
 
 @Named("pessoaDAOController")
 @SessionScoped
@@ -306,7 +305,7 @@ public class PessoaDAOController implements Serializable {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
+            if (value == null || value.length() == 0 || value.isEmpty()) {
                 return null;
             }
             PessoaDAOController controller = (PessoaDAOController) facesContext.getApplication().getELResolver().
@@ -333,7 +332,7 @@ public class PessoaDAOController implements Serializable {
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
-                return null;
+                return "";
             }
             if (object instanceof PessoaDAO) {
                 PessoaDAO o = (PessoaDAO) object;

@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,12 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "exametipo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exametipo.findAll", query = "SELECT e FROM Exametipo e")
-    , @NamedQuery(name = "Exametipo.findByIdexametipo", query = "SELECT e FROM Exametipo e WHERE e.idexametipo = :idexametipo")
-    , @NamedQuery(name = "Exametipo.findByNmexametipo", query = "SELECT e FROM Exametipo e WHERE e.nmexametipo = :nmexametipo")
-    , @NamedQuery(name = "Exametipo.findByVrexame", query = "SELECT e FROM Exametipo e WHERE e.vrexame = :vrexame")})
+    @NamedQuery(name = "Exametipo.findAll", query = "SELECT e FROM ExametipoDAO e")
+    , @NamedQuery(name = "Exametipo.findByIdexametipo", query = "SELECT e FROM ExametipoDAO e WHERE e.idexametipo = :idexametipo")
+    , @NamedQuery(name = "Exametipo.findByNmexametipo", query = "SELECT e FROM ExametipoDAO e WHERE e.nmexametipo = :nmexametipo")
+    , @NamedQuery(name = "Exametipo.findByVrexame", query = "SELECT e FROM ExametipoDAO e WHERE e.vrexame = :vrexame")})
 public class ExametipoDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -119,7 +121,7 @@ public class ExametipoDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Exametipo[ idexametipo=" + idexametipo + " ]";
+        return "br.com.sgcm.dao.ExametipoDAO[ idexametipo=" + idexametipo + " ]";
     }
 
 }

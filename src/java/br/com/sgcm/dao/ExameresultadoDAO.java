@@ -17,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -28,12 +29,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "exameresultado")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Exameresultado.findAll", query = "SELECT e FROM Exameresultado e")
-    , @NamedQuery(name = "Exameresultado.findByIdexameresultado", query = "SELECT e FROM Exameresultado e WHERE e.idexameresultado = :idexameresultado")
-    , @NamedQuery(name = "Exameresultado.findByDtexameresultado", query = "SELECT e FROM Exameresultado e WHERE e.dtexameresultado = :dtexameresultado")
-    , @NamedQuery(name = "Exameresultado.findByDeobservacao", query = "SELECT e FROM Exameresultado e WHERE e.deobservacao = :deobservacao")})
+    @NamedQuery(name = "Exameresultado.findAll", query = "SELECT e FROM ExameresultadoDAO e")
+    , @NamedQuery(name = "Exameresultado.findByIdexameresultado", query = "SELECT e FROM ExameresultadoDAO e WHERE e.idexameresultado = :idexameresultado")
+    , @NamedQuery(name = "Exameresultado.findByDtexameresultado", query = "SELECT e FROM ExameresultadoDAO e WHERE e.dtexameresultado = :dtexameresultado")
+    , @NamedQuery(name = "Exameresultado.findByDeobservacao", query = "SELECT e FROM ExameresultadoDAO e WHERE e.deobservacao = :deobservacao")})
 public class ExameresultadoDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -127,7 +129,7 @@ public class ExameresultadoDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Exameresultado[ idexameresultado=" + idexameresultado + " ]";
+        return "br.com.sgcm.dao.ExameresultadoDAO[ idexameresultado=" + idexameresultado + " ]";
     }
     
 }

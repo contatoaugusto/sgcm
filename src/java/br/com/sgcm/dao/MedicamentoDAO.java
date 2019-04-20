@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -25,20 +26,21 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Antonio Augusto Teixeira
  */
 @Entity
+@Table(name = "medicamento")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Medicamento.findAll", query = "SELECT m FROM Medicamento m")
-    , @NamedQuery(name = "Medicamento.findByIdmedicamento", query = "SELECT m FROM Medicamento m WHERE m.idmedicamento = :idmedicamento")
-    , @NamedQuery(name = "Medicamento.findByNuregistro", query = "SELECT m FROM Medicamento m WHERE m.nuregistro = :nuregistro")
-    , @NamedQuery(name = "Medicamento.findByNmtecnico", query = "SELECT m FROM Medicamento m WHERE m.nmtecnico = :nmtecnico")
-    , @NamedQuery(name = "Medicamento.findByCodclasserisco", query = "SELECT m FROM Medicamento m WHERE m.codclasserisco = :codclasserisco")
-    , @NamedQuery(name = "Medicamento.findByNmcomercial", query = "SELECT m FROM Medicamento m WHERE m.nmcomercial = :nmcomercial")
-    , @NamedQuery(name = "Medicamento.findByNmdetentorregistrocadastro", query = "SELECT m FROM Medicamento m WHERE m.nmdetentorregistrocadastro = :nmdetentorregistrocadastro")
-    , @NamedQuery(name = "Medicamento.findByNmfabricante", query = "SELECT m FROM Medicamento m WHERE m.nmfabricante = :nmfabricante")
-    , @NamedQuery(name = "Medicamento.findByNmpaisfabricante", query = "SELECT m FROM Medicamento m WHERE m.nmpaisfabricante = :nmpaisfabricante")
-    , @NamedQuery(name = "Medicamento.findByDtpublicacaoregistrocadastro", query = "SELECT m FROM Medicamento m WHERE m.dtpublicacaoregistrocadastro = :dtpublicacaoregistrocadastro")
-    , @NamedQuery(name = "Medicamento.findByDevalidaderegistrocadastro", query = "SELECT m FROM Medicamento m WHERE m.devalidaderegistrocadastro = :devalidaderegistrocadastro")
-    , @NamedQuery(name = "Medicamento.findByDtatualizacaodado", query = "SELECT m FROM Medicamento m WHERE m.dtatualizacaodado = :dtatualizacaodado")})
+    @NamedQuery(name = "Medicamento.findAll", query = "SELECT m FROM MedicamentoDAO m")
+    , @NamedQuery(name = "Medicamento.findByIdmedicamento", query = "SELECT m FROM MedicamentoDAO m WHERE m.idmedicamento = :idmedicamento")
+    , @NamedQuery(name = "Medicamento.findByNuregistro", query = "SELECT m FROM MedicamentoDAO m WHERE m.nuregistro = :nuregistro")
+    , @NamedQuery(name = "Medicamento.findByNmtecnico", query = "SELECT m FROM MedicamentoDAO m WHERE m.nmtecnico = :nmtecnico")
+    , @NamedQuery(name = "Medicamento.findByCodclasserisco", query = "SELECT m FROM MedicamentoDAO m WHERE m.codclasserisco = :codclasserisco")
+    , @NamedQuery(name = "Medicamento.findByNmcomercial", query = "SELECT m FROM MedicamentoDAO m WHERE m.nmcomercial = :nmcomercial")
+    , @NamedQuery(name = "Medicamento.findByNmdetentorregistrocadastro", query = "SELECT m FROM MedicamentoDAO m WHERE m.nmdetentorregistrocadastro = :nmdetentorregistrocadastro")
+    , @NamedQuery(name = "Medicamento.findByNmfabricante", query = "SELECT m FROM MedicamentoDAO m WHERE m.nmfabricante = :nmfabricante")
+    , @NamedQuery(name = "Medicamento.findByNmpaisfabricante", query = "SELECT m FROM MedicamentoDAO m WHERE m.nmpaisfabricante = :nmpaisfabricante")
+    , @NamedQuery(name = "Medicamento.findByDtpublicacaoregistrocadastro", query = "SELECT m FROM MedicamentoDAO m WHERE m.dtpublicacaoregistrocadastro = :dtpublicacaoregistrocadastro")
+    , @NamedQuery(name = "Medicamento.findByDevalidaderegistrocadastro", query = "SELECT m FROM MedicamentoDAO m WHERE m.devalidaderegistrocadastro = :devalidaderegistrocadastro")
+    , @NamedQuery(name = "Medicamento.findByDtatualizacaodado", query = "SELECT m FROM MedicamentoDAO m WHERE m.dtatualizacaodado = :dtatualizacaodado")})
 public class MedicamentoDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -195,7 +197,7 @@ public class MedicamentoDAO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.sgcm.dao.Medicamento[ idmedicamento=" + idmedicamento + " ]";
+        return "br.com.sgcm.dao.MedicamentoDAO[ idmedicamento=" + idmedicamento + " ]";
     }
     
 }
