@@ -350,9 +350,14 @@ public class ConsultaDAOController implements Serializable {
      */
     public void onMedicoSelect(SelectEvent event) {
         PessoaDAO medico = (PessoaDAO) event.getObject();
-        MontaAgendaMedico(medico);
-        setNmPessoaMedico(medico.getNmpessoa());
-        setNuCRM(medico.getNucrm());
+        if (medico != null) {
+            MontaAgendaMedico(medico);
+            setNmPessoaMedico(medico.getNmpessoa());
+            setNuCRM(medico.getNucrm());
+        } else {
+            setNmPessoaMedico("");
+            setNuCRM("");
+        }
     }
 
     /*
@@ -433,8 +438,8 @@ public class ConsultaDAOController implements Serializable {
     public void setEvent(ScheduleEvent event) {
         this.event = event;
     }
-    
-       /**
+
+    /**
      * @return the nmPessoaMedico
      */
     public String getNmPessoaMedico() {

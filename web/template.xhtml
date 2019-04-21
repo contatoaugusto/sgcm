@@ -18,7 +18,7 @@
         </f:metadata>
 
         <h:head>
-            <p:growl id="mensagens" autoUpdate="true"  sticky="false" life="5000"/>
+            <p:growl id="mensagens" autoUpdate="true"  sticky="false" life="10000" />
 
             <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
 
@@ -54,8 +54,8 @@
                             </p:submenu>
                             <p:submenu label="Exames" style="font-size: 18px">
                                 <p:menuitem style="font-size: 16px" value="Pedido de Exame" url="./manterExamePedido.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
-                                <p:menuitem style="font-size: 16px" value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
-                                <p:menuitem style="font-size: 16px" value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" ajax="true" value="Resultado de Exame" url="./manterExameResultado.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
+                                <p:menuitem style="font-size: 16px" ajax="true" value="Relatórios" url="./manterHistoricoClinico.xhtml" rendered="true" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Atendente') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Administrador') &amp;&amp; !(usuario.idpessoa.idperfil.nmperfil == 'Medico')}"/>
                             </p:submenu>
                             <p:menuitem value="Login" url="./controleacesso/login.xhtml" rendered="true" disabled="#{usuario != null}" style="font-size: 16px"/>
                             

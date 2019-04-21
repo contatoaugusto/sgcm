@@ -20,7 +20,8 @@
                         <p:selectOneMenu converter="perfilConverter" id="perfil" value="#{pessoaDAOController.selected.idperfil}" disabled="#{!(usuario.idpessoa.idperfil.nmperfil == 'Administrador')}" >
                             <f:selectItem itemLabel="Selecione" itemValue="" />
                             <f:selectItems value="#{perfilDAOController.perfilList}" var="perfil" itemValue="#{perfil}" itemLabel="#{perfil.nmperfil}" />
-                            <p:ajax event="itemSelect" update="especialidademedica nucrm pngCadastro usuario"/>
+                            <f:attribute name="filterPerfil" value="#{perfil}" />
+                            <p:ajax event="itemSelect" listener="#{pessoaDAOController.pessoaByPerfil}" update="especialidademedica nucrm pngCadastro usuario lista"/>
                         </p:selectOneMenu>
                         <p:message for="perfil" />
                         

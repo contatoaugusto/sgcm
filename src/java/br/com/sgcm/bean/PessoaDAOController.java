@@ -27,6 +27,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.SelectEvent;
 
 @Named("pessoaDAOController")
 @SessionScoped
@@ -397,6 +398,17 @@ public class PessoaDAOController implements Serializable {
 
         setNmPessoaPesquisaCadastro(query);
         return pessoas;
+    }
+    
+    public String pessoaByPerfil(SelectEvent event) {
+        PerfilDAO perfil = (PerfilDAO) event.getObject();
+        
+        if (perfil != null)
+            items = new ListDataModel(ejbFacade.findByPerfil(perfil.getIdperfil()));
+        else
+            items = new ListDataModel(ejbFacade.findAll());
+        
+        return null;
     }
 
     /**
