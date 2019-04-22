@@ -14,7 +14,9 @@ WorkBench Versão 6.3 (64 Bits)
 https://downloads.mysql.com/archives/workbench/
 
 ******************** Configuração do recurso no Glassfish ******************
+
 Configurar o jndi-name="jdbc/sgcmJNDI" na instância do GlassFish em:
 http://localhost:4848/
+
 Resources > Add Resources > Importar o arquivo glassfish-resources.xml que está no projeto
 Dai o recurso criado aparecerá em: JDBC Resources
