@@ -27,9 +27,12 @@
                         <p:message for="descricao" />
 
                         <br></br>
-                        <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{perfilDAOController.create()}" update=":lista"/>
+                        
+                    </h:panelGrid>       
+                    <p:commandButton value="Cadastrar" icon="ui-icon-disk" actionListener="#{perfilDAOController.create()}" update=":lista" disabled="#{not empty perfilDAOController.selected.idperfil}"/>
+                        <h:outputText value=" "/>
+                        <p:commandButton value="Atualizar" icon="ui-icon-disk" actionListener="#{perfilDAOController.update()}" update=":lista" disabled="#{empty perfilDAOController.selected.idperfil}"/>
 <!--                        <p:commandButton value="Limpar" type="reset"/>-->
-                    </h:panelGrid>        
                     <p:autoUpdate />
                 </h:form>
 
@@ -54,6 +57,14 @@
 
                     <p:column headerText="Descrição" >
                         <h:outputText value="#{lista.deperfil}" />
+                    </p:column>
+                    
+                     <p:column headerText="Ações" style="align-items: center">
+                        <p:commandButton id="button_editar" actionListener="#{perfilDAOController.prepareEdit()}" icon="ui-icon-pencil" value="Editar"/>
+                        
+                        <h:outputText value=" "/>
+                        <p:commandButton id="button_excluir" actionListener="#{perfilDAOController.destroy()}" icon="ui-icon-trash" value="Excluir"/>
+                        
                     </p:column>
 
                 </p:dataTable>

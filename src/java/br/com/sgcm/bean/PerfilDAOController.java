@@ -138,16 +138,16 @@ public class PerfilDAOController implements Serializable {
     public String prepareEdit() {
         current = (PerfilDAO) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "manterPerfil";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/BundleTemp").getString("PerfilDAOUpdated"));
-            return "View";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("OperacaoSucesso"));
+            return "manterPerfil";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/BundleTemp").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("OperacaoErro"));
             return null;
         }
     }

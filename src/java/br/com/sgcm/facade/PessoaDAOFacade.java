@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -51,7 +52,10 @@ public class PessoaDAOFacade extends AbstractFacade<PessoaDAO> {
 
         getEntityManager();
         try {
-            return (PessoaDAO) em.createNamedQuery("PessoaDAO.findByNucpf").setParameter("nucpf", nuCPF).getSingleResult();
+            Query query = em.createNamedQuery("PessoaDAO.findByNucpf").setParameter("nucpf", nuCPF);
+            query.setFirstResult(1);
+            query.setMaxResults(1);
+            return (PessoaDAO) query.getSingleResult();
         } catch (NoResultException e) {
             //throw new NoResultException("CPF " + nuCPF + " não encontrado");
             return null;
